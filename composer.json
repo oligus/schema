@@ -1,0 +1,29 @@
+{
+    "name": "oli/schema",
+    "description": "Object oriented GraphQL schema",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "oligus",
+            "email": "oli.gustafsson@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "GQLSchema\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "GQLSchema\\Tests\\": "tests/src",
+            "GQLSchema\\E2E\\": "tests/e2e"
+        }
+    }
+}
