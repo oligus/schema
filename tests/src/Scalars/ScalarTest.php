@@ -4,7 +4,11 @@ namespace GQLSchema\Tests;
 
 use PHPUnit\Framework\TestCase;
 use GQLSchema\Scalars\ScalarFactory;
-use GQLSchema\Scalars\Integer;
+use GQLSchema\Scalars\TypeBoolean;
+use GQLSchema\Scalars\TypeFloat;
+use GQLSchema\Scalars\TypeID;
+use GQLSchema\Scalars\TypeInteger;
+use GQLSchema\Scalars\TypeString;
 
 /**
  * Class ScalarTest
@@ -12,13 +16,48 @@ use GQLSchema\Scalars\Integer;
  */
 class ScalarTest extends TestCase
 {
-    public function testInteger()
+    public function testBoolean()
     {
-        $int = ScalarFactory::create('integer');
-        $this->assertInstanceOf(Integer::class, $int);
-        $this->assertEquals('Int', $int->getType());
-        $this->assertEquals('int', $int->getShortType());
-        $this->assertEquals('integer', $int->getLongType());
+        $scalar = ScalarFactory::create('bool');
+        $this->assertInstanceOf(TypeBoolean::class, $scalar);
+        $this->assertEquals('Boolean', $scalar->getType());
+        $this->assertEquals('bool', $scalar->getShortType());
+        $this->assertEquals('boolean', $scalar->getLongType());
     }
 
+    public function testFloat()
+    {
+        $scalar = ScalarFactory::create('float');
+        $this->assertInstanceOf(TypeFloat::class, $scalar);
+        $this->assertEquals('Float', $scalar->getType());
+        $this->assertEquals('float', $scalar->getShortType());
+        $this->assertEquals('float', $scalar->getLongType());
+    }
+
+    public function testID()
+    {
+        $scalar = ScalarFactory::create('id');
+        $this->assertInstanceOf(TypeID::class, $scalar);
+        $this->assertEquals('ID', $scalar->getType());
+        $this->assertEquals('string', $scalar->getShortType());
+        $this->assertEquals('string', $scalar->getLongType());
+    }
+
+    public function testInteger()
+    {
+        $scalar = ScalarFactory::create('integer');
+        $this->assertInstanceOf(TypeInteger::class, $scalar);
+        $this->assertEquals('Int', $scalar->getType());
+        $this->assertEquals('int', $scalar->getShortType());
+        $this->assertEquals('integer', $scalar->getLongType());
+    }
+
+    public function testString()
+    {
+        $scalar = ScalarFactory::create('string');
+        $this->assertInstanceOf(TypeString::class, $scalar);
+        $this->assertEquals('String', $scalar->getType());
+        $this->assertEquals('string', $scalar->getShortType());
+        $this->assertEquals('string', $scalar->getLongType());
+    }
 }

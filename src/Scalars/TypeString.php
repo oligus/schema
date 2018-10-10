@@ -3,23 +3,23 @@
 namespace GQLSchema\Scalars;
 
 /**
- * Class Integer
+ * Class TypeString
  * @package GQLSchema\Scalars
  */
-class Integer extends AbstractScalar
+class TypeString extends AbstractScalar
 {
     /**
      * @var string
      */
-    protected $type = 'Int';
+    protected $type = 'String';
 
     /**
      * @var string
      */
-    protected $shortType = 'int';
+    protected $shortType = 'string';
 
     /**
      * @var string
      */
-    protected $longType = 'integer';
+    protected $longType = 'string';
 }

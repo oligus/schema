@@ -7,12 +7,35 @@ namespace GQLSchema\Scalars;
  */
 class ScalarFactory
 {
-    public static function create($type)
+    /**
+     * @param $type
+     * @return Scalar|null
+     */
+    public static function create($type): ?Scalar
     {
         switch (strtolower($type)) {
             case 'int':
             case 'integer':
-                return new Integer();
+                return new TypeInteger();
+                break;
+
+            case 'float':
+                return new TypeFloat();
+                break;
+
+            case 'string':
+                return new TypeString();
+                break;
+
+            case 'bool':
+            case 'boolean':
+                return new TypeBoolean();
+                break;
+
+            case 'id':
+            case 'Id':
+            case 'ID':
+                return new TypeID();
                 break;
         }
     }
