@@ -1,14 +1,14 @@
 <?php declare(strict_types=1);
 
-namespace GQLSchema\Tests;
+namespace GQLSchema\Tests\Types;
 
+use GQLSchema\Types\TypeObject;
 use PHPUnit\Framework\TestCase;
-use GQLSchema\Scalars\ScalarFactory;
-use GQLSchema\Scalars\TypeBoolean;
-use GQLSchema\Scalars\TypeFloat;
-use GQLSchema\Scalars\TypeID;
-use GQLSchema\Scalars\TypeInteger;
-use GQLSchema\Scalars\TypeString;
+use GQLSchema\Types\TypeBoolean;
+use GQLSchema\Types\TypeFloat;
+use GQLSchema\Types\TypeID;
+use GQLSchema\Types\TypeInteger;
+use GQLSchema\Types\TypeString;
 
 /**
  * Class ScalarTest
