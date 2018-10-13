@@ -6,8 +6,8 @@ use GQLSchema\Argument;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Class Argument
- * @package GQLSchema\Argument
+ * Class ArgumentCollection
+ * @package GQLSchema\Collections
  */
 class ArgumentCollection
 {
@@ -45,16 +45,16 @@ class ArgumentCollection
      */
     public function __toString(): string
     {
-        if($this->arguments->isEmpty()) {
+        if ($this->arguments->isEmpty()) {
             return '';
         }
 
         $string = '(';
 
-        foreach($this->arguments as $index => $argument) {
+        foreach ($this->arguments as $index => $argument) {
             $string .= $argument->__toString();
 
-            if($index + 2 <= count($this->arguments)) {
+            if ($index + 2 <= count($this->arguments)) {
                 $string .= ', ';
             }
         }
