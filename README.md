@@ -1,5 +1,6 @@
-# schema
-Object oriented GraphQL schema
+# GraphQL Schema
+
+GraphQL schema library.
 
 [![Build Status](https://travis-ci.org/oligus/schema.svg?branch=master)](https://travis-ci.org/oligus/schema)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
