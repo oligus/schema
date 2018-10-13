@@ -5,7 +5,47 @@ Object oriented GraphQL schema
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Codecov.io](https://codecov.io/gh/oligus/schema/branch/master/graphs/badge.svg)](https://codecov.io/gh/oligus/schema)
 
+## Types
 
+*Available types:*
+
+```php
+GQLSchema\Types\TypeBoolean
+GQLSchema\Types\TypeFloat
+GQLSchema\Types\TypeID
+GQLSchema\Types\TypeInteger
+GQLSchema\Types\TypeObject
+GQLSchema\Types\TypeString
+```
+
+*Example:*
+
+```php
+$type = new TypeBoolean();
+$type = new TypeObject('MyObject');
+```
+## Fields
+
+## Arguments
+
+Create arguments
+
+*Example:*
+
+```php
+// Boolean with no default value
+$arg = new Argument(new TypeBoolean(), null, 'argName');
+$arg->__toString(); // argName: Boolean
+
+// Boolean collection non nullable
+$arg = new Argument(new TypeBoolean(), null, 'argName', false, false);
+$arg->__toString(); // argName: [Boolean]!
+
+// Boolean with default value
+$arg = new Argument(new TypeBoolean(), new ValueBoolean(false), 'argName', false, false);
+$arg->__toString(); // argName: Boolean = false
+
+```
 
 ## Values
 

@@ -11,53 +11,18 @@ use GQLSchema\Types\TypeInteger;
 use GQLSchema\Types\TypeString;
 
 /**
- * Class ScalarTest
- * @package GQLSchema\Tests
+ * Class TypeTest
+ * @package GQLSchema\Tests\Types
  */
-class ScalarTest extends TestCase
+class TypeTest extends TestCase
 {
-    public function testBoolean()
+    public function testTypes()
     {
-        $scalar = ScalarFactory::create('bool');
-        $this->assertInstanceOf(TypeBoolean::class, $scalar);
-        $this->assertEquals('Boolean', $scalar->getType());
-        $this->assertEquals('bool', $scalar->getShortType());
-        $this->assertEquals('boolean', $scalar->getLongType());
-    }
-
-    public function testFloat()
-    {
-        $scalar = ScalarFactory::create('float');
-        $this->assertInstanceOf(TypeFloat::class, $scalar);
-        $this->assertEquals('Float', $scalar->getType());
-        $this->assertEquals('float', $scalar->getShortType());
-        $this->assertEquals('float', $scalar->getLongType());
-    }
-
-    public function testID()
-    {
-        $scalar = ScalarFactory::create('id');
-        $this->assertInstanceOf(TypeID::class, $scalar);
-        $this->assertEquals('ID', $scalar->getType());
-        $this->assertEquals('string', $scalar->getShortType());
-        $this->assertEquals('string', $scalar->getLongType());
-    }
-
-    public function testInteger()
-    {
-        $scalar = ScalarFactory::create('integer');
-        $this->assertInstanceOf(TypeInteger::class, $scalar);
-        $this->assertEquals('Int', $scalar->getType());
-        $this->assertEquals('int', $scalar->getShortType());
-        $this->assertEquals('integer', $scalar->getLongType());
-    }
-
-    public function testString()
-    {
-        $scalar = ScalarFactory::create('string');
-        $this->assertInstanceOf(TypeString::class, $scalar);
-        $this->assertEquals('String', $scalar->getType());
-        $this->assertEquals('string', $scalar->getShortType());
-        $this->assertEquals('string', $scalar->getLongType());
+        $this->assertEquals('Boolean', (new TypeBoolean())->getName());
+        $this->assertEquals('Float', (new TypeFloat())->getName());
+        $this->assertEquals('ID', (new TypeID())->getName());
+        $this->assertEquals('Int', (new TypeInteger())->getName());
+        $this->assertEquals('MyObject', (new TypeObject('MyObject'))->getName());
+        $this->assertEquals('String', (new TypeString())->getName());
     }
 }
