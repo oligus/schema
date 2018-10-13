@@ -33,6 +33,14 @@ class ArgumentCollection
     }
 
     /**
+     * @return bool
+     */
+    public function isEmpty(): bool
+    {
+        return $this->arguments->isEmpty();
+    }
+
+    /**
      * @return string
      */
     public function __toString(): string

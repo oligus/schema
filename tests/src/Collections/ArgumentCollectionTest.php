@@ -25,4 +25,11 @@ class ArgumentCollectionTest extends TestCase
 
         $this->assertEquals('(booleanArg: Boolean!, integerArg: Int!, stringArg: String! = "test")', $collection->__toString());
     }
+
+    public function testEmpty()
+    {
+        $collection = new ArgumentCollection();
+        $this->assertEquals('', $collection->__toString());
+
+    }
 }

@@ -26,6 +26,24 @@ $type = new TypeObject('MyObject');
 ```
 ## Fields
 
+*Example:*
+
+```php
+// Simple
+$field = new Field(new TypeInteger(), new ArgumentCollection(), 'simpleField', true, false);
+$field->__toString(); // simpleField: Int
+
+// With arguments
+$arguments = new ArgumentCollection();
+$arguments->add(new Argument(new TypeBoolean(), null, 'booleanArg', false, false));
+$arguments->add(new Argument(new TypeInteger(), null, 'integerArg', false, false));
+$arguments->add(new Argument(new TypeString(), new ValueString('test'), 'stringArg', false));
+
+$field = new Field(new TypeInteger(), $arguments, 'testField', false, false);
+$field->__toString(); // testField(booleanArg: Boolean!, integerArg: Int!, stringArg: String! = "test"): Int!'
+
+```
+
 ## Arguments
 
 Create arguments
