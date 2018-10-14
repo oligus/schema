@@ -4,11 +4,11 @@ namespace GQLSchema\Tests\Types\Scalars;
 
 use GQLSchema\Types\TypeModifier;
 use PHPUnit\Framework\TestCase;
-use GQLSchema\Types\Scalars\TypeBoolean;
-use GQLSchema\Types\Scalars\TypeFloat;
-use GQLSchema\Types\Scalars\TypeID;
-use GQLSchema\Types\Scalars\TypeInteger;
-use GQLSchema\Types\Scalars\TypeString;
+use GQLSchema\Types\Scalars\BooleanType;
+use GQLSchema\Types\Scalars\FloatType;
+use GQLSchema\Types\Scalars\IDType;
+use GQLSchema\Types\Scalars\IntegerType;
+use GQLSchema\Types\Scalars\StringType;
 
 /**
  * Class TypeTest
@@ -18,11 +18,11 @@ class ScalarTypesTest extends TestCase
 {
     public function testScalarTypes()
     {
-        $this->assertEquals('Boolean', (new TypeBoolean())->__toString());
-        $this->assertEquals('Float', (new TypeFloat())->__toString());
-        $this->assertEquals('ID', (new TypeID())->__toString());
-        $this->assertEquals('Int', (new TypeInteger())->__toString());
-        $this->assertEquals('String', (new TypeString())->__toString());
+        $this->assertEquals('Boolean', (new BooleanType())->__toString());
+        $this->assertEquals('Float', (new FloatType())->__toString());
+        $this->assertEquals('ID', (new IDType())->__toString());
+        $this->assertEquals('Int', (new IntegerType())->__toString());
+        $this->assertEquals('String', (new StringType())->__toString());
     }
 
     /**
@@ -36,21 +36,21 @@ class ScalarTypesTest extends TestCase
     public function testTypeModifiers()
     {
         $typeModifier = new TypeModifier();
-        $this->assertEquals('String', (new TypeString($typeModifier))->__toString());
+        $this->assertEquals('String', (new StringType($typeModifier))->__toString());
 
         $typeModifier = new TypeModifier(false);
-        $this->assertEquals('String!', (new TypeString($typeModifier))->__toString());
+        $this->assertEquals('String!', (new StringType($typeModifier))->__toString());
 
         $typeModifier = new TypeModifier(true, true);
-        $this->assertEquals('[String]', (new TypeString($typeModifier))->__toString());
+        $this->assertEquals('[String]', (new StringType($typeModifier))->__toString());
 
         $typeModifier = new TypeModifier(false, true);
-        $this->assertEquals('[String!]', (new TypeString($typeModifier))->__toString());
+        $this->assertEquals('[String!]', (new StringType($typeModifier))->__toString());
 
         $typeModifier = new TypeModifier(true, true, false);
-        $this->assertEquals('[String]!', (new TypeString($typeModifier))->__toString());
+        $this->assertEquals('[String]!', (new StringType($typeModifier))->__toString());
 
         $typeModifier = new TypeModifier(false, true, false);
-        $this->assertEquals('[String!]!', (new TypeString($typeModifier))->__toString());
+        $this->assertEquals('[String!]!', (new StringType($typeModifier))->__toString());
     }
 }

@@ -3,13 +3,13 @@
 namespace GQLSchema\Types\Scalars;
 
 /**
- * Class TypeBoolean
+ * Class FloatType
  * @package GQLSchema\Types\Scalars
  */
-class TypeBoolean extends AbstractScalarType
+class FloatType extends AbstractScalarType
 {
     /**
      * @var string
      */
-    protected $name = 'Boolean';
+    protected $name = 'Float';
 }

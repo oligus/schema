@@ -3,10 +3,10 @@
 namespace GQLSchema\Types\Scalars;
 
 /**
- * Class TypeID
+ * Class IDType
  * @package GQLSchema\Types\Scalars
  */
-class TypeID extends AbstractScalarType
+class IDType extends AbstractScalarType
 {
     /**
      * @var string

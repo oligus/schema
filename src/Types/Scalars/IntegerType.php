@@ -3,13 +3,13 @@
 namespace GQLSchema\Types\Scalars;
 
 /**
- * Class TypeFloat
+ * Class IntegerType
  * @package GQLSchema\Types\Scalars
  */
-class TypeFloat extends AbstractScalarType
+class IntegerType extends AbstractScalarType
 {
     /**
      * @var string
      */
-    protected $name = 'Float';
+    protected $name = 'Int';
 }

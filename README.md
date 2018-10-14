@@ -11,22 +11,18 @@ GraphQL schema library.
 *Available types:*
 
 ```php
-GQLSchema\Types\TypeBoolean
-GQLSchema\Types\TypeFloat
-GQLSchema\Types\TypeID
-GQLSchema\Types\TypeInteger
-GQLSchema\Types\TypeObject
-GQLSchema\Types\TypeString
+GQLSchema\Types\BooleanType
+GQLSchema\Types\FloatType
+GQLSchema\Types\IDType
+GQLSchema\Types\IntegerType
+GQLSchema\Types\StringType
 ```
 
 *Example:*
 
 ```php
-$type = new TypeBoolean();
+$type = new BooleanType();
 echo $type->__toString(); // Bool
-
-$type = new TypeObject(null, 'MyObject');
-echo $type->__toString(); // MyObject
 ```
 
 #### Type modifiers
@@ -45,7 +41,7 @@ Non-null List of Non-null Types | [\<type>!]! | [String!]!
 *Example:*
 ```php
 $typeModifier = new TypeModifier($nullable = false, $listable = true, $nullableList = false);
-$type = new TypeBoolean($typeModifier);
+$type = new BooleanType($typeModifier);
 
 echo $type->__toString(); // [bool!]!
 ```
@@ -56,16 +52,16 @@ echo $type->__toString(); // [bool!]!
 
 ```php
 // Simple
-$field = new Field(new TypeInteger(), new ArgumentCollection(), 'simpleField');
+$field = new Field(new IntegerType(), new ArgumentCollection(), 'simpleField');
 $field->__toString(); // simpleField: Int
 
 // With arguments        
 $arguments = new ArgumentCollection();
-$arguments->add(new Argument(new TypeBoolean(new TypeModifier($nullable = false)), null, 'booleanArg'));
-$arguments->add(new Argument(new TypeInteger(new TypeModifier($nullable = false)), null, 'integerArg'));
-$arguments->add(new Argument(new TypeString(new TypeModifier($nullable = false)), new ValueString('test'), 'stringArg'));
+$arguments->add(new Argument(new BooleanType(new TypeModifier($nullable = false)), null, 'booleanArg'));
+$arguments->add(new Argument(new IntegerType(new TypeModifier($nullable = false)), null, 'integerArg'));
+$arguments->add(new Argument(new StringType(new TypeModifier($nullable = false)), new ValueString('test'), 'stringArg'));
 
-$field = new Field(new TypeInteger(new TypeModifier(false)), $arguments, 'testField');
+$field = new Field(new IntegerType(new TypeModifier(false)), $arguments, 'testField');
 echo $field->__toString(); // testField(booleanArg: Boolean!, integerArg: Int!, stringArg: String! = "test"): Int!'
 
 ```
@@ -78,15 +74,15 @@ Create arguments
 
 ```php
 // Boolean with no default value
-$arg = new Argument(new TypeBoolean(), null, 'argName');
+$arg = new Argument(new BooleanType(), null, 'argName');
 echo $arg->__toString(); // argName: Boolean
 
 // Boolean collection non nullable
-$arg = new Argument(new TypeBoolean(new TypeModifier($nullable = true, $listable = true, $nullableList = false), null, 'argName');
+$arg = new Argument(new BooleanType(new TypeModifier($nullable = true, $listable = true, $nullableList = false), null, 'argName');
 echo $arg->__toString(); // argName: [Boolean]!
 
 // Boolean with default value
-$arg = new Argument(new TypeBoolean(), new ValueBoolean(false), 'argName');
+$arg = new Argument(new BooleanType(), new ValueBoolean(false), 'argName');
 echo $arg->__toString(); // argName: Boolean = false
 
 ```

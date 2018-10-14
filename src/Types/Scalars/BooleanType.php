@@ -3,13 +3,13 @@
 namespace GQLSchema\Types\Scalars;
 
 /**
- * Class TypeInteger
+ * Class BooleanType
  * @package GQLSchema\Types\Scalars
  */
-class TypeInteger extends AbstractScalarType
+class BooleanType extends AbstractScalarType
 {
     /**
      * @var string
      */
-    protected $name = 'Int';
+    protected $name = 'Boolean';
 }

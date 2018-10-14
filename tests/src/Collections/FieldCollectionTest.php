@@ -2,8 +2,8 @@
 
 namespace GQLSchema\Tests\Collections;
 
-use GQLSchema\Types\Scalars\TypeInteger;
-use GQLSchema\Types\Scalars\TypeString;
+use GQLSchema\Types\Scalars\IntegerType;
+use GQLSchema\Types\Scalars\StringType;
 use GQLSchema\Field;
 use GQLSchema\Collections\FieldCollection;
 use PHPUnit\Framework\TestCase;
@@ -20,7 +20,7 @@ class FieldCollectionTest extends TestCase
     public function testCollection()
     {
         $fields = new FieldCollection();
-        $fields->add(new Field(new TypeInteger(), null, 'simpleField'));
+        $fields->add(new Field(new IntegerType(), null, 'simpleField'));
         $this->assertEquals("  simpleField: Int\n", $fields->__toString());
 
         /**
@@ -30,9 +30,9 @@ class FieldCollectionTest extends TestCase
         relationship: Person
          */
         $fields = new FieldCollection();
-        $fields->add(new Field(new TypeString(), null, 'name'));
-        $fields->add(new Field(new TypeInteger(), null, 'age'));
-        $fields->add(new Field(new TypeInteger(), null, 'size'));
+        $fields->add(new Field(new StringType(), null, 'name'));
+        $fields->add(new Field(new IntegerType(), null, 'age'));
+        $fields->add(new Field(new IntegerType(), null, 'size'));
 
         $expected = "  name: String\n";
         $expected .= "  age: Int\n";
@@ -54,8 +54,8 @@ class FieldCollectionTest extends TestCase
     public function testUniqueNames()
     {
         $fields = new FieldCollection();
-        $fields->add(new Field(new TypeInteger(), null, 'age'));
-        $fields->add(new Field(new TypeInteger(), null, 'test'));
-        $fields->add(new Field(new TypeInteger(), null, 'age'));
+        $fields->add(new Field(new IntegerType(), null, 'age'));
+        $fields->add(new Field(new IntegerType(), null, 'test'));
+        $fields->add(new Field(new IntegerType(), null, 'age'));
     }
 }
