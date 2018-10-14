@@ -79,7 +79,7 @@ interface Wine {
 ```php
 // Simple
 $field = new Field('simpleField', new IntegerType());
-$field->__toString(); // simpleField: Int
+echo $field; // simpleField: Int
 
 // With arguments        
 $arguments = new ArgumentCollection();
@@ -105,11 +105,11 @@ echo $arg; // argName: Boolean
 
 // Boolean collection non nullable
 $arg = new Argument(new BooleanType(new TypeModifier($nullable = true, $listable = true, $nullableList = false), null, 'argName');
-echo $arg->; // argName: [Boolean]!
+echo $arg; // argName: [Boolean]!
 
 // Boolean with default value
 $arg = new Argument(new BooleanType(), new ValueBoolean(false), 'argName');
-echo $arg->; // argName: Boolean = false
+echo $arg; // argName: Boolean = false
 
 ```
 
@@ -140,13 +140,13 @@ echo $float; // '23.45'
 
 $int = new ValueInteger(5);
 $float->getValue(); // 5
-echo $float->; // '5'
+echo $float; // '5'
 
 $null = new ValueNull();
 $null->getValue(); // null
-echo $null->; // 'null'
+echo $null; // 'null'
 
 $string = new ValueString('test string);
 $string->getValue(); // 'test string'
-echo $string->; // '"test string"'
+echo $string; // '"test string"'
 ```
