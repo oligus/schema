@@ -4,6 +4,7 @@ namespace GQLSchema;
 
 use GQLSchema\Values\Value;
 use GQLSchema\Types\Type;
+use GQLSchema\Exceptions\SchemaException;
 
 /**
  * Class Argument
@@ -31,6 +32,7 @@ class Argument implements InputOutput
      * @param Type $type
      * @param Value|null $defaultValue
      * @param string $name
+     * @throws SchemaException
      */
     public function __construct(
         Type $type,
@@ -38,8 +40,23 @@ class Argument implements InputOutput
         string $name = ''
     ) {
         $this->type = $type;
-        $this->name = $name;
         $this->defaultValue = $defaultValue;
+
+        $this->setName($name);
+    }
+
+    /**
+     * @param string $name
+     * @throws SchemaException
+     */
+    private function setName(string $name): void
+    {
+        if (substr($name, 0, 2) === "__") {
+            throw new SchemaException('The argument must not have a name which begins with the characters "__" (two underscores).');
+        }
+
+
+        $this->name = $name;
     }
 
     /**

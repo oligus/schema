@@ -55,4 +55,13 @@ class ArgumentTest extends TestCase
         $arg = new Argument(new IntegerType(), new ValueInteger(0), 'intArg');
         $this->assertEquals('intArg: Int = 0', $arg->__toString());
     }
+
+    /**
+     * @expectedException \GQLSchema\Exceptions\SchemaException
+     * @expectedExceptionMessage The argument must not have a name which begins with the characters "__" (two underscores)
+     */
+    public function testSetNameException()
+    {
+        new Argument(new BooleanType(), null, '__testField');
+    }
 }

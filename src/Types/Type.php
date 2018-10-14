@@ -9,13 +9,6 @@ namespace GQLSchema\Types;
 interface Type
 {
     /**
-     * Type constructor.
-     * @param TypeModifier|null $typeModifier
-     * @param null|string $name
-     */
-    public function __construct(?TypeModifier $typeModifier, ?string $name);
-
-    /**
      * @return string
      */
     public function getName(): string;

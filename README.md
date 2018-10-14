@@ -11,21 +11,15 @@ GraphQL schema library.
 *Available types:*
 
 ```php
-GQLSchema\Types\BooleanType
-GQLSchema\Types\FloatType
-GQLSchema\Types\IDType
-GQLSchema\Types\IntegerType
-GQLSchema\Types\StringType
+GQLSchema\Types\Scalars\BooleanType
+GQLSchema\Types\Scalars\FloatType
+GQLSchema\Types\Scalars\IDType
+GQLSchema\Types\Scalars\IntegerType
+GQLSchema\Types\Scalars\StringType
+GQLSchema\Types\InterfaceType
 ```
 
-*Example:*
-
-```php
-$type = new BooleanType();
-echo $type->__toString(); // Bool
-```
-
-#### Type modifiers
+### Type modifiers
 
 Type modifiers are used in conjunction with types, add modifier to a type to modify the type in question.
 
@@ -44,6 +38,38 @@ $typeModifier = new TypeModifier($nullable = false, $listable = true, $nullableL
 $type = new BooleanType($typeModifier);
 
 echo $type->__toString(); // [bool!]!
+```
+
+### Scalar types
+
+*Example:*
+
+```php
+$type = new BooleanType();
+echo $type->__toString(); // Bool
+```
+
+### Interface type
+
+*Example:*
+
+```php
+$fields = new FieldCollection();
+$fields->add(new Field(new StringType(), null, 'name'));
+$fields->add(new Field(new IntegerType(), null, 'age'));
+$fields->add(new Field(new IntegerType(), null, 'size'));
+
+$interface = new InterfaceType('Wine', $fields, 'My interface description');
+
+// Yields
+"""
+My interface description
+"""
+interface Wine {
+  name: String  
+  age: Int
+  size: Int
+}
 ```
 
 ## Fields
