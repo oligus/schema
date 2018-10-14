@@ -27,7 +27,7 @@ abstract class AbstractScalarType implements Type
      */
     public function __construct(?TypeModifier $typeModifier = null)
     {
-        if($typeModifier instanceof TypeModifier) {
+        if ($typeModifier instanceof TypeModifier) {
             $this->typeModifier = $typeModifier;
         }
     }
@@ -55,26 +55,26 @@ abstract class AbstractScalarType implements Type
     {
         $name = $this->getName();
 
-        if(is_null($this->getTypeModifier())) {
+        if (is_null($this->getTypeModifier())) {
             return $name;
         }
         $string = '';
 
-        if($this->getTypeModifier()->isListable()) {
+        if ($this->getTypeModifier()->isListable()) {
             $string .= '[';
         }
 
         $string .= $name;
 
-        if(!$this->getTypeModifier()->isNullable()) {
+        if (!$this->getTypeModifier()->isNullable()) {
             $string .= '!';
         }
 
-        if($this->getTypeModifier()->isListable()) {
+        if ($this->getTypeModifier()->isListable()) {
             $string .= ']';
         }
 
-        if(!$this->getTypeModifier()->isNullableList()) {
+        if (!$this->getTypeModifier()->isNullableList()) {
             $string .= '!';
         }
 

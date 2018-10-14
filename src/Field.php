@@ -28,20 +28,28 @@ class Field implements InputOutput
     private $arguments;
 
     /**
+     * @var string
+     */
+    private $description;
+
+    /**
      * Field constructor.
+     * @param string $name
      * @param Type $type
      * @param ArgumentCollection|null $arguments
-     * @param string $name
+     * @param null|string $description
      * @throws SchemaException
      */
     public function __construct(
         string $name,
         Type $type,
-        ?ArgumentCollection $arguments = null
+        ?ArgumentCollection $arguments = null,
+        ?string $description = null
     ) {
         $this->setName($name);
         $this->type = $type;
         $this->arguments = $arguments;
+        $this->description = $description;
     }
 
     /**
@@ -54,7 +62,6 @@ class Field implements InputOutput
             throw new SchemaException('The field must not have a name which begins with the characters "__" (two underscores).');
         }
 
-
         $this->name = $name;
     }
 
@@ -63,7 +70,13 @@ class Field implements InputOutput
      */
     public function __toString(): string
     {
-        $string = $this->getName();
+        $string = '';
+
+        if (!empty($this->getDescription())) {
+            $string .= '"' . $this->getDescription() . '"' . "\n";
+        }
+
+        $string .= $this->getName();
 
         if ($this->arguments instanceof ArgumentCollection && !$this->arguments->isEmpty()) {
             $string .= $this->arguments->__toString();
@@ -88,5 +101,13 @@ class Field implements InputOutput
     public function getType(): Type
     {
         return $this->type;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription(): ?string
+    {
+        return $this->description;
     }
 }

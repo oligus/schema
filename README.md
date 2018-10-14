@@ -6,6 +6,13 @@ GraphQL schema library.
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Codecov.io](https://codecov.io/gh/oligus/schema/branch/master/graphs/badge.svg)](https://codecov.io/gh/oligus/schema)
 
+## Schema
+
+### API
+Method       | Parameters
+-------------| ---------------- 
+addInterface | InterfaceType
+
 ## Types
 
 *Available types:*

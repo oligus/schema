@@ -31,5 +31,4 @@ class ArgumentCollection extends AbstractCollection
 
         return $string;
     }
-
 }

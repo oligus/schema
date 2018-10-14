@@ -8,6 +8,7 @@ use GQLSchema\Field;
 use GQLSchema\Types\Scalars\StringType;
 use GQLSchema\Types\Scalars\IntegerType;
 use PHPUnit\Framework\TestCase;
+use Spatie\Snapshots\MatchesSnapshots;
 
 /**
  * Class TypeModifierTest
@@ -15,6 +16,8 @@ use PHPUnit\Framework\TestCase;
  */
 class InterfaceTypeTest extends TestCase
 {
+    use MatchesSnapshots;
+
     /**
      * @throws \GQLSchema\Exceptions\SchemaException
      */
@@ -27,16 +30,7 @@ class InterfaceTypeTest extends TestCase
 
         $interface = new InterfaceType('Wine', $fields, 'My interface description');
 
-        $expected = '"""' . "\n";
-        $expected .= 'My interface description' . "\n";
-        $expected .= '"""' . "\n";
-        $expected .= "interface Wine {\n";
-        $expected .= "  name: String\n";
-        $expected .= "  age: Int\n";
-        $expected .= "  size: Int\n";
-        $expected .= "}\n";
-
-        $this->assertEquals($expected, $interface->__toString());
+        $this->assertMatchesSnapshot($interface->__toString());
     }
 
     /**

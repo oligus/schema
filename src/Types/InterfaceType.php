@@ -65,7 +65,7 @@ class InterfaceType implements Type
     {
         $string = '';
 
-        if(!empty($this->getDescription())) {
+        if (!empty($this->getDescription())) {
             $string .= '"""' . "\n";
             $string .= $this->getDescription() . "\n";
             $string .= '"""' . "\n";
@@ -75,13 +75,13 @@ class InterfaceType implements Type
         $string .= ' ' . $this->getName();
         $string .= " {\n";
 
-        if($this->fields->isEmpty()) {
+        if ($this->fields->isEmpty()) {
             throw new SchemaException('An Interface type must define one or more fields.');
         }
 
         $string .= $this->fields->__toString();
 
-        $string .= "}\n";
+        $string .= "}\n\n";
 
         return $string;
     }

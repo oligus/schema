@@ -91,6 +91,19 @@ class FieldTest extends TestCase
     }
 
     /**
+     * @throws \GQLSchema\Exceptions\SchemaException
+     */
+    public function testDescription()
+    {
+        $field = new Field('simpleField', new IntegerType(), new ArgumentCollection(), 'My test description');
+
+        $expected = '"My test description"' . "\n";
+        $expected .= 'simpleField: Int';
+        $this->assertEquals($expected, $field->__toString());
+    }
+
+
+    /**
      * @expectedException \GQLSchema\Exceptions\SchemaException
      * @expectedExceptionMessage The field must not have a name which begins with the characters "__" (two underscores)
      */
