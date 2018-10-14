@@ -1,21 +1,20 @@
 <?php declare(strict_types=1);
 
-namespace GQLSchema\Tests\Types;
+namespace GQLSchema\Tests\Types\Scalars;
 
 use GQLSchema\Types\TypeModifier;
-use GQLSchema\Types\TypeObject;
 use PHPUnit\Framework\TestCase;
-use GQLSchema\Types\TypeBoolean;
-use GQLSchema\Types\TypeFloat;
-use GQLSchema\Types\TypeID;
-use GQLSchema\Types\TypeInteger;
-use GQLSchema\Types\TypeString;
+use GQLSchema\Types\Scalars\TypeBoolean;
+use GQLSchema\Types\Scalars\TypeFloat;
+use GQLSchema\Types\Scalars\TypeID;
+use GQLSchema\Types\Scalars\TypeInteger;
+use GQLSchema\Types\Scalars\TypeString;
 
 /**
  * Class TypeTest
  * @package GQLSchema\Tests\Types
  */
-class TypeTest extends TestCase
+class ScalarTypesTest extends TestCase
 {
     public function testScalarTypes()
     {
@@ -23,7 +22,6 @@ class TypeTest extends TestCase
         $this->assertEquals('Float', (new TypeFloat())->__toString());
         $this->assertEquals('ID', (new TypeID())->__toString());
         $this->assertEquals('Int', (new TypeInteger())->__toString());
-        $this->assertEquals('MyObject', (new TypeObject(null, 'MyObject'))->__toString());
         $this->assertEquals('String', (new TypeString())->__toString());
     }
 

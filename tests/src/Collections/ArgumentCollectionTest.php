@@ -6,9 +6,9 @@ use GQLSchema\Types\TypeModifier;
 use GQLSchema\Values\ValueString;
 use PHPUnit\Framework\TestCase;
 use GQLSchema\Argument;
-use GQLSchema\Types\TypeBoolean;
-use GQLSchema\Types\TypeInteger;
-use GQLSchema\Types\TypeString;
+use GQLSchema\Types\Scalars\TypeBoolean;
+use GQLSchema\Types\Scalars\TypeInteger;
+use GQLSchema\Types\Scalars\TypeString;
 use GQLSchema\Collections\ArgumentCollection;
 
 /**
@@ -17,6 +17,9 @@ use GQLSchema\Collections\ArgumentCollection;
  */
 class ArgumentCollectionTest extends TestCase
 {
+    /**
+     * @throws \GQLSchema\Exceptions\SchemaException
+     */
     public function testCollection()
     {
         $collection = new ArgumentCollection();
@@ -31,6 +34,17 @@ class ArgumentCollectionTest extends TestCase
     {
         $collection = new ArgumentCollection();
         $this->assertEquals('', $collection->__toString());
+    }
 
+    /**
+     * @expectedException \GQLSchema\Exceptions\SchemaException
+     * @expectedExceptionMessage The field must have a unique name within type, field name [age] seen twice.
+     */
+    public function testUniqueNames()
+    {
+        $collection = new ArgumentCollection();
+        $collection->add(new Argument(new TypeInteger(), null, 'age'));
+        $collection->add(new Argument(new TypeInteger(), null, 'test'));
+        $collection->add(new Argument(new TypeInteger(), null, 'age'));
     }
 }

@@ -23,9 +23,9 @@ GQLSchema\Types\TypeString
 
 ```php
 $type = new TypeBoolean();
-$type->__toString(); // Bool
+echo $type->__toString(); // Bool
 
-echo $type = new TypeObject(null, 'MyObject');
+$type = new TypeObject(null, 'MyObject');
 echo $type->__toString(); // MyObject
 ```
 

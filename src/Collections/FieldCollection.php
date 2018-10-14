@@ -2,49 +2,25 @@
 
 namespace GQLSchema\Collections;
 
-use GQLSchema\Field;
-use Doctrine\Common\Collections\ArrayCollection;
-
 /**
  * Class FieldCollection
  * @package GQLSchema\Collections
  */
-class FieldCollection
+class FieldCollection extends AbstractCollection
 {
-    /**
-     * @var ArrayCollection
-     */
-    private $fields;
-
-    /**
-     * FieldCollection constructor.
-     */
-    public function __construct()
-    {
-        $this->fields = new ArrayCollection();
-    }
-
-    /**
-     * @param Field $field
-     */
-    public function add(Field $field): void
-    {
-        $this->fields->add($field);
-    }
-
     /**
      * @return string
      */
     public function __toString(): string
     {
-        if ($this->fields->isEmpty()) {
+        if ($this->collection->isEmpty()) {
             return '';
         }
 
         $string = '';
 
-        foreach ($this->fields as $index => $argument) {
-            $string .= '  ' . $argument->__toString() . "\n";
+        foreach ($this->collection as $index => $item) {
+            $string .= '  ' . $item->__toString() . "\n";
         }
 
         return $string;

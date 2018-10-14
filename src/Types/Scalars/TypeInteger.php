@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace GQLSchema\Types;
+namespace GQLSchema\Types\Scalars;
 
 /**
  * Class TypeInteger
- * @package GQLSchema\Types
+ * @package GQLSchema\Types\Scalars
  */
-class TypeInteger extends AbstractType
+class TypeInteger extends AbstractScalarType
 {
     /**
      * @var string

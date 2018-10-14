@@ -4,12 +4,11 @@ namespace GQLSchema\Tests\Types;
 
 use GQLSchema\Argument;
 use GQLSchema\Field;
-use GQLSchema\Types\TypeBoolean;
-use GQLSchema\Types\TypeFloat;
-use GQLSchema\Types\TypeInteger;
+use GQLSchema\Types\Scalars\TypeBoolean;
+use GQLSchema\Types\Scalars\TypeFloat;
+use GQLSchema\Types\Scalars\TypeInteger;
 use GQLSchema\Types\TypeModifier;
-use GQLSchema\Types\TypeObject;
-use GQLSchema\Types\TypeString;
+use GQLSchema\Types\Scalars\TypeString;
 use GQLSchema\Values\ValueBoolean;
 use GQLSchema\Values\ValueString;
 use GQLSchema\Collections\ArgumentCollection;
@@ -21,6 +20,9 @@ use PHPUnit\Framework\TestCase;
  */
 class FieldTest extends TestCase
 {
+    /**
+     * @throws \GQLSchema\Exceptions\SchemaException
+     */
     public function testFields()
     {
         $field = new Field(new TypeInteger(), null, 'simpleField');
@@ -37,9 +39,6 @@ class FieldTest extends TestCase
         $field = new Field(new TypeInteger(new TypeModifier(false)), $arguments, 'testField');
         $this->assertEquals('testField(booleanArg: Boolean!, integerArg: Int!, stringArg: String! = "test"): Int!',
             $field->__toString());
-
-        $field = new Field(new TypeObject(null, 'MyObject'), null, 'simpleField');
-        $this->assertEquals('simpleField: MyObject', $field->__toString());
 
         /**
          * GraphQL examples:
@@ -84,9 +83,19 @@ class FieldTest extends TestCase
 
         // optionalNonNullBooleanArgField(optionalBooleanArg: Boolean! = false): Boolean!
         $arguments = new ArgumentCollection();
-        $arguments->add(new Argument(new TypeBoolean(new TypeModifier(false)), new ValueBoolean(false), 'optionalBooleanArg'));
+        $arguments->add(new Argument(new TypeBoolean(new TypeModifier(false)), new ValueBoolean(false),
+            'optionalBooleanArg'));
         $field = new Field(new TypeBoolean(new TypeModifier(false)), $arguments, 'optionalNonNullBooleanArgField');
-        $this->assertEquals('optionalNonNullBooleanArgField(optionalBooleanArg: Boolean! = false): Boolean!', $field->__toString());
+        $this->assertEquals('optionalNonNullBooleanArgField(optionalBooleanArg: Boolean! = false): Boolean!',
+            $field->__toString());
+    }
 
+    /**
+     * @expectedException \GQLSchema\Exceptions\SchemaException
+     * @expectedExceptionMessage The field must not have a name which begins with the characters "__" (two underscores)
+     */
+    public function testSetNameException()
+    {
+        new Field(new TypeBoolean(), null, '__testField');
     }
 }

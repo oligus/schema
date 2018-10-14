@@ -1,12 +1,15 @@
 <?php declare(strict_types=1);
 
-namespace GQLSchema\Types;
+namespace GQLSchema\Types\Scalars;
+
+use GQLSchema\Types\Type;
+use GQLSchema\Types\TypeModifier;
 
 /**
- * Class AbstractType
- * @package GQLSchema\Types
+ * Class AbstractScalarType
+ * @package GQLSchema\Types\Scalars
  */
-class AbstractType implements Type
+abstract class AbstractScalarType implements Type
 {
     /**
      * @var TypeModifier

@@ -2,59 +2,27 @@
 
 namespace GQLSchema\Collections;
 
-use GQLSchema\Argument;
-use Doctrine\Common\Collections\ArrayCollection;
-
 /**
  * Class ArgumentCollection
  * @package GQLSchema\Collections
  */
-class ArgumentCollection
+class ArgumentCollection extends AbstractCollection
 {
-    /**
-     * @var ArrayCollection
-     */
-    private $arguments;
-
-    /**
-     * ArgumentCollection constructor.
-     */
-    public function __construct()
-    {
-        $this->arguments = new ArrayCollection();
-    }
-
-    /**
-     * @param Argument $argument
-     */
-    public function add(Argument $argument): void
-    {
-        $this->arguments->add($argument);
-    }
-
-    /**
-     * @return bool
-     */
-    public function isEmpty(): bool
-    {
-        return $this->arguments->isEmpty();
-    }
-
     /**
      * @return string
      */
     public function __toString(): string
     {
-        if ($this->arguments->isEmpty()) {
+        if ($this->collection->isEmpty()) {
             return '';
         }
 
         $string = '(';
 
-        foreach ($this->arguments as $index => $argument) {
+        foreach ($this->collection as $index => $argument) {
             $string .= $argument->__toString();
 
-            if ($index + 2 <= count($this->arguments)) {
+            if ($index + 2 <= count($this->collection)) {
                 $string .= ', ';
             }
         }

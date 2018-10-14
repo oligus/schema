@@ -3,11 +3,10 @@
 namespace GQLSchema\Tests\Types;
 
 use GQLSchema\Argument;
-use GQLSchema\Types\TypeFloat;
-use GQLSchema\Types\TypeInteger;
-use GQLSchema\Types\TypeBoolean;
-use GQLSchema\Types\TypeString;
-use GQLSchema\Types\TypeObject;
+use GQLSchema\Types\Scalars\TypeFloat;
+use GQLSchema\Types\Scalars\TypeInteger;
+use GQLSchema\Types\Scalars\TypeBoolean;
+use GQLSchema\Types\Scalars\TypeString;
 use GQLSchema\Types\TypeModifier;
 use GQLSchema\Values\ValueBoolean;
 use GQLSchema\Values\ValueInteger;
@@ -37,10 +36,6 @@ class ArgumentTest extends TestCase
         $typeModifier = new TypeModifier(true, true);
         $arg = new Argument(new TypeString($typeModifier), null, 'stringArg');
         $this->assertEquals('stringArg: [String]', $arg->__toString());
-
-        // objectArg: Object
-        $arg = new Argument(new TypeObject(null, 'Object'), null, 'objectArg');
-        $this->assertEquals('objectArg: Object', $arg->__toString());
 
         // nonNullBooleanArg: Boolean!
         $typeModifier = new TypeModifier(false);

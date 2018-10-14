@@ -6,7 +6,7 @@ namespace GQLSchema\Types;
  * Class TypeObject
  * @package GQLSchema\Types
  */
-class TypeObject extends AbstractType
+class TypeObject
 {
 
 }

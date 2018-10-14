@@ -6,12 +6,10 @@ use GQLSchema\Values\Value;
 use GQLSchema\Types\Type;
 
 /**
- * GraphQL Argument
- *
  * Class Argument
  * @package GQLSchema
  */
-class Argument
+class Argument implements InputOutput
 {
     /**
      * @var Type
@@ -45,11 +43,19 @@ class Argument
     }
 
     /**
-     * @return Type
+     * @return string
      */
-    public function getType(): Type
+    public function __toString(): string
     {
-        return $this->type;
+        $string = $this->getName() . ': ';
+
+        $string .= $this->getType()->__toString();
+
+        if (!is_null($this->getDefaultValue())) {
+            $string .= ' = ' . $this->getDefaultValue()->__toString();
+        }
+
+        return $string;
     }
 
     /**
@@ -61,26 +67,18 @@ class Argument
     }
 
     /**
+     * @return Type
+     */
+    public function getType(): Type
+    {
+        return $this->type;
+    }
+
+    /**
      * @return Value|null
      */
     public function getDefaultValue(): ?Value
     {
         return $this->defaultValue;
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString(): string
-    {
-        $string = $this->getName() . ': ';
-
-        $string .= $this->getType()->__toString();
-
-        if(!is_null($this->getDefaultValue())) {
-            $string .= ' = ' . $this->getDefaultValue()->__toString();
-        }
-
-        return $string;
     }
 }
