@@ -8,6 +8,7 @@ use GQLSchema\Types\TypeInteger;
 use GQLSchema\Types\TypeBoolean;
 use GQLSchema\Types\TypeString;
 use GQLSchema\Types\TypeObject;
+use GQLSchema\Types\TypeModifier;
 use GQLSchema\Values\ValueBoolean;
 use GQLSchema\Values\ValueInteger;
 use PHPUnit\Framework\TestCase;
@@ -20,35 +21,38 @@ class ArgumentTest extends TestCase
 {
     public function testConstruct()
     {
-        // booleanArgField(booleanArg: Boolean): Boolean
+        // booleanArg: Boolean
         $arg = new Argument(new TypeBoolean(), null, 'booleanArg');
         $this->assertEquals('booleanArg: Boolean', $arg->__toString());
 
-        // floatArgField(floatArg: Float): Float
+        // floatArg: Float
         $arg = new Argument(new TypeFloat(), null, 'floatArg');
         $this->assertEquals('floatArg: Float', $arg->__toString());
 
-        // intArgField(intArg: Int): Int
+        // intArg: Int
         $arg = new Argument(new TypeInteger(), null, 'intArg');
         $this->assertEquals('intArg: Int', $arg->__toString());
 
-        // stringArgField(stringArg: String): Int
-        $arg = new Argument(new TypeString(), null, 'testArg', true, true);
-        $this->assertEquals('testArg: [String]', $arg->__toString());
+        // stringArg: [String]
+        $typeModifier = new TypeModifier(true, true);
+        $arg = new Argument(new TypeString($typeModifier), null, 'stringArg');
+        $this->assertEquals('stringArg: [String]', $arg->__toString());
 
-        // objectArgField(objectArg: Object): Object
-        $arg = new Argument(new TypeObject('Object'), null, 'objectArg');
+        // objectArg: Object
+        $arg = new Argument(new TypeObject(null, 'Object'), null, 'objectArg');
         $this->assertEquals('objectArg: Object', $arg->__toString());
 
-        // nonNullBooleanArgField(nonNullBooleanArg: Boolean!): Boolean!
-        $arg = new Argument(new TypeBoolean(), null, 'nonNullBooleanArg', false);
+        // nonNullBooleanArg: Boolean!
+        $typeModifier = new TypeModifier(false);
+        $arg = new Argument(new TypeBoolean($typeModifier), null, 'nonNullBooleanArg');
         $this->assertEquals('nonNullBooleanArg: Boolean!', $arg->__toString());
 
-        // booleanListArgField(booleanListArg: [Boolean]!): [Boolean]
-        $arg = new Argument(new TypeBoolean(), null, 'booleanListArg', false, true);
+        // booleanListArg: [Boolean]!
+        $typeModifier = new TypeModifier(true, true, false);
+        $arg = new Argument(new TypeBoolean($typeModifier), null, 'booleanListArg');
         $this->assertEquals('booleanListArg: [Boolean]!', $arg->__toString());
 
-        // optionalNonNullBooleanArgField(optionalBooleanArg: Boolean! = false): Boolean!
+        // optionalBooleanArg: Boolean! = false
         $arg = new Argument(new TypeBoolean(), new ValueBoolean(false), 'optionalBooleanArg');
         $this->assertEquals('optionalBooleanArg: Boolean = false', $arg->__toString());
 

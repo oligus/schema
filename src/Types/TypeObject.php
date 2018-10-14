@@ -8,12 +8,5 @@ namespace GQLSchema\Types;
  */
 class TypeObject extends AbstractType
 {
-    /**
-     * TypeObject constructor.
-     * @param string $name
-     */
-    public function __construct(string $name)
-    {
-        $this->name = $name;
-    }
+
 }

@@ -3,9 +3,6 @@
 namespace GQLSchema\Tests\Collections;
 
 use GQLSchema\Types\TypeObject;
-use GQLSchema\Values\ValueString;
-use GQLSchema\Argument;
-use GQLSchema\Types\TypeBoolean;
 use GQLSchema\Types\TypeInteger;
 use GQLSchema\Types\TypeString;
 use GQLSchema\Field;
@@ -21,7 +18,7 @@ class FieldCollectionTest extends TestCase
     public function testCollection()
     {
         $fields = new FieldCollection();
-        $fields->add(new Field(new TypeInteger(), null, 'simpleField', true, false));
+        $fields->add(new Field(new TypeInteger(), null, 'simpleField'));
         $this->assertEquals("  simpleField: Int\n", $fields->__toString());
 
         /**
@@ -31,10 +28,10 @@ class FieldCollectionTest extends TestCase
         relationship: Person
          */
         $fields = new FieldCollection();
-        $fields->add(new Field(new TypeString(), null, 'name', true, false));
-        $fields->add(new Field(new TypeInteger(), null, 'age', true, false));
-        $fields->add(new Field(new TypeObject('Url'), null, 'picture', true, false));
-        $fields->add(new Field(new TypeObject('Person'), null, 'relationship', true, false));
+        $fields->add(new Field(new TypeString(), null, 'name'));
+        $fields->add(new Field(new TypeInteger(), null, 'age'));
+        $fields->add(new Field(new TypeObject(null, 'Url'), null, 'picture'));
+        $fields->add(new Field(new TypeObject(null, 'Person'), null, 'relationship'));
 
         $expected = "  name: String\n";
         $expected .= "  age: Int\n";

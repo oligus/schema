@@ -22,16 +22,6 @@ class Field
     private $name;
 
     /**
-     * @var bool
-     */
-    private $nullable;
-
-    /**
-     * @var bool
-     */
-    private $isCollection;
-
-    /**
      * @var ArgumentCollection
      */
     private $arguments;
@@ -41,21 +31,15 @@ class Field
      * @param Type $type
      * @param ArgumentCollection|null $arguments
      * @param string $name
-     * @param bool $nullable
-     * @param bool $isCollection
      */
     public function __construct(
         Type $type,
         ?ArgumentCollection $arguments,
-        string $name,
-        bool $nullable = true,
-        bool $isCollection = false
+        string $name
     ) {
         $this->type = $type;
         $this->arguments = $arguments;
         $this->name = $name;
-        $this->nullable = $nullable;
-        $this->isCollection = $isCollection;
     }
 
     /**
@@ -75,14 +59,6 @@ class Field
     }
 
     /**
-     * @return bool
-     */
-    public function isNullable(): bool
-    {
-        return $this->nullable;
-    }
-
-    /**
      * @return string
      */
     public function __toString(): string
@@ -93,21 +69,7 @@ class Field
             $string .= $this->arguments->__toString();
         }
 
-        $string .= ': ';
-
-        if ($this->isCollection) {
-            $string .= '[';
-        }
-
-        $string .= $this->getType()->getName();
-
-        if ($this->isCollection) {
-            $string .= ']';
-        }
-
-        if (!$this->isNullable()) {
-            $string .= '!';
-        }
+        $string .= ': ' . $this->getType()->__toString();
 
         return $string;
     }

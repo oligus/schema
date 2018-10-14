@@ -2,6 +2,7 @@
 
 namespace GQLSchema\Tests\Collections;
 
+use GQLSchema\Types\TypeModifier;
 use GQLSchema\Values\ValueString;
 use PHPUnit\Framework\TestCase;
 use GQLSchema\Argument;
@@ -19,9 +20,9 @@ class ArgumentCollectionTest extends TestCase
     public function testCollection()
     {
         $collection = new ArgumentCollection();
-        $collection->add(new Argument(new TypeBoolean(), null, 'booleanArg', false, false));
-        $collection->add(new Argument(new TypeInteger(), null, 'integerArg', false, false));
-        $collection->add(new Argument(new TypeString(), new ValueString('test'), 'stringArg', false));
+        $collection->add(new Argument(new TypeBoolean(new TypeModifier(false)), null, 'booleanArg'));
+        $collection->add(new Argument(new TypeInteger(new TypeModifier(false)), null, 'integerArg'));
+        $collection->add(new Argument(new TypeString(new TypeModifier(false)), new ValueString('test'), 'stringArg'));
 
         $this->assertEquals('(booleanArg: Boolean!, integerArg: Int!, stringArg: String! = "test")', $collection->__toString());
     }
