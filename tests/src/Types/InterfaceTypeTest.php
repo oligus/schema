@@ -21,9 +21,9 @@ class InterfaceTypeTest extends TestCase
     public function testConstruct()
     {
         $fields = new FieldCollection();
-        $fields->add(new Field(new StringType(), null, 'name'));
-        $fields->add(new Field(new IntegerType(), null, 'age'));
-        $fields->add(new Field(new IntegerType(), null, 'size'));
+        $fields->add(new Field('name', new StringType()));
+        $fields->add(new Field('age', new IntegerType()));
+        $fields->add(new Field('size', new IntegerType()));
 
         $interface = new InterfaceType('Wine', $fields, 'My interface description');
 

@@ -37,7 +37,7 @@ Non-null List of Non-null Types | [\<type>!]! | [String!]!
 $typeModifier = new TypeModifier($nullable = false, $listable = true, $nullableList = false);
 $type = new BooleanType($typeModifier);
 
-echo $type->__toString(); // [bool!]!
+echo $type; // [bool!]!
 ```
 
 ### Scalar types
@@ -46,7 +46,7 @@ echo $type->__toString(); // [bool!]!
 
 ```php
 $type = new BooleanType();
-echo $type->__toString(); // Bool
+echo $type; // Bool
 ```
 
 ### Interface type
@@ -55,9 +55,9 @@ echo $type->__toString(); // Bool
 
 ```php
 $fields = new FieldCollection();
-$fields->add(new Field(new StringType(), null, 'name'));
-$fields->add(new Field(new IntegerType(), null, 'age'));
-$fields->add(new Field(new IntegerType(), null, 'size'));
+$fields->add(new Field('name', new StringType()));
+$fields->add(new Field('age', new IntegerType()));
+$fields->add(new Field('size', new IntegerType()));
 
 $interface = new InterfaceType('Wine', $fields, 'My interface description');
 
@@ -78,7 +78,7 @@ interface Wine {
 
 ```php
 // Simple
-$field = new Field(new IntegerType(), new ArgumentCollection(), 'simpleField');
+$field = new Field('simpleField', new IntegerType());
 $field->__toString(); // simpleField: Int
 
 // With arguments        
@@ -87,8 +87,8 @@ $arguments->add(new Argument(new BooleanType(new TypeModifier($nullable = false)
 $arguments->add(new Argument(new IntegerType(new TypeModifier($nullable = false)), null, 'integerArg'));
 $arguments->add(new Argument(new StringType(new TypeModifier($nullable = false)), new ValueString('test'), 'stringArg'));
 
-$field = new Field(new IntegerType(new TypeModifier(false)), $arguments, 'testField');
-echo $field->__toString(); // testField(booleanArg: Boolean!, integerArg: Int!, stringArg: String! = "test"): Int!'
+$field = new Field('testField', new IntegerType(new TypeModifier(false)), $arguments);
+echo $field; // testField(booleanArg: Boolean!, integerArg: Int!, stringArg: String! = "test"): Int!'
 
 ```
 
@@ -101,15 +101,15 @@ Create arguments
 ```php
 // Boolean with no default value
 $arg = new Argument(new BooleanType(), null, 'argName');
-echo $arg->__toString(); // argName: Boolean
+echo $arg; // argName: Boolean
 
 // Boolean collection non nullable
 $arg = new Argument(new BooleanType(new TypeModifier($nullable = true, $listable = true, $nullableList = false), null, 'argName');
-echo $arg->__toString(); // argName: [Boolean]!
+echo $arg->; // argName: [Boolean]!
 
 // Boolean with default value
 $arg = new Argument(new BooleanType(), new ValueBoolean(false), 'argName');
-echo $arg->__toString(); // argName: Boolean = false
+echo $arg->; // argName: Boolean = false
 
 ```
 
@@ -132,21 +132,21 @@ GQLSchema\Values\ValueString
 ```php
 $bool = new ValueBoolean(true);
 $bool->getValue(); // true
-echo $bool->__asString(); // 'true'
+echo $bool; // 'true'
 
 $float = new ValueFloat(23.45);
 $float->getValue(); // 23.45
-echo $float->__asString(); // '23.45'
+echo $float; // '23.45'
 
 $int = new ValueInteger(5);
 $float->getValue(); // 5
-echo $float->__asString(); // '5'
+echo $float->; // '5'
 
 $null = new ValueNull();
 $null->getValue(); // null
-echo $null->__asString(); // 'null'
+echo $null->; // 'null'
 
 $string = new ValueString('test string);
 $string->getValue(); // 'test string'
-echo $string->__asString(); // '"test string"'
+echo $string->; // '"test string"'
 ```

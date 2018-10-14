@@ -35,13 +35,13 @@ class Field implements InputOutput
      * @throws SchemaException
      */
     public function __construct(
+        string $name,
         Type $type,
-        ?ArgumentCollection $arguments,
-        string $name
+        ?ArgumentCollection $arguments = null
     ) {
+        $this->setName($name);
         $this->type = $type;
         $this->arguments = $arguments;
-        $this->setName($name);
     }
 
     /**

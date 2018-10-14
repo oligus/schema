@@ -25,10 +25,10 @@ class FieldTest extends TestCase
      */
     public function testFields()
     {
-        $field = new Field(new IntegerType(), null, 'simpleField');
+        $field = new Field('simpleField', new IntegerType());
         $this->assertEquals('simpleField: Int', $field->__toString());
 
-        $field = new Field(new IntegerType(), new ArgumentCollection(), 'simpleField');
+        $field = new Field('simpleField', new IntegerType(), new ArgumentCollection());
         $this->assertEquals('simpleField: Int', $field->__toString());
 
         $arguments = new ArgumentCollection();
@@ -36,7 +36,7 @@ class FieldTest extends TestCase
         $arguments->add(new Argument(new IntegerType(new TypeModifier(false)), null, 'integerArg'));
         $arguments->add(new Argument(new StringType(new TypeModifier(false)), new ValueString('test'), 'stringArg'));
 
-        $field = new Field(new IntegerType(new TypeModifier(false)), $arguments, 'testField');
+        $field = new Field('testField', new IntegerType(new TypeModifier(false)), $arguments);
         $this->assertEquals('testField(booleanArg: Boolean!, integerArg: Int!, stringArg: String! = "test"): Int!',
             $field->__toString());
 
@@ -48,44 +48,44 @@ class FieldTest extends TestCase
         $arguments = new ArgumentCollection();
         $arguments->add(new Argument(new IntegerType(new TypeModifier(false)), null, 'x'));
         $arguments->add(new Argument(new IntegerType(new TypeModifier(false)), null, 'y'));
-        $field = new Field(new IntegerType(new TypeModifier(false)), $arguments, 'multipleReqs');
+        $field = new Field('multipleReqs', new IntegerType(new TypeModifier(false)), $arguments);
         $this->assertEquals('multipleReqs(x: Int!, y: Int!): Int!', $field->__toString());
 
         // booleanArgField(booleanArg: Boolean): Boolean
         $arguments = new ArgumentCollection();
         $arguments->add(new Argument(new BooleanType(), null, 'booleanArg'));
-        $field = new Field(new BooleanType(), $arguments, 'booleanArgField');
+        $field = new Field('booleanArgField', new BooleanType(), $arguments);
         $this->assertEquals('booleanArgField(booleanArg: Boolean): Boolean', $field->__toString());
 
         // floatArgField(floatArg: Float): Float
         $arguments = new ArgumentCollection();
         $arguments->add(new Argument(new FloatType(), null, 'floatArg'));
-        $field = new Field(new FloatType(), $arguments, 'floatArgField');
+        $field = new Field('floatArgField', new FloatType(), $arguments);
         $this->assertEquals('floatArgField(floatArg: Float): Float', $field->__toString());
 
         // intArgField(intArg: Int): Int
         $arguments = new ArgumentCollection();
         $arguments->add(new Argument(new IntegerType(), null, 'intArg'));
-        $field = new Field(new IntegerType(), $arguments, 'intArgField');
+        $field = new Field('intArgField', new IntegerType(), $arguments);
         $this->assertEquals('intArgField(intArg: Int): Int', $field->__toString());
 
         // nonNullBooleanArgField(nonNullBooleanArg: Boolean!): Boolean!
         $arguments = new ArgumentCollection();
         $arguments->add(new Argument(new BooleanType(new TypeModifier(false)), null, 'nonNullBooleanArg'));
-        $field = new Field(new BooleanType(new TypeModifier(false)), $arguments, 'nonNullBooleanArgField');
+        $field = new Field('nonNullBooleanArgField', new BooleanType(new TypeModifier(false)), $arguments);
         $this->assertEquals('nonNullBooleanArgField(nonNullBooleanArg: Boolean!): Boolean!', $field->__toString());
 
         // booleanListArgField(booleanListArg: [Boolean]!): [Boolean]
         $arguments = new ArgumentCollection();
         $arguments->add(new Argument(new BooleanType(new TypeModifier(true, true, false)), null, 'booleanListArg'));
-        $field = new Field(new BooleanType(new TypeModifier(true, true)), $arguments, 'booleanListArgField');
+        $field = new Field('booleanListArgField', new BooleanType(new TypeModifier(true, true)), $arguments);
         $this->assertEquals('booleanListArgField(booleanListArg: [Boolean]!): [Boolean]', $field->__toString());
 
         // optionalNonNullBooleanArgField(optionalBooleanArg: Boolean! = false): Boolean!
         $arguments = new ArgumentCollection();
         $arguments->add(new Argument(new BooleanType(new TypeModifier(false)), new ValueBoolean(false),
             'optionalBooleanArg'));
-        $field = new Field(new BooleanType(new TypeModifier(false)), $arguments, 'optionalNonNullBooleanArgField');
+        $field = new Field('optionalNonNullBooleanArgField', new BooleanType(new TypeModifier(false)), $arguments);
         $this->assertEquals('optionalNonNullBooleanArgField(optionalBooleanArg: Boolean! = false): Boolean!',
             $field->__toString());
     }
@@ -96,6 +96,6 @@ class FieldTest extends TestCase
      */
     public function testSetNameException()
     {
-        new Field(new BooleanType(), null, '__testField');
+        new Field('__testField', new BooleanType());
     }
 }

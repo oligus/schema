@@ -20,7 +20,7 @@ class FieldCollectionTest extends TestCase
     public function testCollection()
     {
         $fields = new FieldCollection();
-        $fields->add(new Field(new IntegerType(), null, 'simpleField'));
+        $fields->add(new Field('simpleField', new IntegerType()));
         $this->assertEquals("  simpleField: Int\n", $fields->__toString());
 
         /**
@@ -30,9 +30,9 @@ class FieldCollectionTest extends TestCase
         relationship: Person
          */
         $fields = new FieldCollection();
-        $fields->add(new Field(new StringType(), null, 'name'));
-        $fields->add(new Field(new IntegerType(), null, 'age'));
-        $fields->add(new Field(new IntegerType(), null, 'size'));
+        $fields->add(new Field('name', new StringType()));
+        $fields->add(new Field('age', new IntegerType()));
+        $fields->add(new Field('size',  new IntegerType()));
 
         $expected = "  name: String\n";
         $expected .= "  age: Int\n";
@@ -54,8 +54,8 @@ class FieldCollectionTest extends TestCase
     public function testUniqueNames()
     {
         $fields = new FieldCollection();
-        $fields->add(new Field(new IntegerType(), null, 'age'));
-        $fields->add(new Field(new IntegerType(), null, 'test'));
-        $fields->add(new Field(new IntegerType(), null, 'age'));
+        $fields->add(new Field('age', new IntegerType()));
+        $fields->add(new Field('test', new IntegerType()));
+        $fields->add(new Field('age', new IntegerType()));
     }
 }
