@@ -306,7 +306,6 @@ return [
     'directory_list' => [
         'src/',
         'vendor/doctrine/',
-        'vendor/symfony/validator/',
     ],
 
     // List of case-insensitive file extensions supported by Phan.
