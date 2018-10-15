@@ -76,6 +76,8 @@ class Argument implements InputOutput
     }
 
     /**
+     * Returns the name.
+     *
      * @return string
      */
     public function getName(): string
@@ -84,6 +86,8 @@ class Argument implements InputOutput
     }
 
     /**
+     * Returns the type.
+     *
      * @return Type
      */
     public function getType(): Type
@@ -92,6 +96,8 @@ class Argument implements InputOutput
     }
 
     /**
+     * Returns the default value.
+     *
      * @return Value|null
      */
     public function getDefaultValue(): ?Value
