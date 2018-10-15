@@ -24,7 +24,7 @@ class InterfaceType implements Type
     private $fields;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $description;
 
@@ -50,7 +50,7 @@ class InterfaceType implements Type
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getDescription(): ?string
     {

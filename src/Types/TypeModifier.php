@@ -36,7 +36,7 @@ class TypeModifier
      * @param bool $listable
      * @param bool $nullableList
      */
-    public function __construct(?bool $nullable = true, ?bool $listable = false, ?bool $nullableList = true)
+    public function __construct(bool $nullable = true, bool $listable = false, bool $nullableList = true)
     {
         $this->nullable = $nullable;
         $this->listable = $listable;

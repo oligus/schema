@@ -23,12 +23,12 @@ class Field implements InputOutput
     private $name;
 
     /**
-     * @var ArgumentCollection
+     * @var ArgumentCollection|null
      */
     private $arguments;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $description;
 
@@ -104,7 +104,7 @@ class Field implements InputOutput
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getDescription(): ?string
     {

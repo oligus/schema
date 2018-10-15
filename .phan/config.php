@@ -259,6 +259,7 @@ return [
         'PhanPluginDescriptionlessCommentOnPrivateProperty',
         'PhanPluginDescriptionlessCommentOnProtectedProperty',
         'PhanUnreferencedUseNormal',
+        'PhanPluginDescriptionlessCommentOnPrivateMethod'
     ],
 
     // If empty, no filter against issues types will be applied.
