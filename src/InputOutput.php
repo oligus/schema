@@ -11,16 +11,22 @@ use GQLSchema\Types\Type;
 interface InputOutput
 {
     /**
+     * String representation of this object.
+     *
      * @return string
      */
     public function __toString(): string;
 
     /**
+     * Returns the name.
+     *
      * @return string
      */
     public function getName(): string;
 
     /**
+     * Returns the type.
+     *
      * @return Type
      */
     public function getType(): Type;

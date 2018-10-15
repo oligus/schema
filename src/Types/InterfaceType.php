@@ -42,6 +42,8 @@ class InterfaceType implements Type
     }
 
     /**
+     * Returns the name.
+     *
      * @return string
      */
     public function getName(): string
@@ -50,6 +52,8 @@ class InterfaceType implements Type
     }
 
     /**
+     * Returns the description.
+     *
      * @return string|null
      */
     public function getDescription(): ?string
@@ -58,6 +62,8 @@ class InterfaceType implements Type
     }
 
     /**
+     * String representation of this object.
+     *
      * @return string
      * @throws SchemaException
      */

@@ -33,6 +33,8 @@ abstract class AbstractScalarType implements Type
     }
 
     /**
+     * Returns the name.
+     *
      * @return string
      */
     public function getName(): string
@@ -41,6 +43,8 @@ abstract class AbstractScalarType implements Type
     }
 
     /**
+     * Returns the type modifier.
+     *
      * @return TypeModifier|null
      */
     public function getTypeModifier(): ?TypeModifier
@@ -49,6 +53,8 @@ abstract class AbstractScalarType implements Type
     }
 
     /**
+     * String representation of this object.
+     *
      * @return string
      */
     public function __toString(): string

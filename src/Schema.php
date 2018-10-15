@@ -16,12 +16,17 @@ class Schema
      */
     private $interfaces;
 
+    /**
+     * Schema constructor.
+     */
     public function __construct()
     {
         $this->interfaces = new ArrayCollection();
     }
 
     /**
+     * Adds an interface to the list of defined interfaces.
+     *
      * @param InterfaceType $interface
      */
     public function addInterface(InterfaceType $interface): void
@@ -30,6 +35,8 @@ class Schema
     }
 
     /**
+     * String representation of this object.
+     *
      * @return string
      * @throws Exceptions\SchemaException
      */

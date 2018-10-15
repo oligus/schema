@@ -26,6 +26,8 @@ abstract class AbstractCollection
     }
 
     /**
+     * Returns true if empty, false otherwise.
+     *
      * @return bool
      */
     public function isEmpty(): bool
@@ -34,6 +36,8 @@ abstract class AbstractCollection
     }
 
     /**
+     * Append an item to the list of items.
+     *
      * @param InputOutput $item
      * @throws SchemaException
      */

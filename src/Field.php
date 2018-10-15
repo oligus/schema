@@ -88,6 +88,8 @@ class Field implements InputOutput
     }
 
     /**
+     * Returns the name
+     *
      * @return string
      */
     public function getName(): string
@@ -96,6 +98,8 @@ class Field implements InputOutput
     }
 
     /**
+     * Returns the type.
+     *
      * @return Type
      */
     public function getType(): Type
@@ -104,6 +108,8 @@ class Field implements InputOutput
     }
 
     /**
+     * Returns the description.
+     *
      * @return string|null
      */
     public function getDescription(): ?string
