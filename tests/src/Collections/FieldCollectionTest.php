@@ -2,6 +2,7 @@
 
 namespace GQLSchema\Tests\Collections;
 
+use GQLSchema\Types\InterfaceType;
 use GQLSchema\Types\Scalars\IntegerType;
 use GQLSchema\Types\Scalars\StringType;
 use GQLSchema\Field;
@@ -23,12 +24,6 @@ class FieldCollectionTest extends TestCase
         $fields->add(new Field('simpleField', new IntegerType()));
         $this->assertEquals("  simpleField: Int\n", $fields->__toString());
 
-        /**
-        name: String
-        age: Int
-        picture: Url
-        relationship: Person
-         */
         $fields = new FieldCollection();
         $fields->add(new Field('name', new StringType()));
         $fields->add(new Field('age', new IntegerType()));
@@ -39,6 +34,29 @@ class FieldCollectionTest extends TestCase
         $expected .= "  size: Int\n";
 
         $this->assertEquals($expected, $fields->__toString());
+    }
+
+    /**
+     * @throws \GQLSchema\Exceptions\SchemaException
+     */
+    public function testImplements()
+    {
+        $fields = new FieldCollection();
+        $fields->add(new Field('name', new StringType()));
+        $fields->add(new Field('age', new IntegerType()));
+        $fields->add(new Field('size',  new IntegerType()));
+
+        $interfaceFields = new FieldCollection();
+        $interfaceFields->add(new Field('name', new StringType()));
+        $interface = new InterfaceType('Wine', $interfaceFields);
+
+        $this->assertTrue($fields->implements($interface));
+
+        $interfaceFields = new FieldCollection();
+        $interfaceFields->add(new Field('test', new StringType()));
+        $interface = new InterfaceType('Wine', $interfaceFields);
+
+        $this->assertFalse($fields->implements($interface));
     }
 
     public function testEmpty()

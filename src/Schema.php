@@ -3,7 +3,9 @@
 namespace GQLSchema;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use GQLSchema\Collections\InterfaceCollection;
 use GQLSchema\Types\InterfaceType;
+use GQLSchema\Types\ObjectType;
 
 /**
  * Class Schema
@@ -12,22 +14,32 @@ use GQLSchema\Types\InterfaceType;
 class Schema
 {
     /**
-     * @var ArrayCollection
+     * @var InterfaceCollection
      */
     private $interfaces;
 
     /**
      * Schema constructor.
      */
+    /**
+     * @var ArrayCollection
+     */
+    private $objects;
+
+    /**
+     * Schema constructor.
+     */
     public function __construct()
     {
-        $this->interfaces = new ArrayCollection();
+        $this->interfaces = new InterfaceCollection();
+        $this->objects = new ArrayCollection();
     }
 
     /**
      * Adds an interface to the list of defined interfaces.
      *
      * @param InterfaceType $interface
+     * @throws Exceptions\SchemaException
      */
     public function addInterface(InterfaceType $interface): void
     {
@@ -35,19 +47,29 @@ class Schema
     }
 
     /**
+     * @param ObjectType $objectType
+     */
+    public function adObject(ObjectType $objectType): void
+    {
+        $this->objects->add($objectType);
+    }
+
+    /**
      * String representation of this object.
      *
      * @return string
-     * @throws Exceptions\SchemaException
      */
     public function __toString(): string
     {
         $schema = '';
 
+        $schema .= $this->interfaces->__toString();
+
         /** @var InterfaceType $interface */
-        foreach ($this->interfaces as $interface) {
-            $schema .= $interface->__toString();
+        foreach ($this->objects as $object) {
+            $schema .= $object->__toString();
         }
+
         return $schema;
     }
 }

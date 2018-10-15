@@ -3,15 +3,16 @@
 namespace GQLSchema\Types;
 
 use GQLSchema\Collections\FieldCollection;
+use GQLSchema\Collections\InterfaceCollection;
 use GQLSchema\Exceptions\SchemaException;
 
 /**
  * Class InterfaceType
  * @package GQLSchema\Types
  */
-class InterfaceType implements Type
+class ObjectType implements Type
 {
-    const TYPE = 'interface';
+    const TYPE = 'type';
 
     /**
      * @var string
@@ -24,26 +25,35 @@ class InterfaceType implements Type
     private $fields;
 
     /**
-     * @var string|null
+     * @var string
      */
     private $description;
 
     /**
-     * InterfaceType constructor.
+     * @var array
+     */
+    private $interfaces;
+
+    /**
+     * ObjectType constructor.
      * @param string $name
      * @param FieldCollection $fields
      * @param null|string $description
+     * @param InterfaceCollection|null $interfaces
      */
-    public function __construct(string $name, FieldCollection $fields, ?string $description = null)
-    {
+    public function __construct(
+        string $name,
+        FieldCollection $fields,
+        ?string $description = null,
+        ?InterfaceCollection $interfaces = null
+    ) {
         $this->name = $name;
         $this->fields = $fields;
         $this->description = $description;
+        $this->interfaces = $interfaces;
     }
 
     /**
-     * Returns the name.
-     *
      * @return string
      */
     public function getName(): string
@@ -52,9 +62,7 @@ class InterfaceType implements Type
     }
 
     /**
-     * Returns the description.
-     *
-     * @return string|null
+     * @return string
      */
     public function getDescription(): ?string
     {
@@ -62,16 +70,14 @@ class InterfaceType implements Type
     }
 
     /**
-     * @return FieldCollection
+     * @return array|null
      */
-    public function getFields(): FieldCollection
+    public function getInterfaces(): ?InterfaceCollection
     {
-        return $this->fields;
+        return $this->interfaces;
     }
 
     /**
-     * String representation of this object.
-     *
      * @return string
      * @throws SchemaException
      */
@@ -87,6 +93,26 @@ class InterfaceType implements Type
 
         $string .= self::TYPE;
         $string .= ' ' . $this->getName();
+
+        /** @var InterfaceCollection $interfaces */
+        $interfaces = $this->getInterfaces();
+
+        if ($interfaces instanceof InterfaceCollection && !$interfaces->isEmpty()) {
+            $string .= ' implements ';
+
+            /**
+             * @var int $index
+             * @var InterfaceType $interface
+             */
+            foreach($this->getInterfaces()->getCollection() as $index => $interface) {
+                $string .= $interface->getName();
+
+                if ($index + 2 <= $this->getInterfaces()->getCollection()->count()) {
+                    $string .= ', ';
+                }
+            }
+        }
+
         $string .= " {\n";
 
         if ($this->fields->isEmpty()) {
