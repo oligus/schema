@@ -1,0 +1,10 @@
+version: '2.2'
+
+services:
+  php-cli:
+      build:
+        context: .
+        dockerfile: ./docker/images/php-7.1-cli
+      volumes:
+        - ./:/var/www/html:cached
+      command: tail -f /dev/null
