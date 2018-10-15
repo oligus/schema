@@ -24,7 +24,7 @@ class InterfaceType implements Type
     private $fields;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $description;
 
@@ -42,6 +42,8 @@ class InterfaceType implements Type
     }
 
     /**
+     * Returns the name.
+     *
      * @return string
      */
     public function getName(): string
@@ -50,7 +52,9 @@ class InterfaceType implements Type
     }
 
     /**
-     * @return string
+     * Returns the description.
+     *
+     * @return string|null
      */
     public function getDescription(): ?string
     {
@@ -58,6 +62,8 @@ class InterfaceType implements Type
     }
 
     /**
+     * String representation of this object.
+     *
      * @return string
      * @throws SchemaException
      */

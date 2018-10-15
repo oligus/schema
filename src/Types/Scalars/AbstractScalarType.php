@@ -12,7 +12,7 @@ use GQLSchema\Types\Type;
 abstract class AbstractScalarType implements Type
 {
     /**
-     * @var TypeModifier
+     * @var TypeModifier|null
      */
     protected $typeModifier;
 
@@ -33,6 +33,8 @@ abstract class AbstractScalarType implements Type
     }
 
     /**
+     * Returns the name.
+     *
      * @return string
      */
     public function getName(): string
@@ -41,7 +43,9 @@ abstract class AbstractScalarType implements Type
     }
 
     /**
-     * @return TypeModifier
+     * Returns the type modifier.
+     *
+     * @return TypeModifier|null
      */
     public function getTypeModifier(): ?TypeModifier
     {
@@ -49,6 +53,8 @@ abstract class AbstractScalarType implements Type
     }
 
     /**
+     * String representation of this object.
+     *
      * @return string
      */
     public function __toString(): string

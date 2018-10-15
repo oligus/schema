@@ -19,7 +19,7 @@ class FieldCollection extends AbstractCollection
 
         $string = '';
 
-        foreach ($this->collection as $index => $item) {
+        foreach ($this->collection as $item) {
             $string .= '  ' . $item->__toString() . "\n";
         }
 
