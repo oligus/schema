@@ -79,6 +79,44 @@ interface Wine {
 }
 ```
 
+### Object type
+
+*Example:*
+
+```php
+$fields = new FieldCollection();
+$fields->add(new Field('name', new StringType()));
+$fields->add(new Field('age', new IntegerType()));
+$fields->add(new Field('size', new IntegerType()));
+
+$object = new ObjectType('Wine', $fields, 'My object description');
+
+echo $object;
+
+// Yields
+type Wine {
+  name: String
+  age: Int
+  size: Int
+}
+
+// Add interface
+
+$fields = new FieldCollection();
+$fields->add(new Field('name', new StringType()));
+
+$interface = new InterfaceType('Name', $fields);
+$object->addInterface($interface);
+
+echo $object;
+
+// Yields
+type Wine implements Name {
+  name: String
+  age: Int
+  size: Int
+}
+```
 ## Fields
 
 *Example:*

@@ -2,7 +2,6 @@
 
 namespace GQLSchema\Tests\Types;
 
-use GQLSchema\Collections\InterfaceCollection;
 use GQLSchema\Field;
 use GQLSchema\Schema;
 use GQLSchema\Types\InterfaceType;
@@ -52,17 +51,17 @@ class SchemaTest extends TestCase
         $fields->add(new Field('age', new IntegerType()));
         $fields->add(new Field('size', new IntegerType()));
 
-        $interfaceCollection = new InterfaceCollection();
+        $objectType = new ObjectType('Wine', $fields, 'My object description');
 
         $interfaceFields = new FieldCollection();
         $interfaceFields->add(new Field('name', new StringType()));
-        $interfaceCollection->add(new InterfaceType('Moo', $interfaceFields));
+        $objectType->addInterface(new InterfaceType('Moo', $interfaceFields));
 
         $interfaceFields = new FieldCollection();
         $interfaceFields->add(new Field('name', new StringType()));
-        $interfaceCollection->add(new InterfaceType('Mee', $interfaceFields));
+        $objectType->addInterface(new InterfaceType('Mee', $interfaceFields));
 
-        $schema->adObject(new ObjectType('Wine', $fields, 'My object description', $interfaceCollection));
+        $schema->adObject($objectType);
         $schema->adObject(new ObjectType('Test', $fields, 'My other description'));
         $schema->adObject(new ObjectType('Third', $fields));
 

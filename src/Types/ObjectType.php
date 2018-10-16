@@ -39,47 +39,17 @@ class ObjectType implements Type
      * @param string $name
      * @param FieldCollection $fields
      * @param null|string $description
-     * @param InterfaceCollection|null $interfaces
      */
     public function __construct(
         string $name,
         FieldCollection $fields,
-        ?string $description = null,
-        ?InterfaceCollection $interfaces = null
+        ?string $description = null
     ) {
         $this->name = $name;
         $this->fields = $fields;
         $this->description = $description;
 
-        if(!$interfaces instanceof InterfaceCollection) {
-            $this->interfaces = new InterfaceCollection();
-        } else {
-            $this->interfaces = $interfaces;
-        }
-    }
-
-    /**
-     * @return string
-     */
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    /**
-     * @return array|null
-     */
-    public function getInterfaces(): ?InterfaceCollection
-    {
-        return $this->interfaces;
+        $this->interfaces = new InterfaceCollection();
     }
 
     /**
@@ -88,7 +58,7 @@ class ObjectType implements Type
      */
     public function addInterface(InterfaceType $interface): void
     {
-        if(!$this->fields->implements($interface)) {
+        if (!$this->fields->implements($interface)) {
             throw new SchemaException('Object type must implement interface, one or more fields missing.');
         }
 
@@ -122,7 +92,7 @@ class ObjectType implements Type
              * @var int $index
              * @var InterfaceType $interface
              */
-            foreach($this->getInterfaces()->getCollection() as $index => $interface) {
+            foreach ($this->getInterfaces()->getCollection() as $index => $interface) {
                 $string .= $interface->getName();
 
                 if ($index + 2 <= $this->getInterfaces()->getCollection()->count()) {
@@ -134,7 +104,7 @@ class ObjectType implements Type
         $string .= " {\n";
 
         if ($this->fields->isEmpty()) {
-            throw new SchemaException('An Interface type must define one or more fields.');
+            throw new SchemaException('An object type must define one or more fields.');
         }
 
         $string .= $this->fields->__toString();
@@ -142,5 +112,29 @@ class ObjectType implements Type
         $string .= "}\n\n";
 
         return $string;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getInterfaces(): ?InterfaceCollection
+    {
+        return $this->interfaces;
     }
 }

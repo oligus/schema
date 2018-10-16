@@ -68,6 +68,16 @@ class ObjectTypeTest extends TestCase
         $fields = new FieldCollection();
         $fields->add(new Field('noname', new StringType()));
         $object->addInterface(new InterfaceType('Exception', $fields));
+    }
 
+    /**
+     * @throws \GQLSchema\Exceptions\SchemaException
+     * @expectedException \GQLSchema\Exceptions\SchemaException
+     * @expectedExceptionMessage An object type must define one or more fields.
+     */
+    public function testNoFieldException()
+    {
+        $object = new ObjectType('Wine', new FieldCollection());
+        $object->__toString();
     }
 }
