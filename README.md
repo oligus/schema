@@ -206,5 +206,5 @@ $ make
 
 Access docker image
 ```bash
-$  docker exec -it schema_php-cli_1 bash
+$  make bash
 ```

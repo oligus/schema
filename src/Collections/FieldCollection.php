@@ -22,7 +22,7 @@ class FieldCollection extends AbstractCollection
         /** @var Field $field */
         foreach ($this->collection as $field) {
             /** @var Field $interfaceField */
-            foreach($interface->getFields()->collection as $interfaceField) {
+            foreach ($interface->getFields()->collection as $interfaceField) {
                 if ($field->getName() === $interfaceField->getName()) {
                     return $field->getType()->__toString() === $interfaceField->getType()->__toString();
                 }
