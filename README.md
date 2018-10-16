@@ -195,3 +195,16 @@ $string = new ValueString('test string);
 $string->getValue(); // 'test string'
 echo $string; // '"test string"'
 ```
+
+## Development
+
+Download and build docker container
+
+```bash
+$ make
+```
+
+Access docker image
+```bash
+$  docker exec -it schema_php-cli_1 bash
+```

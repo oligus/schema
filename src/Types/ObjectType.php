@@ -25,7 +25,7 @@ class ObjectType implements Type
     private $fields;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $description;
 
@@ -53,6 +53,8 @@ class ObjectType implements Type
     }
 
     /**
+     * Add interface to implement
+     *
      * @param InterfaceType $interface
      * @throws SchemaException
      */
@@ -115,7 +117,9 @@ class ObjectType implements Type
     }
 
     /**
-     * @return string
+     * Get description
+     *
+     * @return string|null
      */
     public function getDescription(): ?string
     {
@@ -123,6 +127,8 @@ class ObjectType implements Type
     }
 
     /**
+     * Get name
+     *
      * @return string
      */
     public function getName(): string
@@ -131,7 +137,9 @@ class ObjectType implements Type
     }
 
     /**
-     * @return array|null
+     * Get implemented interfaces
+     *
+     * @return InterfaceCollection|null
      */
     public function getInterfaces(): ?InterfaceCollection
     {

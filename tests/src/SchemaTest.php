@@ -61,9 +61,9 @@ class SchemaTest extends TestCase
         $interfaceFields->add(new Field('name', new StringType()));
         $objectType->addInterface(new InterfaceType('Mee', $interfaceFields));
 
-        $schema->adObject($objectType);
-        $schema->adObject(new ObjectType('Test', $fields, 'My other description'));
-        $schema->adObject(new ObjectType('Third', $fields));
+        $schema->addObject($objectType);
+        $schema->addObject(new ObjectType('Test', $fields, 'My other description'));
+        $schema->addObject(new ObjectType('Third', $fields));
 
         $this->assertMatchesSnapshot($schema->__toString());
     }

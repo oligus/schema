@@ -47,9 +47,11 @@ class Schema
     }
 
     /**
+     * Add object to schema
+     *
      * @param ObjectType $objectType
      */
-    public function adObject(ObjectType $objectType): void
+    public function addObject(ObjectType $objectType): void
     {
         $this->objects->add($objectType);
     }

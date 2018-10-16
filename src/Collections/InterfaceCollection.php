@@ -26,6 +26,8 @@ class InterfaceCollection
     }
 
     /**
+     * Add interface to collection
+     *
      * @param InterfaceType $interface
      * @throws SchemaException
      */
@@ -42,14 +44,16 @@ class InterfaceCollection
     }
 
     /**
+     * Get interface by name
+     *
      * @param string $name
      * @return InterfaceType|null
      */
     public function get(string $name): ?InterfaceType
     {
         /** @var InterfaceType $interface */
-        foreach($this->collection as $interface) {
-            if($interface->getName() === $name) {
+        foreach ($this->collection as $interface) {
+            if ($interface->getName() === $name) {
                 return $interface;
             }
         }
@@ -58,6 +62,8 @@ class InterfaceCollection
     }
 
     /**
+     * Check if collection is empty
+     * q
      * @return bool
      */
     public function isEmpty(): bool
@@ -66,6 +72,8 @@ class InterfaceCollection
     }
 
     /**
+     * Returns a collection of interfaces
+     *
      * @return ArrayCollection
      */
     public function getCollection(): ArrayCollection
@@ -84,7 +92,7 @@ class InterfaceCollection
 
         $string = '';
 
-        foreach ($this->collection as $index => $interface) {
+        foreach ($this->collection as $interface) {
             $string .= $interface->__toString();
         }
 

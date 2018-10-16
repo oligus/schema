@@ -62,6 +62,8 @@ class InterfaceType implements Type
     }
 
     /**
+     * Get interface fields
+     *
      * @return FieldCollection
      */
     public function getFields(): FieldCollection

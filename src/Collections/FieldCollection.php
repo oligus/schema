@@ -12,6 +12,8 @@ use GQLSchema\Types\InterfaceType;
 class FieldCollection extends AbstractCollection
 {
     /**
+     * Check if interface is implemented in current field collection
+     *
      * @param InterfaceType $interface
      * @return bool
      */
@@ -19,17 +21,11 @@ class FieldCollection extends AbstractCollection
     {
         /** @var Field $field */
         foreach ($this->collection as $field) {
-            $match = $interface->getFields()->collection->exists(function($index, $interfaceField) use ($field) {
-                /** @var Field $interfaceField */
-                if($field->getName() === $interfaceField->getName()) {
+            /** @var Field $interfaceField */
+            foreach($interface->getFields()->collection as $interfaceField) {
+                if ($field->getName() === $interfaceField->getName()) {
                     return $field->getType()->__toString() === $interfaceField->getType()->__toString();
                 }
-
-                return false;
-            });
-
-            if($match) {
-                return true;
             }
         }
 
