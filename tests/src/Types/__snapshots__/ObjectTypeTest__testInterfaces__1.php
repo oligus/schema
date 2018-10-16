@@ -2,9 +2,9 @@
 My object description
 """
 type Wine implements Test1, Test2, Test3 {
-  testString: String
-  testAge: Int
-  testSize: Int
+  name: String
+  age: Int
+  size: Int
 }
 
 ';

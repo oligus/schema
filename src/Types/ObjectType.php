@@ -30,7 +30,7 @@ class ObjectType implements Type
     private $description;
 
     /**
-     * @var array
+     * @var InterfaceCollection
      */
     private $interfaces;
 
@@ -50,7 +50,12 @@ class ObjectType implements Type
         $this->name = $name;
         $this->fields = $fields;
         $this->description = $description;
-        $this->interfaces = $interfaces;
+
+        if(!$interfaces instanceof InterfaceCollection) {
+            $this->interfaces = new InterfaceCollection();
+        } else {
+            $this->interfaces = $interfaces;
+        }
     }
 
     /**
@@ -75,6 +80,19 @@ class ObjectType implements Type
     public function getInterfaces(): ?InterfaceCollection
     {
         return $this->interfaces;
+    }
+
+    /**
+     * @param InterfaceType $interface
+     * @throws SchemaException
+     */
+    public function addInterface(InterfaceType $interface): void
+    {
+        if(!$this->fields->implements($interface)) {
+            throw new SchemaException('Object type must implement interface, one or more fields missing.');
+        }
+
+        $this->interfaces->add($interface);
     }
 
     /**

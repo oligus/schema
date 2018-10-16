@@ -2,7 +2,6 @@
 
 namespace GQLSchema\Tests\Types;
 
-use GQLSchema\Collections\InterfaceCollection;
 use GQLSchema\Types\InterfaceType;
 use GQLSchema\Types\ObjectType;
 use GQLSchema\Collections\FieldCollection;
@@ -45,19 +44,30 @@ class ObjectTypeTest extends TestCase
         $fields->add(new Field('age', new IntegerType()));
         $fields->add(new Field('size', new IntegerType()));
 
-        $interfaces = new InterfaceCollection();
-
-        $fields = new FieldCollection();
-        $fields->add(new Field('testString', new StringType()));
-        $fields->add(new Field('testAge', new IntegerType()));
-        $fields->add(new Field('testSize', new IntegerType()));
-
-        $interfaces->add(new InterfaceType('Test1', $fields));
-        $interfaces->add(new InterfaceType('Test2', $fields));
-        $interfaces->add(new InterfaceType('Test3', $fields));
-
-        $object = new ObjectType('Wine', $fields, 'My object description', $interfaces);
+        $object = new ObjectType('Wine', $fields, 'My object description');
+        $object->addInterface(new InterfaceType('Test1', $fields));
+        $object->addInterface(new InterfaceType('Test2', $fields));
+        $object->addInterface(new InterfaceType('Test3', $fields));
 
         $this->assertMatchesSnapshot($object->__toString());
+    }
+
+    /**
+     * @expectedException \GQLSchema\Exceptions\SchemaException
+     * @expectedExceptionMessage Object type must implement interface, one or more fields missing.
+     */
+    public function testInterfaceException()
+    {
+        $fields = new FieldCollection();
+        $fields->add(new Field('name', new StringType()));
+        $fields->add(new Field('age', new IntegerType()));
+        $fields->add(new Field('size', new IntegerType()));
+
+        $object = new ObjectType('Wine', $fields, 'My object description');
+
+        $fields = new FieldCollection();
+        $fields->add(new Field('noname', new StringType()));
+        $object->addInterface(new InterfaceType('Exception', $fields));
+
     }
 }
