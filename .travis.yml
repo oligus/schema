@@ -2,11 +2,27 @@ language: php
 php:
   - '7.2'
 
+dist: xenial
+sudo: required
+
+cache:
+  directories:
+  - $HOME/.composer/cache
+
 install:
   - composer install
 
+before_script:
+  - sudo apt-get update -y
+  - sudo apt-get install -y libzip4
+  - mkdir -p build/logs
+  - .travis/setup.sh
+  - composer validate
+
 script:
   - vendor/bin/phpunit --coverage-clover=coverage.xml
+  - vendor/bin/phpcs --standard=ruleset.xml ./src
+  - vendor/bin/phan -m checkstyle -o build/logs/checkstyle.cs
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
