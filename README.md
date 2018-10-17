@@ -6,12 +6,14 @@ GraphQL schema library.
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Codecov.io](https://codecov.io/gh/oligus/schema/branch/master/graphs/badge.svg)](https://codecov.io/gh/oligus/schema)
 
-## Schema
+## Contents
+[Types](README.md#types)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;[Type modifiers](README.md#type-modifiers)<br />
+[Fields](README.md#fields)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;[Arguments](README.md#arguments)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;[Argument values](README.md#argument-values)<br />
+[Development](README.md#development)<br />
 
-### API
-Method       | Parameters
--------------| ---------------- 
-addInterface | InterfaceType
 
 ## Types
 
@@ -30,6 +32,10 @@ GQLSchema\Types\InterfaceType
 
 Type modifiers are used in conjunction with types, add modifier to a type to modify the type in question.
 
+#### Definition
+`TypeModifier(?bool $nullable, ?bool $listable, ?bool $nullableList)`
+
+*Modifiers*
 Type                            | Syntax      | Example
 --------------------------------| ----------- | -------
 Nullable Type                   | \<type>     | String
@@ -39,12 +45,16 @@ List of Non-null Types          | [\<type>!]  | [String!]
 Non-null List Type              | [\<type>]!  | [String]!
 Non-null List of Non-null Types | [\<type>!]! | [String!]!
 
-*Example:*
+#### Examples
+
 ```php
 $typeModifier = new TypeModifier($nullable = false, $listable = true, $nullableList = false);
 $type = new BooleanType($typeModifier);
+```
 
-echo $type; // [bool!]!
+*Result:*
+```graphql
+[bool!]!
 ```
 
 ### Scalar types
@@ -52,8 +62,8 @@ echo $type; // [bool!]!
 *Example:*
 
 ```php
-$type = new BooleanType();
-echo $type; // Bool
+$type = new BooleanType(); // Yields Bool
+echo $type; 
 ```
 
 ### Interface type
@@ -67,8 +77,10 @@ $fields->add(new Field('age', new IntegerType()));
 $fields->add(new Field('size', new IntegerType()));
 
 $interface = new InterfaceType('Wine', $fields, 'My interface description');
-
+```
 // Yields
+
+```graphql
 """
 My interface description
 """
@@ -119,81 +131,108 @@ type Wine implements Name {
 ```
 ## Fields
 
-*Example:*
+A selection set is primarily composed of fields. A field describes one discrete piece of information available to request within a selection set.
+
+[GrapQL Spec](https://facebook.github.io/graphql/June2018/#sec-Language.Fields)
+
+#### Definition
+`Field(string $name, Type $type)`
+
+#### Examples
 
 ```php
-// Simple
 $field = new Field('simpleField', new IntegerType());
-echo $field; // simpleField: Int
+```
 
-// With arguments        
+*Result:*
+```graphql
+simpleField: Int
+```
+
+*With type modifier:*
+```php
+$field = new Field('simpleField', new IntegerType(new TypeModifier($nullable = false));
+```
+
+*Result:*
+```graphql
+simpleField: Int!
+```
+
+*Collection of fields:*
+```php
+$fields = new FieldCollection();
+$fields->add(new Field('name', new StringType()));
+$fields->add(new Field('age', new IntegerType()));
+$fields->add(new Field('size',  new IntegerType()));
+```
+
+*Result:*
+```graphql
+name: String
+age: Int
+size: Int
+```
+
+### Arguments
+
+Fields are conceptually functions which return values, and occasionally accept arguments which alter their behavior. These arguments often map directly to function arguments within a GraphQL server’s implementation.
+
+[GrapQL Spec](https://facebook.github.io/graphql/June2018/#sec-Language.Arguments)
+
+#### Definition
+`Argument(string $name, Type $type, Value $defaultVale)`
+
+#### Examples
+
+```php
+$argument = new Argument('booleanArg', new BooleanType());
+```
+
+*Result:*
+```graphql
+booleanArg: Boolean
+```
+
+*With type default value:*
+```php
+$argument = new Argument('intArg', new IntegerType(), new ValueInteger(0));
+```
+
+*Result:*
+```graphql
+intArg: Int = 0
+```
+
+*Collection of arguments:*
+```php
 $arguments = new ArgumentCollection();
 $arguments->add(new Argument(new BooleanType(new TypeModifier($nullable = false)), null, 'booleanArg'));
 $arguments->add(new Argument(new IntegerType(new TypeModifier($nullable = false)), null, 'integerArg'));
 $arguments->add(new Argument(new StringType(new TypeModifier($nullable = false)), new ValueString('test'), 'stringArg'));
-
-$field = new Field('testField', new IntegerType(new TypeModifier(false)), $arguments);
-echo $field; // testField(booleanArg: Boolean!, integerArg: Int!, stringArg: String! = "test"): Int!'
-
 ```
 
-## Arguments
-
-Create arguments
-
-*Example:*
-
-```php
-// Boolean with no default value
-$arg = new Argument(new BooleanType(), null, 'argName');
-echo $arg; // argName: Boolean
-
-// Boolean collection non nullable
-$arg = new Argument(new BooleanType(new TypeModifier($nullable = true, $listable = true, $nullableList = false), null, 'argName');
-echo $arg; // argName: [Boolean]!
-
-// Boolean with default value
-$arg = new Argument(new BooleanType(), new ValueBoolean(false), 'argName');
-echo $arg; // argName: Boolean = false
-
+*Result:*
+```graphql
+booleanArg: Boolean!, integerArg: Int!, stringArg: String! = "test"
 ```
 
-## Values
+### Argument values
 
-Set simple scalar values for default values in the schema. 
+Set simple scalar values for default values in arguments. 
+
+#### Definition
+`Value(mixed $value)`
 
 *Available values:*
+`ValueBoolean, ValueFloat, ValueInteger, ValueNull, ValueString`
 
-```php
-GQLSchema\Values\ValueBoolean
-GQLSchema\Values\ValueFloat
-GQLSchema\Values\ValueInteger
-GQLSchema\Values\ValueNull
-GQLSchema\Values\ValueString
-```
-
-*Example:*
+#### Examples
 
 ```php
 $bool = new ValueBoolean(true);
 $bool->getValue(); // true
 echo $bool; // 'true'
-
-$float = new ValueFloat(23.45);
-$float->getValue(); // 23.45
-echo $float; // '23.45'
-
-$int = new ValueInteger(5);
-$float->getValue(); // 5
-echo $float; // '5'
-
-$null = new ValueNull();
-$null->getValue(); // null
-echo $null; // 'null'
-
-$string = new ValueString('test string);
-$string->getValue(); // 'test string'
-echo $string; // '"test string"'
 ```
 
 ## Development

@@ -23,9 +23,9 @@ class ArgumentCollectionTest extends TestCase
     public function testCollection()
     {
         $collection = new ArgumentCollection();
-        $collection->add(new Argument(new BooleanType(new TypeModifier(false)), null, 'booleanArg'));
-        $collection->add(new Argument(new IntegerType(new TypeModifier(false)), null, 'integerArg'));
-        $collection->add(new Argument(new StringType(new TypeModifier(false)), new ValueString('test'), 'stringArg'));
+        $collection->add(new Argument('booleanArg', new BooleanType(new TypeModifier(false))));
+        $collection->add(new Argument('integerArg', new IntegerType(new TypeModifier(false))));
+        $collection->add(new Argument('stringArg', new StringType(new TypeModifier(false)), new ValueString('test')));
 
         $this->assertEquals('(booleanArg: Boolean!, integerArg: Int!, stringArg: String! = "test")', $collection->__toString());
     }
@@ -43,8 +43,8 @@ class ArgumentCollectionTest extends TestCase
     public function testUniqueNames()
     {
         $collection = new ArgumentCollection();
-        $collection->add(new Argument(new IntegerType(), null, 'age'));
-        $collection->add(new Argument(new IntegerType(), null, 'test'));
-        $collection->add(new Argument(new IntegerType(), null, 'age'));
+        $collection->add(new Argument('age', new IntegerType()));
+        $collection->add(new Argument('test', new IntegerType()));
+        $collection->add(new Argument('age', new IntegerType()));
     }
 }

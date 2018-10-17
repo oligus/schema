@@ -29,20 +29,19 @@ class Argument implements InputOutput
 
     /**
      * Argument constructor.
+     * @param string $name
      * @param Type $type
      * @param Value|null $defaultValue
-     * @param string $name
      * @throws SchemaException
      */
     public function __construct(
+        string $name,
         Type $type,
-        ?Value $defaultValue,
-        string $name = ''
+        ?Value $defaultValue = null
     ) {
+        $this->setName($name);
         $this->type = $type;
         $this->defaultValue = $defaultValue;
-
-        $this->setName($name);
     }
 
     /**
