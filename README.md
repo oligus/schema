@@ -9,6 +9,7 @@ GraphQL schema library.
 ## Contents
 [Types](README.md#types)<br />
 &nbsp;&nbsp;&nbsp;&nbsp;[Type modifiers](README.md#type-modifiers)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;[Scalar](README.md#scalar)<br />
 [Fields](README.md#fields)<br />
 &nbsp;&nbsp;&nbsp;&nbsp;[Arguments](README.md#arguments)<br />
 &nbsp;&nbsp;&nbsp;&nbsp;[Argument values](README.md#argument-values)<br />
@@ -36,6 +37,7 @@ Type modifiers are used in conjunction with types, add modifier to a type to mod
 `TypeModifier(?bool $nullable, ?bool $listable, ?bool $nullableList)`
 
 *Modifiers*
+
 Type                            | Syntax      | Example
 --------------------------------| ----------- | -------
 Nullable Type                   | \<type>     | String
@@ -55,6 +57,28 @@ $type = new BooleanType($typeModifier);
 *Result:*
 ```graphql
 [bool!]!
+```
+
+### Scalar
+
+Scalar types represent primitive leaf values in a GraphQL type system. GraphQL responses take the form of a hierarchical tree; the leaves on these trees are GraphQL scalars.
+
+[GrapQL Spec](https://facebook.github.io/graphql/June2018/#sec-Scalars)
+
+#### Definition
+`Scalar(string $name, ?string $description)`
+
+#### Examples
+```php
+$scalar = new ScalarType('Url', 'Url description');
+```
+
+*Result:*
+```graphql
+"""
+Url description
+"""
+scalar Url
 ```
 
 ### Scalar types
