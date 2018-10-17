@@ -9,6 +9,8 @@ GraphQL schema library.
 ## Contents
 [Types](README.md#types)<br />
 &nbsp;&nbsp;&nbsp;&nbsp;[Type modifiers](README.md#type-modifiers)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;[Scalar](README.md#scalar)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;[Built in scalar types](README.md#built-in-scalar-types)<br />
 [Fields](README.md#fields)<br />
 &nbsp;&nbsp;&nbsp;&nbsp;[Arguments](README.md#arguments)<br />
 &nbsp;&nbsp;&nbsp;&nbsp;[Argument values](README.md#argument-values)<br />
@@ -17,15 +19,22 @@ GraphQL schema library.
 
 ## Types
 
+The fundamental unit of any GraphQL Schema is the type. There are six kinds of named type definitions in GraphQL, and two wrapping types.
+
+[GrapQL Spec](https://facebook.github.io/graphql/June2018/#sec-Types)
+
 *Available types:*
 
 ```php
-GQLSchema\Types\Scalars\BooleanType
-GQLSchema\Types\Scalars\FloatType
-GQLSchema\Types\Scalars\IDType
-GQLSchema\Types\Scalars\IntegerType
-GQLSchema\Types\Scalars\StringType
-GQLSchema\Types\InterfaceType
+ScalarType
+
+BooleanType
+FloatType
+IDType
+IntegerType
+StringType
+
+InterfaceType
 ```
 
 ### Type modifiers
@@ -36,6 +45,7 @@ Type modifiers are used in conjunction with types, add modifier to a type to mod
 `TypeModifier(?bool $nullable, ?bool $listable, ?bool $nullableList)`
 
 *Modifiers*
+
 Type                            | Syntax      | Example
 --------------------------------| ----------- | -------
 Nullable Type                   | \<type>     | String
@@ -57,18 +67,62 @@ $type = new BooleanType($typeModifier);
 [bool!]!
 ```
 
-### Scalar types
+### Scalar
 
-*Example:*
+Scalar types represent primitive leaf values in a GraphQL type system. GraphQL responses take the form of a hierarchical tree; the leaves on these trees are GraphQL scalars.
+
+[GrapQL Spec](https://facebook.github.io/graphql/June2018/#sec-Scalars)
+
+#### Definition
+`Scalar(string $name, ?string $description)`
+
+#### Examples
+```php
+$scalar = new ScalarType('Url', 'Url description');
+```
+
+*Result:*
+```graphql
+"""
+Url description
+"""
+scalar Url
+```
+
+### Built in scalar types
+
+GraphQL provides a basic set of well‐defined Scalar types. A GraphQL server should support all of these types.
+
+**Built in types:** *Boolean, Float, ID, Integer, String*
+
+[GrapQL Spec](https://facebook.github.io/graphql/June2018/#sec-Scalars)
+
+#### Definition
+`<TYPE>Type(?TypeModifier $modifier)`
+
+Where \<**TYPE**> is Boolean, Float, ID, Integer or String
+
+#### Examples
 
 ```php
-$type = new BooleanType(); // Yields Bool
-echo $type; 
+$type = new BooleanType();
+```
+
+*Result:*
+```graphql
+Boolean
 ```
 
 ### Interface type
 
-*Example:*
+GraphQL interfaces represent a list of named fields and their arguments. GraphQL objects can then implement these interfaces which requires that the object type will define all fields defined by those interfaces.
+
+[GrapQL Spec](https://facebook.github.io/graphql/June2018/#sec-Interfaces)
+
+#### Definition
+`InterfaceType(string $name, FieldCollection $fields, ?string $description = null)`
+
+#### Examples
 
 ```php
 $fields = new FieldCollection();
@@ -76,14 +130,11 @@ $fields->add(new Field('name', new StringType()));
 $fields->add(new Field('age', new IntegerType()));
 $fields->add(new Field('size', new IntegerType()));
 
-$interface = new InterfaceType('Wine', $fields, 'My interface description');
+$interface = new InterfaceType('Wine', $fields);
 ```
-// Yields
 
+*Result:*
 ```graphql
-"""
-My interface description
-"""
 interface Wine {
   name: String  
   age: Int
@@ -93,7 +144,14 @@ interface Wine {
 
 ### Object type
 
-*Example:*
+GraphQL queries are hierarchical and composed, describing a tree of information. While Scalar types describe the leaf values of these hierarchical queries, Objects describe the intermediate levels.
+
+[GrapQL Spec](https://facebook.github.io/graphql/June2018/#sec-Objects)
+
+#### Definition
+`ObjectType(string $name, FieldCollection $fields, ?string $description = null)`
+
+#### Examples
 
 ```php
 $fields = new FieldCollection();
@@ -101,34 +159,35 @@ $fields->add(new Field('name', new StringType()));
 $fields->add(new Field('age', new IntegerType()));
 $fields->add(new Field('size', new IntegerType()));
 
-$object = new ObjectType('Wine', $fields, 'My object description');
+$object = new ObjectType('Wine', $fields);
+```
 
-echo $object;
-
-// Yields
+*Result:*
+```graphql
 type Wine {
   name: String
   age: Int
   size: Int
 }
-
-// Add interface
-
+```
+*Add interface*
+```php
 $fields = new FieldCollection();
 $fields->add(new Field('name', new StringType()));
 
 $interface = new InterfaceType('Name', $fields);
 $object->addInterface($interface);
+```
 
-echo $object;
-
-// Yields
+*Result:*
+```graphql
 type Wine implements Name {
   name: String
   age: Int
   size: Int
 }
 ```
+
 ## Fields
 
 A selection set is primarily composed of fields. A field describes one discrete piece of information available to request within a selection set.
@@ -207,9 +266,9 @@ intArg: Int = 0
 *Collection of arguments:*
 ```php
 $arguments = new ArgumentCollection();
-$arguments->add(new Argument(new BooleanType(new TypeModifier($nullable = false)), null, 'booleanArg'));
-$arguments->add(new Argument(new IntegerType(new TypeModifier($nullable = false)), null, 'integerArg'));
-$arguments->add(new Argument(new StringType(new TypeModifier($nullable = false)), new ValueString('test'), 'stringArg'));
+$arguments->add(new Argument('booleanArg', new BooleanType(new TypeModifier($nullable = false))));
+$arguments->add(new Argument('integerArg', new IntegerType(new TypeModifier($nullable = false))));
+$arguments->add(new Argument('stringArg', new StringType(new TypeModifier($nullable = false)), new ValueString('test')));
 ```
 
 *Result:*
