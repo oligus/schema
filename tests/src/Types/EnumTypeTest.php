@@ -14,6 +14,9 @@ class EnumTypeTest extends TestCase
 {
     use MatchesSnapshots;
 
+    /**
+     * @throws \Exception
+     */
     public function testSimple()
     {
         $enum = new EnumType('Direction', 'Different directions', ['SOUTH', 'NORTH']);
@@ -21,5 +24,17 @@ class EnumTypeTest extends TestCase
         $enum->addEnum('WEST');
 
         $this->assertMatchesSnapshot($enum->__toString());
+    }
+
+    /**
+     * @throws \Exception
+     * @expectedException \GQLSchema\Exceptions\SchemaException
+     * @expectedExceptionMessage Enums must be unique, enum already found: EAST
+     */
+    public function testUniqueEnum()
+    {
+        $enum = new EnumType('Direction', 'Different directions', ['SOUTH', 'NORTH']);
+        $enum->addEnum('EAST');
+        $enum->addEnum('EAST');
     }
 }

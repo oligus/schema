@@ -2,6 +2,8 @@
 
 namespace GQLSchema\Types;
 
+use GQLSchema\Exceptions\SchemaException;
+
 /**
  * Class EnumType
  * @package GQLSchema\Types
@@ -39,31 +41,20 @@ class EnumType implements Type
     }
 
     /**
-     * Add anum
+     * Add enum
      *
      * @param string $enum
+     * @throws \Exception
      */
     public function addEnum(string $enum): void
     {
+        foreach ($this->getEnums() as $addedEnum) {
+            if ($addedEnum === $enum) {
+                throw new SchemaException('Enums must be unique, enum already found: ' . $enum);
+            }
+        }
+
         $this->enums[] = $enum;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    /**
-     * Returns enum description
-     *
-     * @return null|string
-     */
-    public function getDescription(): ?string
-    {
-        return $this->description;
     }
 
     /**
@@ -98,5 +89,23 @@ class EnumType implements Type
         $string .= "}\n";
 
         return $string;
+    }
+
+    /**
+     * Returns enum description
+     *
+     * @return null|string
+     */
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
     }
 }
