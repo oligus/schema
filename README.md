@@ -11,6 +11,7 @@ GraphQL schema library.
 &nbsp;&nbsp;&nbsp;&nbsp;[Type modifiers](README.md#type-modifiers)<br />
 &nbsp;&nbsp;&nbsp;&nbsp;[Scalar](README.md#scalar)<br />
 &nbsp;&nbsp;&nbsp;&nbsp;[Built in scalar types](README.md#built-in-scalar-types)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;[Enums](README.md#enums)<br />
 [Fields](README.md#fields)<br />
 &nbsp;&nbsp;&nbsp;&nbsp;[Arguments](README.md#arguments)<br />
 &nbsp;&nbsp;&nbsp;&nbsp;[Argument values](README.md#argument-values)<br />
@@ -185,6 +186,39 @@ type Wine implements Name {
   name: String
   age: Int
   size: Int
+}
+```
+### Enums
+
+GraphQL Enum types, like scalar types, also represent leaf values in a GraphQL type system. However Enum types describe the set of possible values.
+
+[GrapQL Spec](https://facebook.github.io/graphql/June2018/#sec-Enums)
+
+#### Definitions
+`EnumType(string $name, ?string $description = null, array $enums = [])`
+
+*Add enum:*
+
+`add(string $enum)`
+
+#### Examples
+
+```php
+$enum = new EnumType('Direction', 'Different directions', ['SOUTH', 'NORTH']);
+$enum->addEnum('EAST');
+$enum->addEnum('WEST');
+```
+
+*Result:*
+```graphql
+"""
+Different directions
+"""
+enum Direction {
+  SOUTH
+  NORTH
+  EAST
+  WEST
 }
 ```
 
