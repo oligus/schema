@@ -39,15 +39,30 @@ class ObjectTypeTest extends TestCase
      */
     public function testInterfaces()
     {
+        $interface1 = new InterfaceType('Test1');
+        $interface1->addField(new Field('name', new StringType()));
+        $interface1->addField(new Field('age', new IntegerType()));
+        $interface1->addField(new Field('size', new IntegerType()));
+
+        $interface2 = new InterfaceType('Test2');
+        $interface2->addField(new Field('name', new StringType()));
+        $interface2->addField(new Field('age', new IntegerType()));
+        $interface2->addField(new Field('size', new IntegerType()));
+
+        $interface3 = new InterfaceType('Test3');
+        $interface3->addField(new Field('name', new StringType()));
+        $interface3->addField(new Field('age', new IntegerType()));
+        $interface3->addField(new Field('size', new IntegerType()));
+
         $fields = new FieldCollection();
         $fields->add(new Field('name', new StringType()));
         $fields->add(new Field('age', new IntegerType()));
         $fields->add(new Field('size', new IntegerType()));
 
         $object = new ObjectType('Wine', $fields, 'My object description');
-        $object->addInterface(new InterfaceType('Test1', $fields));
-        $object->addInterface(new InterfaceType('Test2', $fields));
-        $object->addInterface(new InterfaceType('Test3', $fields));
+        $object->addInterface($interface1);
+        $object->addInterface($interface2);
+        $object->addInterface($interface3);
 
         $this->assertMatchesSnapshot($object->__toString());
     }
@@ -67,7 +82,14 @@ class ObjectTypeTest extends TestCase
 
         $fields = new FieldCollection();
         $fields->add(new Field('noname', new StringType()));
-        $object->addInterface(new InterfaceType('Exception', $fields));
+
+        $interface = new InterfaceType('Wine', 'My object description');
+        $interface->addField(new Field('name', new StringType()));
+        $interface->addField(new Field('age', new IntegerType()));
+        $interface->addField(new Field('size', new IntegerType()));
+        $interface->addField(new Field('noname', new IntegerType()));
+
+        $object->addInterface($interface);
     }
 
     /**

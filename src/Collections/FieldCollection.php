@@ -19,13 +19,28 @@ class FieldCollection extends AbstractCollection
      */
     public function implements(InterfaceType $interface): bool
     {
+        /** @var Field $interfaceField */
+        foreach ($interface->getFields()->collection as $interfaceField) {
+            if (!$this->hasField($interfaceField->getName())) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Returns true if field name is present
+     *
+     * @param string $name
+     * @return bool
+     */
+    public function hasField(string $name): bool
+    {
         /** @var Field $field */
         foreach ($this->collection as $field) {
-            /** @var Field $interfaceField */
-            foreach ($interface->getFields()->collection as $interfaceField) {
-                if ($field->getName() === $interfaceField->getName()) {
-                    return $field->getType()->__toString() === $interfaceField->getType()->__toString();
-                }
+            if ($field->getName() === $name) {
+                return true;
             }
         }
 
