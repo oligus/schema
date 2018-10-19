@@ -8,9 +8,10 @@ GraphQL schema library.
 
 ## Contents
 [Types](README.md#types)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;[Type modifiers](README.md#type-modifiers)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;[Type modifiers](#type-modifiers)<br />
 &nbsp;&nbsp;&nbsp;&nbsp;[Scalar](README.md#scalar)<br />
 &nbsp;&nbsp;&nbsp;&nbsp;[Built in scalar types](README.md#built-in-scalar-types)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;[Interfaces](README.md#interfaces)<br />
 &nbsp;&nbsp;&nbsp;&nbsp;[Enums](README.md#enums)<br />
 [Fields](README.md#fields)<br />
 &nbsp;&nbsp;&nbsp;&nbsp;[Arguments](README.md#arguments)<br />
@@ -114,24 +115,22 @@ $type = new BooleanType();
 Boolean
 ```
 
-### Interface type
+### Interfaces
 
 GraphQL interfaces represent a list of named fields and their arguments. GraphQL objects can then implement these interfaces which requires that the object type will define all fields defined by those interfaces.
 
 [GrapQL Spec](https://facebook.github.io/graphql/June2018/#sec-Interfaces)
 
 #### Definition
-`InterfaceType(string $name, FieldCollection $fields, ?string $description = null)`
+`InterfaceType(string $name, ?string $description = null)`
 
 #### Examples
 
 ```php
-$fields = new FieldCollection();
-$fields->add(new Field('name', new StringType()));
-$fields->add(new Field('age', new IntegerType()));
-$fields->add(new Field('size', new IntegerType()));
-
-$interface = new InterfaceType('Wine', $fields);
+$interface = new InterfaceType('Wine');
+$interface->addField(new Field('name', new StringType()));
+$interface->addField(new Field('age', new IntegerType()));
+$interface->addField(new Field('size', new IntegerType()));
 ```
 
 *Result:*
@@ -150,17 +149,15 @@ GraphQL queries are hierarchical and composed, describing a tree of information.
 [GrapQL Spec](https://facebook.github.io/graphql/June2018/#sec-Objects)
 
 #### Definition
-`ObjectType(string $name, FieldCollection $fields, ?string $description = null)`
+`ObjectType(string $name, ?string $description = null)`
 
 #### Examples
 
 ```php
-$fields = new FieldCollection();
-$fields->add(new Field('name', new StringType()));
-$fields->add(new Field('age', new IntegerType()));
-$fields->add(new Field('size', new IntegerType()));
-
-$object = new ObjectType('Wine', $fields);
+$object = new ObjectType('Wine');
+$object->addField(new Field('name', new StringType()));
+$object->addField(new Field('age', new IntegerType()));
+$object->addField(new Field('size', new IntegerType()));
 ```
 
 *Result:*
@@ -171,13 +168,11 @@ type Wine {
   size: Int
 }
 ```
-*Add interface*
+*Implement interface*
 ```php
-$fields = new FieldCollection();
-$fields->add(new Field('name', new StringType()));
-
-$interface = new InterfaceType('Name', $fields);
-$object->addInterface($interface);
+$interface = new InterfaceType('Wine');
+$interface->addField(new Field('name', new StringType()));
+$object->implements($interface);
 ```
 
 *Result:*

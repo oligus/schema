@@ -46,15 +46,13 @@ class FieldCollectionTest extends TestCase
         $fields->add(new Field('age', new IntegerType()));
         $fields->add(new Field('size',  new IntegerType()));
 
-        $interfaceFields = new FieldCollection();
-        $interfaceFields->add(new Field('name', new StringType()));
-        $interface = new InterfaceType('Wine', $interfaceFields);
+        $interface = new InterfaceType('Wine');
+        $interface->addField(new Field('name', new StringType()));
 
         $this->assertTrue($fields->implements($interface));
 
-        $interfaceFields = new FieldCollection();
-        $interfaceFields->add(new Field('test', new StringType()));
-        $interface = new InterfaceType('Wine', $interfaceFields);
+        $interface = new InterfaceType('Wine');
+        $interface->addField(new Field('test', new StringType()));
 
         $this->assertFalse($fields->implements($interface));
     }
@@ -75,5 +73,21 @@ class FieldCollectionTest extends TestCase
         $fields->add(new Field('age', new IntegerType()));
         $fields->add(new Field('test', new IntegerType()));
         $fields->add(new Field('age', new IntegerType()));
+    }
+
+    /**
+     * @throws \GQLSchema\Exceptions\SchemaException
+     */
+    public function testHasName()
+    {
+        $fields = new FieldCollection();
+        $fields->add(new Field('name', new StringType()));
+        $fields->add(new Field('age', new IntegerType()));
+        $fields->add(new Field('test', new IntegerType()));
+
+        $this->assertTrue($fields->hasField('name'));
+        $this->assertTrue($fields->hasField('age'));
+        $this->assertTrue($fields->hasField('test'));
+        $this->assertFalse($fields->hasField('moo'));
     }
 }

@@ -8,7 +8,6 @@ use GQLSchema\Types\InterfaceType;
 use GQLSchema\Types\ObjectType;
 use GQLSchema\Types\Scalars\StringType;
 use GQLSchema\Types\Scalars\IntegerType;
-use GQLSchema\Collections\FieldCollection;
 use PHPUnit\Framework\TestCase;
 use Spatie\Snapshots\MatchesSnapshots;
 
@@ -27,14 +26,24 @@ class SchemaTest extends TestCase
     {
         $schema = new Schema();
 
-        $fields = new FieldCollection();
-        $fields->add(new Field('name', new StringType()));
-        $fields->add(new Field('age', new IntegerType()));
-        $fields->add(new Field('size', new IntegerType()));
+        $interface1 = new InterfaceType('Wine', 'My interface description');
+        $interface1->addField(new Field('name', new StringType()));
+        $interface1->addField(new Field('age', new IntegerType()));
+        $interface1->addField(new Field('size', new IntegerType()));
 
-        $schema->addInterface(new InterfaceType('Wine', $fields, 'My interface description'));
-        $schema->addInterface(new InterfaceType('Test', $fields));
-        $schema->addInterface(new InterfaceType('Third', $fields));
+        $interface2 = new InterfaceType('Test');
+        $interface2->addField(new Field('name', new StringType()));
+        $interface2->addField(new Field('age', new IntegerType()));
+        $interface2->addField(new Field('size', new IntegerType()));
+
+        $interface3 = new InterfaceType('Third');
+        $interface3->addField(new Field('name', new StringType()));
+        $interface3->addField(new Field('age', new IntegerType()));
+        $interface3->addField(new Field('size', new IntegerType()));
+
+        $schema->addInterface($interface1);
+        $schema->addInterface($interface2);
+        $schema->addInterface($interface3);
 
         $this->assertMatchesSnapshot($schema->__toString());
     }
@@ -46,24 +55,34 @@ class SchemaTest extends TestCase
     {
         $schema = new Schema();
 
-        $fields = new FieldCollection();
-        $fields->add(new Field('name', new StringType()));
-        $fields->add(new Field('age', new IntegerType()));
-        $fields->add(new Field('size', new IntegerType()));
+        $object = new ObjectType('Wine', 'My object description');
+        $object->addField(new Field('name', new StringType()));
+        $object->addField(new Field('age', new IntegerType()));
+        $object->addField(new Field('size', new IntegerType()));
 
-        $objectType = new ObjectType('Wine', $fields, 'My object description');
+        $interface = new InterfaceType('Moo');
+        $interface->addField(new Field('name', new StringType()));
+        $object->implements($interface);
 
-        $interfaceFields = new FieldCollection();
-        $interfaceFields->add(new Field('name', new StringType()));
-        $objectType->addInterface(new InterfaceType('Moo', $interfaceFields));
+        $interface = new InterfaceType('Mee');
+        $interface->addField(new Field('name', new StringType()));
+        $object->implements($interface);
 
-        $interfaceFields = new FieldCollection();
-        $interfaceFields->add(new Field('name', new StringType()));
-        $objectType->addInterface(new InterfaceType('Mee', $interfaceFields));
+        $schema->addObject($object);
 
-        $schema->addObject($objectType);
-        $schema->addObject(new ObjectType('Test', $fields, 'My other description'));
-        $schema->addObject(new ObjectType('Third', $fields));
+        $object = new ObjectType('Test', 'My other description');
+        $object->addField(new Field('name', new StringType()));
+        $object->addField(new Field('age', new IntegerType()));
+        $object->addField(new Field('size', new IntegerType()));
+
+        $schema->addObject($object);
+
+        $object = new ObjectType('Third');
+        $object->addField(new Field('name', new StringType()));
+        $object->addField(new Field('age', new IntegerType()));
+        $object->addField(new Field('size', new IntegerType()));
+
+        $schema->addObject($object);
 
         $this->assertMatchesSnapshot($schema->__toString());
     }

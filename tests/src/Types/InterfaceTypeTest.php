@@ -3,7 +3,6 @@
 namespace GQLSchema\Tests\Types;
 
 use GQLSchema\Types\InterfaceType;
-use GQLSchema\Collections\FieldCollection;
 use GQLSchema\Field;
 use GQLSchema\Types\Scalars\StringType;
 use GQLSchema\Types\Scalars\IntegerType;
@@ -23,12 +22,10 @@ class InterfaceTypeTest extends TestCase
      */
     public function testConstruct()
     {
-        $fields = new FieldCollection();
-        $fields->add(new Field('name', new StringType()));
-        $fields->add(new Field('age', new IntegerType()));
-        $fields->add(new Field('size', new IntegerType()));
-
-        $interface = new InterfaceType('Wine', $fields, 'My interface description');
+        $interface = new InterfaceType('Wine', 'My interface description');
+        $interface->addField(new Field('name', new StringType()));
+        $interface->addField(new Field('age', new IntegerType()));
+        $interface->addField(new Field('size', new IntegerType()));
 
         $this->assertMatchesSnapshot($interface->__toString());
     }
@@ -39,7 +36,7 @@ class InterfaceTypeTest extends TestCase
      */
     public function testEmptyFieldsException()
     {
-        $interface = new InterfaceType('Test', new FieldCollection());
+        $interface = new InterfaceType('Test');
         $interface->__toString();
 
     }

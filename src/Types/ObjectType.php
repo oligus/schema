@@ -5,6 +5,7 @@ namespace GQLSchema\Types;
 use GQLSchema\Collections\FieldCollection;
 use GQLSchema\Collections\InterfaceCollection;
 use GQLSchema\Exceptions\SchemaException;
+use GQLSchema\Field;
 
 /**
  * Class InterfaceType
@@ -37,19 +38,28 @@ class ObjectType implements Type
     /**
      * ObjectType constructor.
      * @param string $name
-     * @param FieldCollection $fields
      * @param null|string $description
      */
     public function __construct(
         string $name,
-        FieldCollection $fields,
         ?string $description = null
     ) {
         $this->name = $name;
-        $this->fields = $fields;
         $this->description = $description;
 
+        $this->fields = new FieldCollection();
         $this->interfaces = new InterfaceCollection();
+    }
+
+    /**
+     * Add field to interface
+     *
+     * @param Field $field
+     * @throws SchemaException
+     */
+    public function addField(Field $field): void
+    {
+        $this->fields->add($field);
     }
 
     /**
@@ -58,7 +68,7 @@ class ObjectType implements Type
      * @param InterfaceType $interface
      * @throws SchemaException
      */
-    public function addInterface(InterfaceType $interface): void
+    public function implements(InterfaceType $interface): void
     {
         if (!$this->fields->implements($interface)) {
             throw new SchemaException('Object type must implement interface, one or more fields missing.');

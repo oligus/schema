@@ -3,7 +3,6 @@
 namespace GQLSchema\Tests\Collections;
 
 use GQLSchema\Field;
-use GQLSchema\Collections\FieldCollection;
 use GQLSchema\Types\InterfaceType;
 use GQLSchema\Types\Scalars\IntegerType;
 use GQLSchema\Types\Scalars\StringType;
@@ -26,14 +25,24 @@ class InterfaceCollectionTest extends TestCase
     {
         $interfaces = new InterfaceCollection();
 
-        $fields = new FieldCollection();
-        $fields->add(new Field('testString', new StringType()));
-        $fields->add(new Field('testAge', new IntegerType()));
-        $fields->add(new Field('testSize', new IntegerType()));
+        $interface1 = new InterfaceType('Test1');
+        $interface1->addField(new Field('testString', new StringType()));
+        $interface1->addField(new Field('testAge', new IntegerType()));
+        $interface1->addField(new Field('testSize', new IntegerType()));
 
-        $interfaces->add(new InterfaceType('Test1', $fields));
-        $interfaces->add(new InterfaceType('Test2', $fields));
-        $interfaces->add(new InterfaceType('Test3', $fields));
+        $interface2 = new InterfaceType('Test2');
+        $interface2->addField(new Field('testString', new StringType()));
+        $interface2->addField(new Field('testAge', new IntegerType()));
+        $interface2->addField(new Field('testSize', new IntegerType()));
+
+        $interface3 = new InterfaceType('Test3');
+        $interface3->addField(new Field('testString', new StringType()));
+        $interface3->addField(new Field('testAge', new IntegerType()));
+        $interface3->addField(new Field('testSize', new IntegerType()));
+
+        $interfaces->add($interface1);
+        $interfaces->add($interface2);
+        $interfaces->add($interface3);
 
         $this->assertMatchesSnapshot($interfaces->__toString());
     }
@@ -45,14 +54,24 @@ class InterfaceCollectionTest extends TestCase
     {
         $interfaces = new InterfaceCollection();
 
-        $fields = new FieldCollection();
-        $fields->add(new Field('testString', new StringType()));
-        $fields->add(new Field('testAge', new IntegerType()));
-        $fields->add(new Field('testSize', new IntegerType()));
+        $interface1 = new InterfaceType('Test1');
+        $interface1->addField(new Field('testString', new StringType()));
+        $interface1->addField(new Field('testAge', new IntegerType()));
+        $interface1->addField(new Field('testSize', new IntegerType()));
 
-        $interfaces->add(new InterfaceType('Test1', $fields));
-        $interfaces->add(new InterfaceType('Test2', $fields));
-        $interfaces->add(new InterfaceType('Test3', $fields));
+        $interface2 = new InterfaceType('Test2');
+        $interface2->addField(new Field('testString', new StringType()));
+        $interface2->addField(new Field('testAge', new IntegerType()));
+        $interface2->addField(new Field('testSize', new IntegerType()));
+
+        $interface3 = new InterfaceType('Test3');
+        $interface3->addField(new Field('testString', new StringType()));
+        $interface3->addField(new Field('testAge', new IntegerType()));
+        $interface3->addField(new Field('testSize', new IntegerType()));
+
+        $interfaces->add($interface1);
+        $interfaces->add($interface2);
+        $interfaces->add($interface3);
 
         $this->assertNull($interfaces->get('Nada'));
         $interface = $interfaces->get('Test1');
@@ -75,13 +94,23 @@ class InterfaceCollectionTest extends TestCase
     {
         $interfaces = new InterfaceCollection();
 
-        $fields = new FieldCollection();
-        $fields->add(new Field('testString', new StringType()));
-        $fields->add(new Field('testAge', new IntegerType()));
-        $fields->add(new Field('testSize', new IntegerType()));
+        $interface1 = new InterfaceType('Test1');
+        $interface1->addField(new Field('testString', new StringType()));
+        $interface1->addField(new Field('testAge', new IntegerType()));
+        $interface1->addField(new Field('testSize', new IntegerType()));
 
-        $interfaces->add(new InterfaceType('Test1', $fields, 'My interface description'));
-        $interfaces->add(new InterfaceType('Test2', $fields, 'My interface description'));
-        $interfaces->add(new InterfaceType('Test1', $fields, 'My interface description'));
+        $interface2 = new InterfaceType('Test2');
+        $interface2->addField(new Field('testString', new StringType()));
+        $interface2->addField(new Field('testAge', new IntegerType()));
+        $interface2->addField(new Field('testSize', new IntegerType()));
+
+        $interface3 = new InterfaceType('Test1');
+        $interface3->addField(new Field('testString', new StringType()));
+        $interface3->addField(new Field('testAge', new IntegerType()));
+        $interface3->addField(new Field('testSize', new IntegerType()));
+
+        $interfaces->add($interface1);
+        $interfaces->add($interface2);
+        $interfaces->add($interface3);
     }
 }

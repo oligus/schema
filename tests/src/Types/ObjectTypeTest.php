@@ -24,12 +24,10 @@ class ObjectTypeTest extends TestCase
      */
     public function testSimple()
     {
-        $fields = new FieldCollection();
-        $fields->add(new Field('name', new StringType()));
-        $fields->add(new Field('age', new IntegerType()));
-        $fields->add(new Field('size', new IntegerType()));
-
-        $object = new ObjectType('Wine', $fields);
+        $object = new ObjectType('Wine');
+        $object->addField(new Field('name', new StringType()));
+        $object->addField(new Field('age', new IntegerType()));
+        $object->addField(new Field('size', new IntegerType()));
 
         $this->assertMatchesSnapshot($object->__toString());
     }
@@ -39,15 +37,29 @@ class ObjectTypeTest extends TestCase
      */
     public function testInterfaces()
     {
-        $fields = new FieldCollection();
-        $fields->add(new Field('name', new StringType()));
-        $fields->add(new Field('age', new IntegerType()));
-        $fields->add(new Field('size', new IntegerType()));
+        $interface1 = new InterfaceType('Test1');
+        $interface1->addField(new Field('name', new StringType()));
+        $interface1->addField(new Field('age', new IntegerType()));
+        $interface1->addField(new Field('size', new IntegerType()));
 
-        $object = new ObjectType('Wine', $fields, 'My object description');
-        $object->addInterface(new InterfaceType('Test1', $fields));
-        $object->addInterface(new InterfaceType('Test2', $fields));
-        $object->addInterface(new InterfaceType('Test3', $fields));
+        $interface2 = new InterfaceType('Test2');
+        $interface2->addField(new Field('name', new StringType()));
+        $interface2->addField(new Field('age', new IntegerType()));
+        $interface2->addField(new Field('size', new IntegerType()));
+
+        $interface3 = new InterfaceType('Test3');
+        $interface3->addField(new Field('name', new StringType()));
+        $interface3->addField(new Field('age', new IntegerType()));
+        $interface3->addField(new Field('size', new IntegerType()));
+
+        $object = new ObjectType('Wine', 'My object description');
+        $object->addField(new Field('name', new StringType()));
+        $object->addField(new Field('age', new IntegerType()));
+        $object->addField(new Field('size', new IntegerType()));
+
+        $object->implements($interface1);
+        $object->implements($interface2);
+        $object->implements($interface3);
 
         $this->assertMatchesSnapshot($object->__toString());
     }
@@ -58,16 +70,22 @@ class ObjectTypeTest extends TestCase
      */
     public function testInterfaceException()
     {
-        $fields = new FieldCollection();
-        $fields->add(new Field('name', new StringType()));
-        $fields->add(new Field('age', new IntegerType()));
-        $fields->add(new Field('size', new IntegerType()));
 
-        $object = new ObjectType('Wine', $fields, 'My object description');
+        $object = new ObjectType('Wine', 'My object description');
+        $object->addField(new Field('name', new StringType()));
+        $object->addField(new Field('age', new IntegerType()));
+        $object->addField(new Field('size', new IntegerType()));
 
         $fields = new FieldCollection();
         $fields->add(new Field('noname', new StringType()));
-        $object->addInterface(new InterfaceType('Exception', $fields));
+
+        $interface = new InterfaceType('Wine', 'My object description');
+        $interface->addField(new Field('name', new StringType()));
+        $interface->addField(new Field('age', new IntegerType()));
+        $interface->addField(new Field('size', new IntegerType()));
+        $interface->addField(new Field('noname', new IntegerType()));
+
+        $object->implements($interface);
     }
 
     /**
@@ -77,7 +95,7 @@ class ObjectTypeTest extends TestCase
      */
     public function testNoFieldException()
     {
-        $object = new ObjectType('Wine', new FieldCollection());
+        $object = new ObjectType('Wine');
         $object->__toString();
     }
 }
