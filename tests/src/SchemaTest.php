@@ -8,7 +8,6 @@ use GQLSchema\Types\InterfaceType;
 use GQLSchema\Types\ObjectType;
 use GQLSchema\Types\Scalars\StringType;
 use GQLSchema\Types\Scalars\IntegerType;
-use GQLSchema\Collections\FieldCollection;
 use PHPUnit\Framework\TestCase;
 use Spatie\Snapshots\MatchesSnapshots;
 
@@ -56,24 +55,34 @@ class SchemaTest extends TestCase
     {
         $schema = new Schema();
 
-        $fields = new FieldCollection();
-        $fields->add(new Field('name', new StringType()));
-        $fields->add(new Field('age', new IntegerType()));
-        $fields->add(new Field('size', new IntegerType()));
-
-        $objectType = new ObjectType('Wine', $fields, 'My object description');
+        $object = new ObjectType('Wine', 'My object description');
+        $object->addField(new Field('name', new StringType()));
+        $object->addField(new Field('age', new IntegerType()));
+        $object->addField(new Field('size', new IntegerType()));
 
         $interface = new InterfaceType('Moo');
         $interface->addField(new Field('name', new StringType()));
-        $objectType->addInterface($interface);
+        $object->implements($interface);
 
         $interface = new InterfaceType('Mee');
         $interface->addField(new Field('name', new StringType()));
-        $objectType->addInterface($interface);
+        $object->implements($interface);
 
-        $schema->addObject($objectType);
-        $schema->addObject(new ObjectType('Test', $fields, 'My other description'));
-        $schema->addObject(new ObjectType('Third', $fields));
+        $schema->addObject($object);
+
+        $object = new ObjectType('Test', 'My other description');
+        $object->addField(new Field('name', new StringType()));
+        $object->addField(new Field('age', new IntegerType()));
+        $object->addField(new Field('size', new IntegerType()));
+
+        $schema->addObject($object);
+
+        $object = new ObjectType('Third');
+        $object->addField(new Field('name', new StringType()));
+        $object->addField(new Field('age', new IntegerType()));
+        $object->addField(new Field('size', new IntegerType()));
+
+        $schema->addObject($object);
 
         $this->assertMatchesSnapshot($schema->__toString());
     }

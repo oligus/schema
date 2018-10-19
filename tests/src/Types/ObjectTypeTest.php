@@ -24,12 +24,10 @@ class ObjectTypeTest extends TestCase
      */
     public function testSimple()
     {
-        $fields = new FieldCollection();
-        $fields->add(new Field('name', new StringType()));
-        $fields->add(new Field('age', new IntegerType()));
-        $fields->add(new Field('size', new IntegerType()));
-
-        $object = new ObjectType('Wine', $fields);
+        $object = new ObjectType('Wine');
+        $object->addField(new Field('name', new StringType()));
+        $object->addField(new Field('age', new IntegerType()));
+        $object->addField(new Field('size', new IntegerType()));
 
         $this->assertMatchesSnapshot($object->__toString());
     }
@@ -54,15 +52,14 @@ class ObjectTypeTest extends TestCase
         $interface3->addField(new Field('age', new IntegerType()));
         $interface3->addField(new Field('size', new IntegerType()));
 
-        $fields = new FieldCollection();
-        $fields->add(new Field('name', new StringType()));
-        $fields->add(new Field('age', new IntegerType()));
-        $fields->add(new Field('size', new IntegerType()));
+        $object = new ObjectType('Wine', 'My object description');
+        $object->addField(new Field('name', new StringType()));
+        $object->addField(new Field('age', new IntegerType()));
+        $object->addField(new Field('size', new IntegerType()));
 
-        $object = new ObjectType('Wine', $fields, 'My object description');
-        $object->addInterface($interface1);
-        $object->addInterface($interface2);
-        $object->addInterface($interface3);
+        $object->implements($interface1);
+        $object->implements($interface2);
+        $object->implements($interface3);
 
         $this->assertMatchesSnapshot($object->__toString());
     }
@@ -73,12 +70,11 @@ class ObjectTypeTest extends TestCase
      */
     public function testInterfaceException()
     {
-        $fields = new FieldCollection();
-        $fields->add(new Field('name', new StringType()));
-        $fields->add(new Field('age', new IntegerType()));
-        $fields->add(new Field('size', new IntegerType()));
 
-        $object = new ObjectType('Wine', $fields, 'My object description');
+        $object = new ObjectType('Wine', 'My object description');
+        $object->addField(new Field('name', new StringType()));
+        $object->addField(new Field('age', new IntegerType()));
+        $object->addField(new Field('size', new IntegerType()));
 
         $fields = new FieldCollection();
         $fields->add(new Field('noname', new StringType()));
@@ -89,7 +85,7 @@ class ObjectTypeTest extends TestCase
         $interface->addField(new Field('size', new IntegerType()));
         $interface->addField(new Field('noname', new IntegerType()));
 
-        $object->addInterface($interface);
+        $object->implements($interface);
     }
 
     /**
@@ -99,7 +95,7 @@ class ObjectTypeTest extends TestCase
      */
     public function testNoFieldException()
     {
-        $object = new ObjectType('Wine', new FieldCollection());
+        $object = new ObjectType('Wine');
         $object->__toString();
     }
 }
