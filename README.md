@@ -11,6 +11,7 @@ GraphQL schema library.
 &nbsp;&nbsp;&nbsp;&nbsp;[Type modifiers](#type-modifiers)<br />
 &nbsp;&nbsp;&nbsp;&nbsp;[Scalar](README.md#scalar)<br />
 &nbsp;&nbsp;&nbsp;&nbsp;[Built in scalar types](README.md#built-in-scalar-types)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;[Objects](README.md#objects)<br />
 &nbsp;&nbsp;&nbsp;&nbsp;[Interfaces](README.md#interfaces)<br />
 &nbsp;&nbsp;&nbsp;&nbsp;[Enums](README.md#enums)<br />
 [Fields](README.md#fields)<br />
@@ -115,34 +116,7 @@ $type = new BooleanType();
 Boolean
 ```
 
-### Interfaces
-
-GraphQL interfaces represent a list of named fields and their arguments. GraphQL objects can then implement these interfaces which requires that the object type will define all fields defined by those interfaces.
-
-[GrapQL Spec](https://facebook.github.io/graphql/June2018/#sec-Interfaces)
-
-#### Definition
-`InterfaceType(string $name, ?string $description = null)`
-
-#### Examples
-
-```php
-$interface = new InterfaceType('Wine');
-$interface->addField(new Field('name', new StringType()));
-$interface->addField(new Field('age', new IntegerType()));
-$interface->addField(new Field('size', new IntegerType()));
-```
-
-*Result:*
-```graphql
-interface Wine {
-  name: String  
-  age: Int
-  size: Int
-}
-```
-
-### Object type
+### Objects
 
 GraphQL queries are hierarchical and composed, describing a tree of information. While Scalar types describe the leaf values of these hierarchical queries, Objects describe the intermediate levels.
 
@@ -183,6 +157,60 @@ type Wine implements Name {
   size: Int
 }
 ```
+
+### Interfaces
+
+GraphQL interfaces represent a list of named fields and their arguments. GraphQL objects can then implement these interfaces which requires that the object type will define all fields defined by those interfaces.
+
+[GrapQL Spec](https://facebook.github.io/graphql/June2018/#sec-Interfaces)
+
+#### Definition
+`InterfaceType(string $name, ?string $description = null)`
+
+#### Examples
+
+```php
+$interface = new InterfaceType('Wine');
+$interface->addField(new Field('name', new StringType()));
+$interface->addField(new Field('age', new IntegerType()));
+$interface->addField(new Field('size', new IntegerType()));
+```
+
+*Result:*
+```graphql
+interface Wine {
+  name: String  
+  age: Int
+  size: Int
+}
+```
+
+### Unions
+
+GraphQL Unions represent an object that could be one of a list of GraphQL Object types, but provides for no guaranteed fields between those types. They also differ from interfaces in that Object types declare what interfaces they implement, but are not aware of what unions contain them.
+
+[GrapQL Spec](https://facebook.github.io/graphql/June2018/#sec-Unions)
+
+#### Definitions
+`UnionType(string $name, ?string $description = null)`
+
+*Add object:*
+
+`addObjectType(ObjectType $objectType): void`
+
+#### Examples
+
+```php
+$union = new UnionType('Animals');
+$union->addObjectType(new ObjectType('Dog'));
+$union->addObjectType(new ObjectType('Cat'));
+```
+
+*Result:*
+```graphql
+union Animals = Dog | Cat
+```
+
 ### Enums
 
 GraphQL Enum types, like scalar types, also represent leaf values in a GraphQL type system. However Enum types describe the set of possible values.
