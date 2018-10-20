@@ -19,7 +19,7 @@ class InputTypeTest extends SchemaTestCase
      */
     public function testInputType()
     {
-        $object = new InputType('Wine');
+        $object = new InputType('Wine', 'Input description');
         $object->addField(new Field('name', new StringType()));
         $object->addField(new Field('age', new IntegerType()));
         $object->addField(new Field('size', new IntegerType()));
