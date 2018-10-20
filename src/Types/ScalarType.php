@@ -8,48 +8,9 @@ use GQLSchema\Exceptions\SchemaException;
  * Class ScalarType
  * @package GQLSchema\Types
  */
-class ScalarType implements Type
+class ScalarType extends AbstractType
 {
     const TYPE = 'scalar';
-
-    /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var string|null
-     */
-    private $description;
-
-    /**
-     * ScalarType constructor.
-     * @param string $name
-     * @param null|string $description
-     */
-    public function __construct(string $name, ?string $description = null)
-    {
-        $this->name = $name;
-        $this->description = $description;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    /**
-     * Returns description
-     *
-     * @return null|string
-     */
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
 
     /**
      * @return string

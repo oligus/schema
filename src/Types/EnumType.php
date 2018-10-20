@@ -8,14 +8,9 @@ use GQLSchema\Exceptions\SchemaException;
  * Class EnumType
  * @package GQLSchema\Types
  */
-class EnumType implements Type
+class EnumType extends AbstractType
 {
     const TYPE = 'enum';
-
-    /**
-     * @var string
-     */
-    private $name;
 
     /**
      * @var array
@@ -23,20 +18,16 @@ class EnumType implements Type
     private $enums;
 
     /**
-     * @var string|null
-     */
-    private $description;
-
-    /**
      * EnumType constructor.
      * @param string $name
      * @param null|string $description
      * @param array $enums
+     * @throws SchemaException
      */
     public function __construct(string $name, ?string $description = null, array $enums = [])
     {
-        $this->name = $name;
-        $this->description = $description;
+        parent::__construct($name, $description);
+
         $this->enums = $enums;
     }
 
@@ -89,23 +80,5 @@ class EnumType implements Type
         $string .= "}\n";
 
         return $string;
-    }
-
-    /**
-     * Returns enum description
-     *
-     * @return null|string
-     */
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName(): string
-    {
-        return $this->name;
     }
 }

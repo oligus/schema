@@ -11,24 +11,14 @@ use GQLSchema\Field;
  * Class InterfaceType
  * @package GQLSchema\Types
  */
-class ObjectType implements Type
+class ObjectType extends AbstractType
 {
     const TYPE = 'type';
-
-    /**
-     * @var string
-     */
-    private $name;
 
     /**
      * @var FieldCollection
      */
     private $fields;
-
-    /**
-     * @var string|null
-     */
-    private $description;
 
     /**
      * @var InterfaceCollection
@@ -39,13 +29,11 @@ class ObjectType implements Type
      * ObjectType constructor.
      * @param string $name
      * @param null|string $description
+     * @throws SchemaException
      */
-    public function __construct(
-        string $name,
-        ?string $description = null
-    ) {
-        $this->name = $name;
-        $this->description = $description;
+    public function __construct(string $name, ?string $description = null)
+    {
+        parent::__construct($name, $description);
 
         $this->fields = new FieldCollection();
         $this->interfaces = new InterfaceCollection();
@@ -124,26 +112,6 @@ class ObjectType implements Type
         $string .= "}\n\n";
 
         return $string;
-    }
-
-    /**
-     * Get description
-     *
-     * @return string|null
-     */
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName(): string
-    {
-        return $this->name;
     }
 
     /**

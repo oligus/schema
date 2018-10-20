@@ -10,14 +10,9 @@ use GQLSchema\Field;
  * Class InterfaceType
  * @package GQLSchema\Types
  */
-class InterfaceType implements Type
+class InterfaceType extends AbstractType
 {
     const TYPE = 'interface';
-
-    /**
-     * @var string
-     */
-    private $name;
 
     /**
      * @var FieldCollection
@@ -25,41 +20,16 @@ class InterfaceType implements Type
     private $fields;
 
     /**
-     * @var string|null
-     */
-    private $description;
-
-    /**
      * InterfaceType constructor.
      * @param string $name
      * @param null|string $description
+     * @throws SchemaException
      */
     public function __construct(string $name, ?string $description = null)
     {
-        $this->name = $name;
-        $this->description = $description;
+        parent::__construct($name, $description);
 
         $this->fields = new FieldCollection();
-    }
-
-    /**
-     * Returns the name.
-     *
-     * @return string
-     */
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    /**
-     * Returns the description.
-     *
-     * @return string|null
-     */
-    public function getDescription(): ?string
-    {
-        return $this->description;
     }
 
     /**

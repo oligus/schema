@@ -12,12 +12,22 @@ use Spatie\Snapshots\MatchesSnapshots;
  */
 class ScalarTypeTest extends SchemaTestCase
 {
-    use MatchesSnapshots;
-
-    public function testSimple()
+    /**
+     * @throws \GQLSchema\Exceptions\SchemaException
+     */
+    public function testScalarType()
     {
         $scalar = new ScalarType('Url', 'Url description');
         $this->assertMatchesSnapshot($scalar->__toString());
+    }
+
+    /**
+     * @expectedException \GQLSchema\Exceptions\SchemaException
+     * @expectedExceptionMessage Invalid name [023]
+     */
+    public function testNameValidation()
+    {
+        new ScalarType('023');
     }
 
 }
