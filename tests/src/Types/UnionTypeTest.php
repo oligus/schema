@@ -7,7 +7,7 @@ use GQLSchema\Types\ObjectType;
 use GQLSchema\Tests\SchemaTestCase;
 
 /**
- * Class TypeModifierTest
+ * Class UnionTypeTest
  * @package GQLSchema\Tests\Types
  */
 class UnionTypeTest extends SchemaTestCase

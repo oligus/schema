@@ -8,7 +8,6 @@ use GQLSchema\Types\Scalars\IntegerType;
 use GQLSchema\Types\Scalars\StringType;
 use GQLSchema\Collections\InterfaceCollection;
 use GQLSchema\Tests\SchemaTestCase;
-use Spatie\Snapshots\MatchesSnapshots;
 
 /**
  * Class InterfaceCollectionTest
@@ -16,8 +15,6 @@ use Spatie\Snapshots\MatchesSnapshots;
  */
 class InterfaceCollectionTest extends SchemaTestCase
 {
-    use MatchesSnapshots;
-
     /**
      * @throws \GQLSchema\Exceptions\SchemaException
      */

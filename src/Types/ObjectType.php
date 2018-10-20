@@ -8,7 +8,7 @@ use GQLSchema\Exceptions\SchemaException;
 use GQLSchema\Field;
 
 /**
- * Class InterfaceType
+ * Class ObjectType
  * @package GQLSchema\Types
  */
 class ObjectType extends AbstractType

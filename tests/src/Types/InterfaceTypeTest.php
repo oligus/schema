@@ -7,16 +7,13 @@ use GQLSchema\Field;
 use GQLSchema\Types\Scalars\StringType;
 use GQLSchema\Types\Scalars\IntegerType;
 use GQLSchema\Tests\SchemaTestCase;
-use Spatie\Snapshots\MatchesSnapshots;
 
 /**
- * Class TypeModifierTest
+ * Class InterfaceTypeTest
  * @package GQLSchema\Tests\Types
  */
 class InterfaceTypeTest extends SchemaTestCase
 {
-    use MatchesSnapshots;
-
     /**
      * @throws \GQLSchema\Exceptions\SchemaException
      */
