@@ -34,7 +34,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "GQLSchema\\Tests\\": "tests/src",
+      "GQLSchema\\Tests\\": "tests",
       "GQLSchema\\E2E\\": "tests/e2e"
     }
   }

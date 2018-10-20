@@ -8,17 +8,14 @@ use GQLSchema\Types\InterfaceType;
 use GQLSchema\Types\ObjectType;
 use GQLSchema\Types\Scalars\StringType;
 use GQLSchema\Types\Scalars\IntegerType;
-use PHPUnit\Framework\TestCase;
-use Spatie\Snapshots\MatchesSnapshots;
+use GQLSchema\Tests\SchemaTestCase;
 
 /**
  * Class ArgumentTest
  * @package GQLSchema\Tests\Types
  */
-class SchemaTest extends TestCase
+class SchemaTest extends SchemaTestCase
 {
-    use MatchesSnapshots;
-
     /**
      * @throws \GQLSchema\Exceptions\SchemaException
      */

@@ -7,14 +7,14 @@ use GQLSchema\Types\InterfaceType;
 use GQLSchema\Types\Scalars\IntegerType;
 use GQLSchema\Types\Scalars\StringType;
 use GQLSchema\Collections\InterfaceCollection;
-use PHPUnit\Framework\TestCase;
+use GQLSchema\Tests\SchemaTestCase;
 use Spatie\Snapshots\MatchesSnapshots;
 
 /**
  * Class InterfaceCollectionTest
  * @package GQLSchema\Tests\Collections
  */
-class InterfaceCollectionTest extends TestCase
+class InterfaceCollectionTest extends SchemaTestCase
 {
     use MatchesSnapshots;
 

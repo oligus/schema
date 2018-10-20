@@ -3,13 +3,13 @@
 namespace GQLSchema\Tests\Values;
 
 use GQLSchema\Values\ValueBoolean;
-use PHPUnit\Framework\TestCase;
+use GQLSchema\Tests\SchemaTestCase;
 
 /**
  * Class ValueBooleanTest
  * @package GQLSchema\Tests\Values
  */
-class ValueBooleanTest extends TestCase
+class ValueBooleanTest extends SchemaTestCase
 {
     public function testConstruct()
     {

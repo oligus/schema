@@ -3,13 +3,13 @@
 namespace GQLSchema\Tests\Types;
 
 use GQLSchema\Types\TypeModifier;
-use PHPUnit\Framework\TestCase;
+use GQLSchema\Tests\SchemaTestCase;
 
 /**
  * Class TypeModifierTest
  * @package GQLSchema\Tests\Types
  */
-class TypeModifierTest extends TestCase
+class TypeModifierTest extends SchemaTestCase
 {
     public function testConstruct()
     {

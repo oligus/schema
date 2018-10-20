@@ -3,13 +3,13 @@
 namespace GQLSchema\Tests\Values;
 
 use GQLSchema\Values\ValueFloat;
-use PHPUnit\Framework\TestCase;
+use GQLSchema\Tests\SchemaTestCase;
 
 /**
  * Class ValueFloatTest
  * @package GQLSchema\Tests\Values
  */
-class ValueFloatTest extends TestCase
+class ValueFloatTest extends SchemaTestCase
 {
     public function testConstruct()
     {

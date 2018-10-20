@@ -8,14 +8,14 @@ use GQLSchema\Collections\FieldCollection;
 use GQLSchema\Field;
 use GQLSchema\Types\Scalars\StringType;
 use GQLSchema\Types\Scalars\IntegerType;
-use PHPUnit\Framework\TestCase;
+use GQLSchema\Tests\SchemaTestCase;
 use Spatie\Snapshots\MatchesSnapshots;
 
 /**
  * Class TypeModifierTest
  * @package GQLSchema\Tests\Types
  */
-class ObjectTypeTest extends TestCase
+class ObjectTypeTest extends SchemaTestCase
 {
     use MatchesSnapshots;
 

@@ -3,13 +3,13 @@
 namespace GQLSchema\Tests\Values;
 
 use GQLSchema\Values\ValueString;
-use PHPUnit\Framework\TestCase;
+use GQLSchema\Tests\SchemaTestCase;
 
 /**
  * Class ValueStringTest
  * @package GQLSchema\Tests\Values
  */
-class ValueStringTest extends TestCase
+class ValueStringTest extends SchemaTestCase
 {
     public function testConstruct()
     {

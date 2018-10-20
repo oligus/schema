@@ -10,13 +10,13 @@ use GQLSchema\Types\Scalars\StringType;
 use GQLSchema\Types\TypeModifier;
 use GQLSchema\Values\ValueBoolean;
 use GQLSchema\Values\ValueInteger;
-use PHPUnit\Framework\TestCase;
+use GQLSchema\Tests\SchemaTestCase;
 
 /**
  * Class ArgumentTest
  * @package GQLSchema\Tests\Types
  */
-class ArgumentTest extends TestCase
+class ArgumentTest extends SchemaTestCase
 {
     /**
      * @throws \GQLSchema\Exceptions\SchemaException

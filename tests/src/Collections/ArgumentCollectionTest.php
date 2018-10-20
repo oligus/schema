@@ -4,7 +4,7 @@ namespace GQLSchema\Tests\Collections;
 
 use GQLSchema\Types\TypeModifier;
 use GQLSchema\Values\ValueString;
-use PHPUnit\Framework\TestCase;
+use GQLSchema\Tests\SchemaTestCase;
 use GQLSchema\Argument;
 use GQLSchema\Types\Scalars\BooleanType;
 use GQLSchema\Types\Scalars\IntegerType;
@@ -15,7 +15,7 @@ use GQLSchema\Collections\ArgumentCollection;
  * Class ArgumentCollectionTest
  * @package GQLSchema\Tests\Collections
  */
-class ArgumentCollectionTest extends TestCase
+class ArgumentCollectionTest extends SchemaTestCase
 {
     /**
      * @throws \GQLSchema\Exceptions\SchemaException

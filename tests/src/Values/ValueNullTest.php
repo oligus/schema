@@ -3,13 +3,13 @@
 namespace GQLSchema\Tests\Values;
 
 use GQLSchema\Values\ValueNull;
-use PHPUnit\Framework\TestCase;
+use GQLSchema\Tests\SchemaTestCase;
 
 /**
  * Class ValueNullTest
  * @package GQLSchema\Tests\Values
  */
-class ValueNullTest extends TestCase
+class ValueNullTest extends SchemaTestCase
 {
     public function testConstruct()
     {

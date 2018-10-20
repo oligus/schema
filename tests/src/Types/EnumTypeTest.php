@@ -3,14 +3,14 @@
 namespace GQLSchema\Tests\Types;
 
 use GQLSchema\Types\EnumType;
-use PHPUnit\Framework\TestCase;
+use GQLSchema\Tests\SchemaTestCase;
 use Spatie\Snapshots\MatchesSnapshots;
 
 /**
  * Class EnumTypeTest
  * @package GQLSchema\Tests\Types
  */
-class EnumTypeTest extends TestCase
+class EnumTypeTest extends SchemaTestCase
 {
     use MatchesSnapshots;
 

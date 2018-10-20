@@ -3,7 +3,7 @@
 namespace GQLSchema\Tests\Types\Scalars;
 
 use GQLSchema\Types\TypeModifier;
-use PHPUnit\Framework\TestCase;
+use GQLSchema\Tests\SchemaTestCase;
 use GQLSchema\Types\Scalars\BooleanType;
 use GQLSchema\Types\Scalars\FloatType;
 use GQLSchema\Types\Scalars\IDType;
@@ -14,7 +14,7 @@ use GQLSchema\Types\Scalars\StringType;
  * Class TypeTest
  * @package GQLSchema\Tests\Types
  */
-class ScalarTypesTest extends TestCase
+class ScalarTypesTest extends SchemaTestCase
 {
     public function testScalarTypes()
     {

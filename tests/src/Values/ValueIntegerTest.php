@@ -3,13 +3,13 @@
 namespace GQLSchema\Tests\Values;
 
 use GQLSchema\Values\ValueInteger;
-use PHPUnit\Framework\TestCase;
+use GQLSchema\Tests\SchemaTestCase;
 
 /**
  * Class ValueIntegerTest
  * @package GQLSchema\Tests\Values
  */
-class ValueIntegerTest extends TestCase
+class ValueIntegerTest extends SchemaTestCase
 {
     public function testConstruct()
     {

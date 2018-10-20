@@ -3,14 +3,14 @@
 namespace GQLSchema\Tests\Types;
 
 use GQLSchema\Types\ScalarType;
-use PHPUnit\Framework\TestCase;
+use GQLSchema\Tests\SchemaTestCase;
 use Spatie\Snapshots\MatchesSnapshots;
 
 /**
  * Class TypeModifierTest
  * @package GQLSchema\Tests\Types
  */
-class ScalarTypeTest extends TestCase
+class ScalarTypeTest extends SchemaTestCase
 {
     use MatchesSnapshots;
 

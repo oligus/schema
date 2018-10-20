@@ -12,13 +12,13 @@ use GQLSchema\Types\Scalars\StringType;
 use GQLSchema\Values\ValueBoolean;
 use GQLSchema\Values\ValueString;
 use GQLSchema\Collections\ArgumentCollection;
-use PHPUnit\Framework\TestCase;
+use GQLSchema\Tests\SchemaTestCase;
 
 /**
  * Class FieldTest
  * @package GQLSchema\Tests\Types
  */
-class FieldTest extends TestCase
+class FieldTest extends SchemaTestCase
 {
     /**
      * @throws \GQLSchema\Exceptions\SchemaException

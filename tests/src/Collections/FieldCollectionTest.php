@@ -7,13 +7,13 @@ use GQLSchema\Types\Scalars\IntegerType;
 use GQLSchema\Types\Scalars\StringType;
 use GQLSchema\Field;
 use GQLSchema\Collections\FieldCollection;
-use PHPUnit\Framework\TestCase;
+use GQLSchema\Tests\SchemaTestCase;
 
 /**
  * Class FieldCollectionTest
  * @package GQLSchema\Tests\Collections
  */
-class FieldCollectionTest extends TestCase
+class FieldCollectionTest extends SchemaTestCase
 {
     /**
      * @throws \GQLSchema\Exceptions\SchemaException
