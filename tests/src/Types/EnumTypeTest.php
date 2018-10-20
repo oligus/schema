@@ -4,7 +4,6 @@ namespace GQLSchema\Tests\Types;
 
 use GQLSchema\Types\EnumType;
 use GQLSchema\Tests\SchemaTestCase;
-use Spatie\Snapshots\MatchesSnapshots;
 
 /**
  * Class EnumTypeTest
@@ -12,8 +11,6 @@ use Spatie\Snapshots\MatchesSnapshots;
  */
 class EnumTypeTest extends SchemaTestCase
 {
-    use MatchesSnapshots;
-
     /**
      * @throws \Exception
      */

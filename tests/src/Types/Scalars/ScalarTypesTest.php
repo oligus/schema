@@ -11,8 +11,8 @@ use GQLSchema\Types\Scalars\IntegerType;
 use GQLSchema\Types\Scalars\StringType;
 
 /**
- * Class TypeTest
- * @package GQLSchema\Tests\Types
+ * Class ScalarTypesTest
+ * @package GQLSchema\Tests\Types\Scalars
  */
 class ScalarTypesTest extends SchemaTestCase
 {

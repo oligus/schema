@@ -11,7 +11,7 @@ use GQLSchema\Types\Scalars\IntegerType;
 use GQLSchema\Tests\SchemaTestCase;
 
 /**
- * Class ArgumentTest
+ * Class SchemaTest
  * @package GQLSchema\Tests\Types
  */
 class SchemaTest extends SchemaTestCase

@@ -4,10 +4,9 @@ namespace GQLSchema\Tests\Types;
 
 use GQLSchema\Types\ScalarType;
 use GQLSchema\Tests\SchemaTestCase;
-use Spatie\Snapshots\MatchesSnapshots;
 
 /**
- * Class TypeModifierTest
+ * Class ScalarTypeTest
  * @package GQLSchema\Tests\Types
  */
 class ScalarTypeTest extends SchemaTestCase
