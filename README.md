@@ -14,6 +14,7 @@ GraphQL schema library.
 &nbsp;&nbsp;&nbsp;&nbsp;[Objects](README.md#objects)<br />
 &nbsp;&nbsp;&nbsp;&nbsp;[Interfaces](README.md#interfaces)<br />
 &nbsp;&nbsp;&nbsp;&nbsp;[Enums](README.md#enums)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;[Inputs](#inputs)<br />
 [Fields](README.md#fields)<br />
 &nbsp;&nbsp;&nbsp;&nbsp;[Arguments](README.md#arguments)<br />
 &nbsp;&nbsp;&nbsp;&nbsp;[Argument values](README.md#argument-values)<br />
@@ -40,7 +41,7 @@ StringType
 InterfaceType
 ```
 
-### Type modifiers
+## Type modifiers
 
 Type modifiers are used in conjunction with types, add modifier to a type to modify the type in question.
 
@@ -70,7 +71,7 @@ $type = new BooleanType($typeModifier);
 [bool!]!
 ```
 
-### Scalar
+## Scalar
 
 Scalar types represent primitive leaf values in a GraphQL type system. GraphQL responses take the form of a hierarchical tree; the leaves on these trees are GraphQL scalars.
 
@@ -211,7 +212,7 @@ $union->addObjectType(new ObjectType('Cat'));
 union Animals = Dog | Cat
 ```
 
-### Enums
+## Enums
 
 GraphQL Enum types, like scalar types, also represent leaf values in a GraphQL type system. However Enum types describe the set of possible values.
 
@@ -242,6 +243,37 @@ enum Direction {
   NORTH
   EAST
   WEST
+}
+```
+
+## Inputs
+
+Fields may accept arguments to configure their behavior. These inputs are often scalars or enums, but they sometimes need to represent more complex values.
+
+[GrapQL Spec](https://facebook.github.io/graphql/June2018/#sec-Input-Objects)
+
+#### Definition
+`InputType(string $name, ?string $description = null)`
+
+*Add field:*
+
+`addField(Field $field): void`
+
+#### Examples
+
+```php
+$object = new InputType('Animal');
+$object->addField(new Field('name', new StringType()));
+$object->addField(new Field('age', new IntegerType()));
+$object->addField(new Field('weight', new IntegerType()));
+```
+
+*Result:*
+```graphql
+input Animal {
+  name: String
+  age: Int
+  weight: Int
 }
 ```
 
@@ -290,7 +322,7 @@ age: Int
 size: Int
 ```
 
-### Arguments
+## Arguments
 
 Fields are conceptually functions which return values, and occasionally accept arguments which alter their behavior. These arguments often map directly to function arguments within a GraphQL server’s implementation.
 
@@ -333,7 +365,7 @@ $arguments->add(new Argument('stringArg', new StringType(new TypeModifier($nulla
 booleanArg: Boolean!, integerArg: Int!, stringArg: String! = "test"
 ```
 
-### Argument values
+## Argument values
 
 Set simple scalar values for default values in arguments. 
 
