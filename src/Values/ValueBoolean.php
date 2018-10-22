@@ -29,12 +29,4 @@ class ValueBoolean implements Value
     {
         return $this->value;
     }
-
-    /**
-     * @return string
-     */
-    public function __toString(): string
-    {
-        return $this->value ? 'true' : 'false';
-    }
 }
