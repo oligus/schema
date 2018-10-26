@@ -25,16 +25,13 @@ class FieldTest extends SchemaTestCase
      */
     public function testFields()
     {
-        $field = new Field('simpleField', new IntegerType());
-        $this->assertEquals('simpleField: Int', $field->__toString());
+        $field = new Field('simpleField', new IntegerType(), new TypeModifier(false, true, false));
+        $this->assertEquals('simpleField: [Int!]!', $this->serializer->serialize($field));
 
-        $field = new Field('simpleField', new IntegerType(), new ArgumentCollection());
-        $this->assertEquals('simpleField: Int', $field->__toString());
-
-        $arguments = new ArgumentCollection();
-        $arguments->add(new Argument('booleanArg', new BooleanType(new TypeModifier(false))));
-        $arguments->add(new Argument('integerArg', new IntegerType(new TypeModifier(false))));
-        $arguments->add(new Argument('stringArg', new StringType(new TypeModifier(false)), new ValueString('test')));
+        $arguments = new CommonCollection();
+        $arguments->add(new Argument('booleanArg', new BooleanType(), new TypeModifier(false)));
+        $arguments->add(new Argument('integerArg', new IntegerType(), new TypeModifier(false)));
+        $arguments->add(new Argument('stringArg', new StringType(), new TypeModifier(false), new ValueString('test')));
 
         $field = new Field('testField', new IntegerType(new TypeModifier(false)), $arguments);
         $this->assertEquals('testField(booleanArg: Boolean!, integerArg: Int!, stringArg: String! = "test"): Int!',
@@ -98,7 +95,7 @@ class FieldTest extends SchemaTestCase
 
         $expected = '"My test description"' . "\n";
         $expected .= 'simpleField: Int';
-        $this->assertEquals($expected, $field->__toString());
+        $this->assertEquals($expected, $this->serializer->serialize($field));
     }
 
 

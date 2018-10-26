@@ -19,7 +19,7 @@ class ArgumentSerializer
     public function serialize(Argument $argument): string
     {
         $type = $argument->getType()->getName();
-        $typeModifier = $argument->getType()->getTypeModifier();
+        $typeModifier = $argument->getTypeModifier();
 
         $string = $argument->getName() . ': ';
 

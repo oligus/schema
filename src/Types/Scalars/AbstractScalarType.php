@@ -43,6 +43,14 @@ abstract class AbstractScalarType implements Type
     }
 
     /**
+     * @return string
+     */
+    public function getType(): string
+    {
+        return $this->name;
+    }
+
+    /**
      * Returns the type modifier.
      *
      * @return TypeModifier|null
@@ -53,37 +61,10 @@ abstract class AbstractScalarType implements Type
     }
 
     /**
-     * String representation of this object.
-     *
-     * @return string
+     * @return null|string
      */
-    public function __toString(): string
+    public function getDescription(): ?string
     {
-        $name = $this->getName();
-
-        if (is_null($this->getTypeModifier())) {
-            return $name;
-        }
-        $string = '';
-
-        if ($this->getTypeModifier()->isListable()) {
-            $string .= '[';
-        }
-
-        $string .= $name;
-
-        if (!$this->getTypeModifier()->isNullable()) {
-            $string .= '!';
-        }
-
-        if ($this->getTypeModifier()->isListable()) {
-            $string .= ']';
-        }
-
-        if (!$this->getTypeModifier()->isNullableList()) {
-            $string .= '!';
-        }
-
-        return $string;
+        return "test";
     }
 }

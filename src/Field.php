@@ -10,7 +10,7 @@ use GQLSchema\Collections\ArgumentCollection;
  * Class Field
  * @package GQLSchema
  */
-class Field implements InputOutput
+class Field implements Element
 {
     /**
      * @var Type
@@ -33,6 +33,11 @@ class Field implements InputOutput
     private $description;
 
     /**
+     * @var TypeModifier|null
+     */
+    private $typeModifier;
+
+    /**
      * Field constructor.
      * @param string $name
      * @param Type $type
@@ -43,7 +48,7 @@ class Field implements InputOutput
     public function __construct(
         string $name,
         Type $type,
-        ?ArgumentCollection $arguments = null,
+        ?TypeModifier $typeModifier = null,
         ?string $description = null
     ) {
         $this->setName($name);

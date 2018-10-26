@@ -17,7 +17,8 @@ class ScalarTypeTest extends SchemaTestCase
     public function testScalarType()
     {
         $scalar = new ScalarType('Url', 'Url description');
-        $this->assertMatchesSnapshot($scalar->__toString());
+        $this->assertEquals('scalar', $scalar->getType());
+        $this->assertEquals('Url', $scalar->getName());
     }
 
     /**

@@ -47,6 +47,15 @@ class Schema
     }
 
     /**
+     * @return InterfaceCollection
+     */
+    public function getInterfaces(): InterfaceCollection
+    {
+        return $this->interfaces;
+    }
+
+
+    /**
      * Add object to schema
      *
      * @param ObjectType $objectType
