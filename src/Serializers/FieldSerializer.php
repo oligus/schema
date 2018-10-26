@@ -13,19 +13,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 class FieldSerializer
 {
     /**
-     * @var ScalarSerializer
-     */
-    private $scalarSerializer;
-
-    /**
-     * FieldSerializer constructor.
-     */
-    public function __construct()
-    {
-        $this->scalarSerializer = new ScalarSerializer();
-    }
-
-    /**
      * @param Field $field
      * @return string
      */

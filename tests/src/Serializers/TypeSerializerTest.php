@@ -6,6 +6,7 @@ use GQLSchema\Serializers\TypeSerializer;
 use GQLSchema\Field;
 use GQLSchema\Types\EnumType;
 use GQLSchema\Types\InputType;
+use GQLSchema\Types\TypeModifier;
 use GQLSchema\Types\UnionType;
 use GQLSchema\Types\ObjectType;
 use GQLSchema\Types\InterfaceType;
@@ -39,7 +40,7 @@ class TypeSerializerTest extends SchemaTestCase
         $object->addField(new Field('age', new IntegerType()));
         $object->addField(new Field('size', new IntegerType()));
 
-        $this->assertEquals('Wine', $this->serializer->serialize($object, $this->serializer::CONTEXT_SCALAR));
+        $this->assertEquals('Wine', $this->serializer->serialize($object, new TypeModifier()));
         $this->assertMatchesSnapshot($this->serializer->serialize($object));
     }
 
@@ -53,7 +54,7 @@ class TypeSerializerTest extends SchemaTestCase
         $interface->addField(new Field('age', new IntegerType()));
         $interface->addField(new Field('size', new IntegerType()));
 
-        $this->assertEquals('Wine', $this->serializer->serialize($interface, $this->serializer::CONTEXT_SCALAR));
+        $this->assertEquals('Wine', $this->serializer->serialize($interface, new TypeModifier()));
         $this->assertMatchesSnapshot($this->serializer->serialize($interface));
     }
 
@@ -67,7 +68,7 @@ class TypeSerializerTest extends SchemaTestCase
         $input->addField(new Field('age', new IntegerType()));
         $input->addField(new Field('size', new IntegerType()));
 
-        $this->assertEquals('Wine', $this->serializer->serialize($input, $this->serializer::CONTEXT_SCALAR));
+        $this->assertEquals('Wine', $this->serializer->serialize($input, new TypeModifier()));
         $this->assertMatchesSnapshot($this->serializer->serialize($input));
     }
 
@@ -81,7 +82,7 @@ class TypeSerializerTest extends SchemaTestCase
         $union->addObjectType(new ObjectType('Cat'));
         $union->addObjectType(new ObjectType('Bird'));
 
-        $this->assertEquals('MyUnion', $this->serializer->serialize($union, $this->serializer::CONTEXT_SCALAR));
+        $this->assertEquals('MyUnion', $this->serializer->serialize($union, new TypeModifier()));
         $this->assertMatchesSnapshot($this->serializer->serialize($union));
     }
 
@@ -91,7 +92,7 @@ class TypeSerializerTest extends SchemaTestCase
     public function testEnumType()
     {
         $enum = new EnumType('Direction', 'Different directions', ['SOUTH', 'NORTH', 'EAST', 'WEST']);
-        $this->assertEquals('Direction', $this->serializer->serialize($enum, $this->serializer::CONTEXT_SCALAR));
+        $this->assertEquals('Direction', $this->serializer->serialize($enum, new TypeModifier()));
         $this->assertMatchesSnapshot($this->serializer->serialize($enum));
     }
 
