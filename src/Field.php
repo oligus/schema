@@ -3,8 +3,9 @@
 namespace GQLSchema;
 
 use GQLSchema\Types\Type;
+use GQLSchema\Collections\CommonCollection;
 use GQLSchema\Exceptions\SchemaException;
-use GQLSchema\Collections\ArgumentCollection;
+use GQLSchema\Types\TypeModifier;
 
 /**
  * Class Field
@@ -23,7 +24,7 @@ class Field implements Element
     private $name;
 
     /**
-     * @var ArgumentCollection|null
+     * @var CommonCollection
      */
     private $arguments;
 
@@ -41,7 +42,7 @@ class Field implements Element
      * Field constructor.
      * @param string $name
      * @param Type $type
-     * @param ArgumentCollection|null $arguments
+     * @param TypeModifier|null $typeModifier
      * @param null|string $description
      * @throws SchemaException
      */
@@ -53,8 +54,10 @@ class Field implements Element
     ) {
         $this->setName($name);
         $this->type = $type;
-        $this->arguments = $arguments;
+        $this->typeModifier = $typeModifier;
         $this->description = $description;
+
+        $this->arguments = new CommonCollection();
     }
 
     /**
@@ -63,6 +66,10 @@ class Field implements Element
      */
     private function setName(string $name): void
     {
+        if (!preg_match('/[_A-Za-z][_0-9A-Za-z]*/', $name)) {
+            throw new SchemaException('Invalid name [' . $name . ']');
+        }
+
         if (substr($name, 0, 2) === "__") {
             throw new SchemaException('The field must not have a name which begins with the characters "__" (two underscores).');
         }
@@ -71,25 +78,30 @@ class Field implements Element
     }
 
     /**
-     * @return string
+     * @param Argument $argument
+     * @throws SchemaException
      */
-    public function __toString(): string
+    public function addArgument(Argument $argument): void
     {
-        $string = '';
+        $this->arguments->add($argument);
+    }
 
-        if (!empty($this->getDescription())) {
-            $string .= '"' . $this->getDescription() . '"' . "\n";
-        }
+    /**
+     * @return CommonCollection
+     */
+    public function getArguments(): CommonCollection
+    {
+        return $this->arguments;
+    }
 
-        $string .= $this->getName();
-
-        if ($this->arguments instanceof ArgumentCollection && !$this->arguments->isEmpty()) {
-            $string .= $this->arguments->__toString();
-        }
-
-        $string .= ': ' . $this->getType()->__toString();
-
-        return $string;
+    /**
+     * Returns the description.
+     *
+     * @return string|null
+     */
+    public function getDescription(): ?string
+    {
+        return $this->description;
     }
 
     /**
@@ -113,12 +125,19 @@ class Field implements Element
     }
 
     /**
-     * Returns the description.
-     *
-     * @return string|null
+     * @param TypeModifier|null $typeModifier
      */
-    public function getDescription(): ?string
+    public function setTypeModifier(?TypeModifier $typeModifier): void
     {
-        return $this->description;
+        $this->typeModifier = $typeModifier;
     }
+
+    /**
+     * @return TypeModifier|null
+     */
+    public function getTypeModifier(): ?TypeModifier
+    {
+        return $this->typeModifier;
+    }
+
 }

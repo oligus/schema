@@ -37,6 +37,19 @@ abstract class AbstractCollection
     }
 
     /**
+     * @return \ArrayIterator|\Traversable
+     */
+    public function getIterator()
+    {
+        return $this->collection->getIterator();
+    }
+
+    public function count()
+    {
+        return $this->collection->count();
+    }
+
+    /**
      * Append an item to the list of items.
      *
      * @param InputOutput $item
