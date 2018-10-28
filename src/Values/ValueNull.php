@@ -15,12 +15,4 @@ class ValueNull implements Value
     {
         return null;
     }
-
-    /**
-     * @return string
-     */
-    public function __toString(): string
-    {
-        return 'null';
-    }
 }

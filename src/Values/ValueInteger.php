@@ -29,12 +29,4 @@ class ValueInteger implements Value
     {
         return $this->value;
     }
-
-    /**
-     * @return string
-     */
-    public function __toString(): string
-    {
-        return "$this->value";
-    }
 }

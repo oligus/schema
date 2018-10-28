@@ -2,6 +2,7 @@
 
 namespace GQLSchema;
 
+use GQLSchema\Types\TypeModifier;
 use GQLSchema\Values\Value;
 use GQLSchema\Types\Type;
 use GQLSchema\Exceptions\SchemaException;
@@ -10,7 +11,7 @@ use GQLSchema\Exceptions\SchemaException;
  * Class Argument
  * @package GQLSchema
  */
-class Argument implements InputOutput
+class Argument implements Element
 {
     /**
      * @var Type
@@ -28,19 +29,27 @@ class Argument implements InputOutput
     private $defaultValue;
 
     /**
+     * @var TypeModifier|null
+     */
+    private $typeModifier;
+
+    /**
      * Argument constructor.
      * @param string $name
      * @param Type $type
+     * @param TypeModifier|null $typeModifier
      * @param Value|null $defaultValue
      * @throws SchemaException
      */
     public function __construct(
         string $name,
         Type $type,
+        ?TypeModifier $typeModifier = null,
         ?Value $defaultValue = null
     ) {
         $this->setName($name);
         $this->type = $type;
+        $this->typeModifier = $typeModifier;
         $this->defaultValue = $defaultValue;
     }
 
@@ -56,22 +65,6 @@ class Argument implements InputOutput
 
 
         $this->name = $name;
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString(): string
-    {
-        $string = $this->getName() . ': ';
-
-        $string .= $this->getType()->__toString();
-
-        if (!is_null($this->getDefaultValue())) {
-            $string .= ' = ' . $this->getDefaultValue()->__toString();
-        }
-
-        return $string;
     }
 
     /**
@@ -102,5 +95,21 @@ class Argument implements InputOutput
     public function getDefaultValue(): ?Value
     {
         return $this->defaultValue;
+    }
+
+    /**
+     * @return TypeModifier|null
+     */
+    public function getTypeModifier(): ?TypeModifier
+    {
+        return $this->typeModifier;
+    }
+
+    /**
+     * @param TypeModifier|null $typeModifier
+     */
+    public function setTypeModifier(?TypeModifier $typeModifier): void
+    {
+        $this->typeModifier = $typeModifier;
     }
 }

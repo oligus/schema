@@ -13,18 +13,6 @@ class EnumTypeTest extends SchemaTestCase
 {
     /**
      * @throws \Exception
-     */
-    public function testSimple()
-    {
-        $enum = new EnumType('Direction', 'Different directions', ['SOUTH', 'NORTH']);
-        $enum->addEnum('EAST');
-        $enum->addEnum('WEST');
-
-        $this->assertMatchesSnapshot($enum->__toString());
-    }
-
-    /**
-     * @throws \Exception
      * @expectedException \GQLSchema\Exceptions\SchemaException
      * @expectedExceptionMessage Enums must be unique, enum already found: EAST
      */

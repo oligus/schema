@@ -52,35 +52,4 @@ class InterfaceType extends AbstractType
     {
         $this->fields->add($field);
     }
-
-    /**
-     * String representation of this object.
-     *
-     * @return string
-     * @throws SchemaException
-     */
-    public function __toString(): string
-    {
-        $string = '';
-
-        if (!empty($this->getDescription())) {
-            $string .= '"""' . "\n";
-            $string .= $this->getDescription() . "\n";
-            $string .= '"""' . "\n";
-        }
-
-        $string .= self::TYPE;
-        $string .= ' ' . $this->getName();
-        $string .= " {\n";
-
-        if ($this->fields->isEmpty()) {
-            throw new SchemaException('An Interface type must define one or more fields.');
-        }
-
-        $string .= $this->fields->__toString();
-
-        $string .= "}\n\n";
-
-        return $string;
-    }
 }

@@ -2,7 +2,6 @@
 
 namespace GQLSchema\Types\Scalars;
 
-use GQLSchema\Types\TypeModifier;
 use GQLSchema\Types\Type;
 
 /**
@@ -12,25 +11,9 @@ use GQLSchema\Types\Type;
 abstract class AbstractScalarType implements Type
 {
     /**
-     * @var TypeModifier|null
-     */
-    protected $typeModifier;
-
-    /**
      * @var string
      */
     protected $name;
-
-    /**
-     * AbstractScalarType constructor.
-     * @param TypeModifier|null $typeModifier
-     */
-    public function __construct(?TypeModifier $typeModifier = null)
-    {
-        if ($typeModifier instanceof TypeModifier) {
-            $this->typeModifier = $typeModifier;
-        }
-    }
 
     /**
      * Returns the name.
@@ -43,47 +26,18 @@ abstract class AbstractScalarType implements Type
     }
 
     /**
-     * Returns the type modifier.
-     *
-     * @return TypeModifier|null
+     * @return string
      */
-    public function getTypeModifier(): ?TypeModifier
+    public function getType(): string
     {
-        return $this->typeModifier;
+        return $this->name;
     }
 
     /**
-     * String representation of this object.
-     *
-     * @return string
+     * @return null|string
      */
-    public function __toString(): string
+    public function getDescription(): ?string
     {
-        $name = $this->getName();
-
-        if (is_null($this->getTypeModifier())) {
-            return $name;
-        }
-        $string = '';
-
-        if ($this->getTypeModifier()->isListable()) {
-            $string .= '[';
-        }
-
-        $string .= $name;
-
-        if (!$this->getTypeModifier()->isNullable()) {
-            $string .= '!';
-        }
-
-        if ($this->getTypeModifier()->isListable()) {
-            $string .= ']';
-        }
-
-        if (!$this->getTypeModifier()->isNullableList()) {
-            $string .= '!';
-        }
-
-        return $string;
+        return "";
     }
 }

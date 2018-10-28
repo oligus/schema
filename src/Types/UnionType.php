@@ -20,6 +20,7 @@ class UnionType extends AbstractType
 
     /**
      * UnionType constructor.
+     *
      * @param string $name
      * @param null|string $description
      * @throws SchemaException
@@ -51,33 +52,8 @@ class UnionType extends AbstractType
 
     /**
      * @return string
-     * @throws SchemaException
      */
-    public function __toString(): string
-    {
-        if ($this->objectTypes->isEmpty()) {
-            throw new SchemaException('No types added');
-        }
-
-        $string = '';
-
-        if (!empty($this->getDescription())) {
-            $string .= '"""' . "\n";
-            $string .= $this->getDescription() . "\n";
-            $string .= '"""' . "\n";
-        }
-
-        $string .= self::TYPE;
-        $string .= ' ' . $this->getName();
-        $string .= ' = ' . $this->getObjectTypes();
-
-        return $string . "\n";
-    }
-
-    /**
-     * @return string
-     */
-    private function getObjectTypes(): string
+    public function getObjectTypes(): string
     {
         $string = '';
 
