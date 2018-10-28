@@ -4,10 +4,9 @@ namespace GQLSchema\Serializers\TypeSerializers;
 
 use GQLSchema\Field;
 use GQLSchema\Types\InputType;
-use GQLSchema\Types\InterfaceType;
+use GQLSchema\Types\Type;
 use GQLSchema\Exceptions\SchemaException;
 use GQLSchema\Serializers\FieldSerializer;
-use GQLSchema\Collections\InterfaceCollection;
 
 /**
  * Class InputSerializer
@@ -16,32 +15,50 @@ use GQLSchema\Collections\InterfaceCollection;
 class InputSerializer
 {
     /**
-     * @param InputType $type
+     * @var InputType
+     */
+    private $inputType;
+
+    /**
+     * InputSerializer constructor.
+     * @param Type $type
+     * @throws SchemaException
+     */
+    public function __construct(Type $type)
+    {
+        if (!$type instanceof InputType) {
+            throw new SchemaException('Type must be input type');
+        }
+
+        $this->inputType = $type;
+    }
+
+    /**
      * @return string
      * @throws SchemaException
      */
-    public function serialize(InputType $type): string
+    public function serialize(): string
     {
         $string = '';
 
-        if (!empty($type->getDescription())) {
+        if (!empty($this->inputType->getDescription())) {
             $string .= '"""' . "\n";
-            $string .= $type->getDescription() . "\n";
+            $string .= $this->inputType->getDescription() . "\n";
             $string .= '"""' . "\n";
         }
 
-        $string .= $type->getType();
-        $string .= ' ' . $type->getName();
+        $string .= $this->inputType->getType();
+        $string .= ' ' . $this->inputType->getName();
 
         $string .= " {\n";
 
 
-        if ($type->getFields()->isEmpty()) {
+        if ($this->inputType->getFields()->isEmpty()) {
             throw new SchemaException('An input type must define one or more fields.');
         }
 
         /** @var Field $field */
-        foreach ($type->getFields()->getIterator() as $field) {
+        foreach ($this->inputType->getFields()->getIterator() as $field) {
             $string .= '  ';
             $string .= (new FieldSerializer())->serialize($field);
             $string .= "\n";

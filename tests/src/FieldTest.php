@@ -122,4 +122,13 @@ class FieldTest extends SchemaTestCase
     {
         new Field('__testField', new BooleanType());
     }
+
+    /**
+     * @expectedException \GQLSchema\Exceptions\SchemaException
+     * @expectedExceptionMessage Invalid name [99-yes]
+     */
+    public function testSetInvalidName()
+    {
+        new Field('99-yes', new BooleanType());
+    }
 }

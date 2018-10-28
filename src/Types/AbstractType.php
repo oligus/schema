@@ -86,25 +86,6 @@ abstract class AbstractType implements Type
     }
 
     /**
-     * @return TypeModifier|null
-     */
-    public function getTypeModifier(): ?TypeModifier
-    {
-        return $this->typeModifier;
-    }
-
-    /**
-     * @param TypeModifier|null $typeModifier
-     * @return AbstractType
-     */
-    public function setTypeModifier(?TypeModifier $typeModifier): self
-    {
-        $this->typeModifier = $typeModifier;
-
-        return $this;
-    }
-
-    /**
      * @return string
      */
     public function getType(): string

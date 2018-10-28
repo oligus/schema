@@ -12,6 +12,7 @@ use GQLSchema\Types\Scalars\StringType;
 use GQLSchema\Types\Scalars\IntegerType;
 use GQLSchema\Values\ValueBoolean;
 use GQLSchema\Values\ValueInteger;
+use GQLSchema\Values\ValueNull;
 
 /**
  * Class ArgumentSerializerTest
@@ -54,7 +55,8 @@ class ArgumentSerializerTest extends SchemaTestCase
 
         // nonNullBooleanArg: Boolean!
         $typeModifier = new TypeModifier(false);
-        $arg = new Argument('nonNullBooleanArg', new BooleanType(), $typeModifier);
+        $arg = new Argument('nonNullBooleanArg', new BooleanType());
+        $arg->setTypeModifier($typeModifier);
         $this->assertEquals('nonNullBooleanArg: Boolean!', $this->serializer->serialize($arg));
 
         // booleanListArg: [Boolean]!
@@ -69,5 +71,9 @@ class ArgumentSerializerTest extends SchemaTestCase
         // intArgField(intArg: Int): Int
         $arg = new Argument('intArg', new IntegerType(), null, new ValueInteger(0));
         $this->assertEquals('intArg: Int = 0', $this->serializer->serialize($arg));
+
+        // intArgField(intArg: Int): Int
+        $arg = new Argument('intArg', new IntegerType(), null, new ValueNull());
+        $this->assertEquals('intArg: Int = null', $this->serializer->serialize($arg));
     }
 }

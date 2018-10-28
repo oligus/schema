@@ -6,6 +6,7 @@ use GQLSchema\Serializers\TypeSerializer;
 use GQLSchema\Field;
 use GQLSchema\Types\EnumType;
 use GQLSchema\Types\InputType;
+use GQLSchema\Types\Type;
 use GQLSchema\Types\TypeModifier;
 use GQLSchema\Types\UnionType;
 use GQLSchema\Types\ObjectType;
@@ -28,6 +29,18 @@ class TypeSerializerTest extends SchemaTestCase
     protected function setUp()
     {
         $this->serializer = new TypeSerializer();
+    }
+
+    /**
+     * @throws \GQLSchema\Exceptions\SchemaException
+     */
+    public function testScalarType()
+    {
+        $scalar = new IntegerType();
+        $this->assertEquals('Int', $this->serializer->serialize($scalar));
+        $this->assertEquals('Int!', $this->serializer->serialize($scalar, new TypeModifier(false)));
+        $this->assertEquals('[Int!]',
+            $this->serializer->serialize($scalar, new TypeModifier(false, true,  true)));
     }
 
     /**
@@ -94,6 +107,22 @@ class TypeSerializerTest extends SchemaTestCase
         $enum = new EnumType('Direction', 'Different directions', ['SOUTH', 'NORTH', 'EAST', 'WEST']);
         $this->assertEquals('Direction', $this->serializer->serialize($enum, new TypeModifier()));
         $this->assertMatchesSnapshot($this->serializer->serialize($enum));
+    }
+
+    /**
+     * @expectedException \GQLSchema\Exceptions\SchemaException
+     * @expectedExceptionMessage Unknown type: test
+     */
+    public function testUnknownType()
+    {
+        $mock = new class implements Type {
+            public function getName(): string { return 'test'; }
+            public function getType(): string { return 'testType'; }
+            public function getDescription(): ?string { return null; }
+            public function getTypeModifier(): ?TypeModifier { return null; }
+        };
+
+        $this->serializer->serialize($mock);
     }
 
 }

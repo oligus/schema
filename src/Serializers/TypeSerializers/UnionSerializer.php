@@ -3,6 +3,7 @@
 namespace GQLSchema\Serializers\TypeSerializers;
 
 use GQLSchema\Types\UnionType;
+use GQLSchema\Types\Type;
 use GQLSchema\Exceptions\SchemaException;
 
 /**
@@ -12,29 +13,47 @@ use GQLSchema\Exceptions\SchemaException;
 class UnionSerializer
 {
     /**
-     * @param UnionType $type
+     * @var UnionType
+     */
+    private $unionType;
+
+    /**
+     * UnionSerializer constructor.
+     * @param Type $type
+     * @throws SchemaException
+     */
+    public function __construct(Type $type)
+    {
+        if (!$type instanceof UnionType) {
+            throw new SchemaException('Type must be union type');
+        }
+
+        $this->unionType = $type;
+    }
+
+    /**
      * @return string
      * @throws SchemaException
      */
-    public function serialize(UnionType $type): string
+    public function serialize(): string
     {
         $string = '';
 
-        if (!empty($type->getDescription())) {
+        if (!empty($this->unionType->getDescription())) {
             $string .= '"""' . "\n";
-            $string .= $type->getDescription() . "\n";
+            $string .= $this->unionType->getDescription() . "\n";
             $string .= '"""' . "\n";
         }
 
-        $objectTypes = $type->getObjectTypes();
+        $objectTypes = $this->unionType->getObjectTypes();
 
         if (empty($objectTypes)) {
             throw new SchemaException('No types added');
         }
 
-        $string .= $type->getType();
-        $string .= ' ' . $type->getName();
-        $string .= ' = ' . $type->getObjectTypes();
+        $string .= $this->unionType->getType();
+        $string .= ' ' . $this->unionType->getName();
+        $string .= ' = ' . $this->unionType->getObjectTypes();
 
         return $string;
     }

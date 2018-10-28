@@ -4,9 +4,7 @@ namespace GQLSchema\Serializers;
 
 use GQLSchema\Serializers\TypeSerializers\InterfaceSerializer;
 use GQLSchema\Serializers\TypeSerializers\ScalarSerializer;
-use GQLSchema\Types\InterfaceType;
 use GQLSchema\Schema;
-use GQLSchema\Types\ScalarType;
 
 /**
  * Class SchemaSerializer
@@ -23,34 +21,28 @@ class SchemaSerializer
     {
         $string = '';
 
-        if(!$schema->getInterfaces()->isEmpty()) {
-
-            /** @var InterfaceType $interface */
-            $interfaceSerializer = new InterfaceSerializer();
-
-            foreach($schema->getInterfaces()->getCollection()->getIterator() as $interface) {
-                $string .= $interfaceSerializer->serialize($interface);
+        if (!$schema->getInterfaces()->isEmpty()) {
+            foreach ($schema->getInterfaces()->getCollection()->getIterator() as $interface) {
+                $string .= (new InterfaceSerializer($interface))->serialize();
             }
         }
 
-        if(!$schema->getScalars()->isEmpty()) {
+        if (!$schema->getScalars()->isEmpty()) {
             $scalarSerializer = new ScalarSerializer();
 
-            foreach($schema->getScalars()->getIterator() as $scalar) {
+            foreach ($schema->getScalars()->getIterator() as $scalar) {
                 $string .= $scalarSerializer->serialize($scalar);
             }
         }
 
-        if(!$schema->getObjects()->isEmpty()) {
+        if (!$schema->getObjects()->isEmpty()) {
             $objectSerializer = new TypeSerializer();
 
-            foreach($schema->getObjects()->getIterator() as $object) {
+            foreach ($schema->getObjects()->getIterator() as $object) {
                 $string .= $objectSerializer->serialize($object);
             }
         }
 
         return $string;
-
     }
-
 }

@@ -44,15 +44,8 @@ abstract class AbstractCollection
         return $this->collection->getIterator();
     }
 
-    public function count()
-    {
-        return $this->collection->count();
-    }
-
     /**
-     * Append an item to the list of items.
-     *
-     * @param InputOutput $item
+     * @param Element $element
      * @throws SchemaException
      */
     public function add(Element $element): void

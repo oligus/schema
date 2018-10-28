@@ -23,7 +23,7 @@ class ArgumentSerializer
 
         $string = $argument->getName() . ': ';
 
-        if($typeModifier instanceof TypeModifier) {
+        if ($typeModifier instanceof TypeModifier) {
             $string .= $this->modifyType($type, $typeModifier);
         } else {
             $string .= $type;

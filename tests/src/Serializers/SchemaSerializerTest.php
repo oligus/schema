@@ -3,11 +3,8 @@
 namespace GQLSchema\Tests\Serializers;
 
 use GQLSchema\Schema;
-use GQLSchema\Serializers\ScalarSerializer;
 use GQLSchema\Field;
 use GQLSchema\Serializers\SchemaSerializer;
-use GQLSchema\Types\EnumType;
-use GQLSchema\Types\InputType;
 use GQLSchema\Types\InterfaceType;
 use GQLSchema\Types\ObjectType;
 use GQLSchema\Types\Scalars\BooleanType;
@@ -71,20 +68,5 @@ class SchemaSerializerTest extends SchemaTestCase
         $schema->addObject($query);
 
         $this->assertMatchesSnapshot($this->serializer->serialize($schema));
-    }
-
-    /**
-     * @param string $name
-     * @return InterfaceType
-     * @throws \GQLSchema\Exceptions\SchemaException
-     */
-    private function getInterface(string $name)
-    {
-        $interface = new InterfaceType($name);
-        $interface->addField(new Field('name', new StringType()));
-        $interface->addField(new Field('age', new IntegerType()));
-        $interface->addField(new Field('size', new IntegerType()));
-
-        return $interface;
     }
 }

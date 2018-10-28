@@ -28,11 +28,4 @@ interface Type
      * @return null|string
      */
     public function getDescription(): ?string;
-
-    /**
-     * Returns current type modifier
-     *
-     * @return TypeModifier|null
-     */
-    public function getTypeModifier(): ?TypeModifier;
 }

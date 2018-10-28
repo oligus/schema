@@ -34,6 +34,14 @@ class FieldSerializerTest extends SchemaTestCase
      */
     public function testSerialize()
     {
+        $field = new Field('testField', new IntegerType());
+        $field->setTypeModifier(new TypeModifier(false));
+        $field->addArgument(new Argument('booleanArg', new BooleanType(), new TypeModifier(false)));
+
+        $this->assertEquals('testField(booleanArg: Boolean!): Int!',
+            $this->serializer->serialize($field));
+
+
         $field = new Field('testField', new IntegerType(), new TypeModifier(false));
         $field->addArgument(new Argument('booleanArg', new BooleanType(), new TypeModifier(false)));
         $field->addArgument(new Argument('integerArg', new IntegerType(), new TypeModifier(false)));
@@ -41,6 +49,7 @@ class FieldSerializerTest extends SchemaTestCase
 
         $this->assertEquals('testField(booleanArg: Boolean!, integerArg: Int!, stringArg: String! = "test"): Int!',
             $this->serializer->serialize($field));
+
 
     }
 }

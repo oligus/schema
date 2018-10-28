@@ -3,6 +3,7 @@
 namespace GQLSchema\Serializers\TypeSerializers;
 
 use GQLSchema\Field;
+use GQLSchema\Types\Type;
 use GQLSchema\Types\ObjectType;
 use GQLSchema\Types\InterfaceType;
 use GQLSchema\Exceptions\SchemaException;
@@ -16,25 +17,43 @@ use GQLSchema\Collections\InterfaceCollection;
 class ObjectSerializer
 {
     /**
-     * @param ObjectType $type
+     * @var ObjectType
+     */
+    private $objectType;
+
+    /**
+     * ObjectSerializer constructor.
+     * @param Type $type
+     * @throws SchemaException
+     */
+    public function __construct(Type $type)
+    {
+        if (!$type instanceof ObjectType) {
+            throw new SchemaException('Type must be object type');
+        }
+
+        $this->objectType = $type;
+    }
+
+    /**
      * @return string
      * @throws SchemaException
      */
-    public function serialize(ObjectType $type): string
+    public function serialize(): string
     {
         $string = '';
 
-        if (!empty($type->getDescription())) {
+        if (!empty($this->objectType->getDescription())) {
             $string .= '"""' . "\n";
-            $string .= $type->getDescription() . "\n";
+            $string .= $this->objectType->getDescription() . "\n";
             $string .= '"""' . "\n";
         }
 
-        $string .= $type->getType();
-        $string .= ' ' . $type->getName();
+        $string .= $this->objectType->getType();
+        $string .= ' ' . $this->objectType->getName();
 
         /** @var InterfaceCollection $interfaces */
-        $interfaces = $type->getInterfaces();
+        $interfaces = $this->objectType->getInterfaces();
 
         if ($interfaces instanceof InterfaceCollection && !$interfaces->isEmpty()) {
             $string .= ' implements ';
@@ -43,10 +62,10 @@ class ObjectSerializer
              * @var int $index
              * @var InterfaceType $interface
              */
-            foreach ($type->getInterfaces()->getCollection() as $index => $interface) {
+            foreach ($this->objectType->getInterfaces()->getCollection() as $index => $interface) {
                 $string .= $interface->getName();
 
-                if ($index + 2 <= $type->getInterfaces()->getCollection()->count()) {
+                if ($index + 2 <= $this->objectType->getInterfaces()->getCollection()->count()) {
                     $string .= ', ';
                 }
             }
@@ -54,12 +73,12 @@ class ObjectSerializer
 
         $string .= " {\n";
 
-        if ($type->getFields()->isEmpty()) {
+        if ($this->objectType->getFields()->isEmpty()) {
             throw new SchemaException('An object type must define one or more fields.');
         }
 
         /** @var Field $field */
-        foreach ($type->getFields()->getIterator() as $field) {
+        foreach ($this->objectType->getFields()->getIterator() as $field) {
             $string .= '  ';
             $string .= (new FieldSerializer())->serialize($field);
             $string .= "\n";

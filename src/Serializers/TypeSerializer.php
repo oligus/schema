@@ -10,6 +10,7 @@ use GQLSchema\Serializers\TypeSerializers\UnionSerializer;
 use GQLSchema\Types\InputType;
 use GQLSchema\Types\InterfaceType;
 use GQLSchema\Types\ObjectType;
+use GQLSchema\Types\Scalars\AbstractScalarType;
 use GQLSchema\Types\Type;
 use GQLSchema\Types\EnumType;
 use GQLSchema\Types\UnionType;
@@ -30,43 +31,43 @@ class TypeSerializer
      */
     public function serialize(Type $type, ?TypeModifier $typeModifier = null): string
     {
-        if($typeModifier instanceof TypeModifier) {
+        if ($typeModifier instanceof TypeModifier || $type instanceof AbstractScalarType) {
             return $this->serializeScalar($type, $typeModifier);
         }
 
         switch (true) {
             case $type instanceof EnumType:
-                return (new EnumSerializer())->serialize($type);
-                break;
+                return (new EnumSerializer($type))->serialize();
 
             case $type instanceof InputType:
-                return (new InputSerializer())->serialize($type);
-                break;
+                return (new InputSerializer($type))->serialize();
 
             case $type instanceof InterfaceType:
-                return (new InterfaceSerializer())->serialize($type);
-                break;
+                return (new InterfaceSerializer($type))->serialize();
 
             case $type instanceof ObjectType:
-                return (new ObjectSerializer())->serialize($type);
-                break;
+                return (new ObjectSerializer($type))->serialize();
 
             case $type instanceof UnionType:
-                return (new UnionSerializer())->serialize($type);
-                break;
+                return (new UnionSerializer($type))->serialize();
 
             default:
                 throw new SchemaException('Unknown type: ' .$type->getName());
         }
     }
 
-    public function serializeScalar(Type $type, TypeModifier $typeModifier): string
+    /**
+     * @param Type $type
+     * @param TypeModifier|null $typeModifier
+     * @return string
+     */
+    public function serializeScalar(Type $type, ?TypeModifier $typeModifier): string
     {
         $name = $type->getName();
 
         $string = '';
 
-        if($typeModifier instanceof TypeModifier) {
+        if ($typeModifier instanceof TypeModifier) {
             $string .= $this->modifyType($name, $typeModifier);
         } else {
             $string .= $name;
@@ -88,11 +89,10 @@ class TypeSerializer
         $string .= !$typeModifier->isNullable() ? '!' : '';
         $string .= $typeModifier->isListable() ? ']' : '';
 
-        if($typeModifier->isListable()) {
+        if ($typeModifier->isListable()) {
             $string .= !$typeModifier->isNullableList() ? '!' : '';
         }
 
         return $string;
     }
-
 }

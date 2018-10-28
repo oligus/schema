@@ -30,7 +30,7 @@ class FieldSerializer
 
         if ($arguments instanceof ArrayCollection && !$arguments->isEmpty()) {
             $string .= '(';
-            foreach($arguments->getIterator() as $index => $argument) {
+            foreach ($arguments->getIterator() as $index => $argument) {
                 $string .= (new ArgumentSerializer())->serialize($argument);
 
                 if ($index + 2 <= $arguments->count()) {
@@ -43,9 +43,12 @@ class FieldSerializer
         $string .= ': ' . $this->serializeScalar($field);
 
         return $string;
-
     }
 
+    /**
+     * @param Field $field
+     * @return string
+     */
     public function serializeScalar(Field $field): string
     {
         $name = $field->getType()->getName();
@@ -53,7 +56,7 @@ class FieldSerializer
 
         $string = '';
 
-        if($typeModifier instanceof TypeModifier) {
+        if ($typeModifier instanceof TypeModifier) {
             $string .= $this->modifyType($name, $typeModifier);
         } else {
             $string .= $name;
@@ -75,7 +78,7 @@ class FieldSerializer
         $string .= !$typeModifier->isNullable() ? '!' : '';
         $string .= $typeModifier->isListable() ? ']' : '';
 
-        if($typeModifier->isListable()) {
+        if ($typeModifier->isListable()) {
             $string .= !$typeModifier->isNullableList() ? '!' : '';
         }
 

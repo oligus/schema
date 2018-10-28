@@ -2,7 +2,6 @@
 
 namespace GQLSchema\Tests\Types\Scalars;
 
-use GQLSchema\Types\TypeModifier;
 use GQLSchema\Tests\SchemaTestCase;
 use GQLSchema\Types\Scalars\BooleanType;
 use GQLSchema\Types\Scalars\FloatType;
@@ -23,5 +22,10 @@ class ScalarTypesTest extends SchemaTestCase
         $this->assertEquals('ID', (new IDType())->getName());
         $this->assertEquals('Int', (new IntegerType())->getName());
         $this->assertEquals('String', (new StringType())->getName());
+
+        $scalar = new IntegerType();
+        $this->assertEquals('Int',$scalar->getName());
+        $this->assertEquals('Int', $scalar->getType());
+        $this->assertEquals('', $scalar->getDescription());
     }
 }

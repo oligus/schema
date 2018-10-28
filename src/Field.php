@@ -66,7 +66,7 @@ class Field implements Element
      */
     private function setName(string $name): void
     {
-        if (!preg_match('/[_A-Za-z][_0-9A-Za-z]*/', $name)) {
+        if (!preg_match('/^[_A-Za-z][_0-9A-Za-z]*/', $name)) {
             throw new SchemaException('Invalid name [' . $name . ']');
         }
 
@@ -139,5 +139,4 @@ class Field implements Element
     {
         return $this->typeModifier;
     }
-
 }

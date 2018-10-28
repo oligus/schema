@@ -2,7 +2,6 @@
 
 namespace GQLSchema\Types\Scalars;
 
-use GQLSchema\Types\TypeModifier;
 use GQLSchema\Types\Type;
 
 /**
@@ -12,25 +11,9 @@ use GQLSchema\Types\Type;
 abstract class AbstractScalarType implements Type
 {
     /**
-     * @var TypeModifier|null
-     */
-    protected $typeModifier;
-
-    /**
      * @var string
      */
     protected $name;
-
-    /**
-     * AbstractScalarType constructor.
-     * @param TypeModifier|null $typeModifier
-     */
-    public function __construct(?TypeModifier $typeModifier = null)
-    {
-        if ($typeModifier instanceof TypeModifier) {
-            $this->typeModifier = $typeModifier;
-        }
-    }
 
     /**
      * Returns the name.
@@ -51,20 +34,10 @@ abstract class AbstractScalarType implements Type
     }
 
     /**
-     * Returns the type modifier.
-     *
-     * @return TypeModifier|null
-     */
-    public function getTypeModifier(): ?TypeModifier
-    {
-        return $this->typeModifier;
-    }
-
-    /**
      * @return null|string
      */
     public function getDescription(): ?string
     {
-        return "test";
+        return "";
     }
 }

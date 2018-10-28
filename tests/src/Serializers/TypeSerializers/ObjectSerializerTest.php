@@ -4,6 +4,8 @@ namespace GQLSchema\Tests\Serializers\TypeSerializers;
 
 use GQLSchema\Serializers\TypeSerializers\ObjectSerializer;
 use GQLSchema\Field;
+use GQLSchema\Types\Type;
+use GQLSchema\Types\TypeModifier;
 use GQLSchema\Types\ObjectType;
 use GQLSchema\Types\InterfaceType;
 use GQLSchema\Types\Scalars\StringType;
@@ -16,16 +18,6 @@ use GQLSchema\Tests\SchemaTestCase;
  */
 class ObjectSerializerTest extends SchemaTestCase
 {
-    /**
-     * @var ObjectSerializer
-     */
-    private $serializer;
-
-    protected function setUp()
-    {
-        $this->serializer = new ObjectSerializer();
-    }
-
     /**
      * @throws \GQLSchema\Exceptions\SchemaException
      */
@@ -42,7 +34,7 @@ class ObjectSerializerTest extends SchemaTestCase
 
         $object->implements($interface);
 
-        $this->assertMatchesSnapshot($this->serializer->serialize($object));
+        $this->assertMatchesSnapshot((new ObjectSerializer($object))->serialize());
     }
 
     /**
@@ -74,7 +66,7 @@ class ObjectSerializerTest extends SchemaTestCase
         $object->implements($interface2);
         $object->implements($interface3);
 
-        $this->assertMatchesSnapshot($this->serializer->serialize($object));
+        $this->assertMatchesSnapshot((new ObjectSerializer($object))->serialize());
     }
 
     /**
@@ -85,7 +77,23 @@ class ObjectSerializerTest extends SchemaTestCase
     public function testNoFieldException()
     {
         $object = new ObjectType('Wine');
-        $this->serializer->serialize($object);
+        (new ObjectSerializer($object))->serialize();
+    }
+
+    /**
+     * @expectedException \GQLSchema\Exceptions\SchemaException
+     * @expectedExceptionMessage Type must be object type
+     */
+    public function testWrongType()
+    {
+        $mock = new class implements Type {
+            public function getName(): string { return 'test'; }
+            public function getType(): string { return 'testType'; }
+            public function getDescription(): ?string { return null; }
+            public function getTypeModifier(): ?TypeModifier { return null; }
+        };
+
+        new ObjectSerializer($mock);
     }
 
 }

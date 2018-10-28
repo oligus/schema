@@ -2,19 +2,13 @@
 
 namespace GQLSchema\Tests\Serializers\TypeSerializers;
 
-use GQLSchema\Serializers\TypeSerializer;
 use GQLSchema\Field;
-use GQLSchema\Argument;
 use GQLSchema\Serializers\TypeSerializers\InputSerializer;
-use GQLSchema\Types\EnumType;
+use GQLSchema\Types\Type;
 use GQLSchema\Types\InputType;
-use GQLSchema\Types\UnionType;
-use GQLSchema\Types\ObjectType;
 use GQLSchema\Types\TypeModifier;
-use GQLSchema\Types\Scalars\BooleanType;
 use GQLSchema\Types\Scalars\IntegerType;
 use GQLSchema\Types\Scalars\StringType;
-use GQLSchema\Values\ValueString;
 use GQLSchema\Tests\SchemaTestCase;
 
 /**
@@ -23,16 +17,6 @@ use GQLSchema\Tests\SchemaTestCase;
  */
 class InputSerializerTest extends SchemaTestCase
 {
-    /**
-     * @var TypeSerializer
-     */
-    private $serializer;
-
-    protected function setUp()
-    {
-        $this->serializer = new InputSerializer();
-    }
-
     /**
      * @throws \GQLSchema\Exceptions\SchemaException
      */
@@ -43,7 +27,7 @@ class InputSerializerTest extends SchemaTestCase
         $input->addField(new Field('age', new IntegerType()));
         $input->addField(new Field('size', new IntegerType()));
 
-        $this->assertMatchesSnapshot($this->serializer->serialize($input));
+        $this->assertMatchesSnapshot((new InputSerializer($input))->serialize());
     }
 
     /**
@@ -54,7 +38,22 @@ class InputSerializerTest extends SchemaTestCase
     public function testNoFieldException()
     {
         $input = new InputType('Wine');
-        $this->serializer->serialize($input);
+        (new InputSerializer($input))->serialize();
     }
 
+    /**
+     * @expectedException \GQLSchema\Exceptions\SchemaException
+     * @expectedExceptionMessage Type must be input type
+     */
+    public function testWrongType()
+    {
+        $mock = new class implements Type {
+            public function getName(): string { return 'test'; }
+            public function getType(): string { return 'testType'; }
+            public function getDescription(): ?string { return null; }
+            public function getTypeModifier(): ?TypeModifier { return null; }
+        };
+
+        new InputSerializer($mock);
+    }
 }

@@ -32,7 +32,7 @@ class ValueSerializer
                 return '"' . $value->getValue() . '"';
 
             default:
-                return (string)$value->getValue();
+                return (string) $value->getValue();
         }
     }
 }

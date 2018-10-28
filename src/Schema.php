@@ -11,6 +11,7 @@ use GQLSchema\Types\ScalarType;
 
 /**
  * Class Schema
+ * @codeCoverageIgnore
  * @package GQLSchema
  */
 class Schema
@@ -187,16 +188,5 @@ class Schema
     public function addInput(InputType $inputType): void
     {
         $this->inputs->add($inputType);
-    }
-
-    /**
-     * @return string
-     * @throws Exceptions\SchemaException
-     */
-    public function __toString(): string
-    {
-        $schema = '';
-
-        return $schema;
     }
 }

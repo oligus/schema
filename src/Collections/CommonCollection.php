@@ -12,18 +12,18 @@ use GQLSchema\Exceptions\SchemaException;
 class CommonCollection extends ArrayCollection
 {
     /**
-     * @param $element
+     * @param Element $element
      * @throws SchemaException
      */
     public function add($element): void
     {
-        if(!$element instanceof Element) {
+        if (!$element instanceof Element) {
             throw new SchemaException('Collection item must be instance of Element');
         }
 
         /** @var Element $item */
-        foreach($this->toArray() as $item) {
-            if($element->getName() === $item->getName()) {
+        foreach ($this->toArray() as $item) {
+            if ($element->getName() === $item->getName()) {
                 throw new SchemaException('The field must have a unique name within type, field name [' . $item->getName() . '] seen twice.');
             }
         }
