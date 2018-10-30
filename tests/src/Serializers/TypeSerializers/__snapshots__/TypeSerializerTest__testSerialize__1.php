@@ -1,4 +1,6 @@
 <?php return '"""
 My union description
 """
-union MyUnion = Dog';
+union MyUnion = Dog
+
+';

@@ -2,7 +2,6 @@
 
 namespace GQLSchema\Collections;
 
-use GQLSchema\InputOutput;
 use GQLSchema\Exceptions\SchemaException;
 use Doctrine\Common\Collections\ArrayCollection;
 use GQLSchema\Element;
@@ -50,7 +49,7 @@ abstract class AbstractCollection
      */
     public function add(Element $element): void
     {
-        /** @var InputOutput $collectionItem */
+        /** @var Element $collectionItem */
         foreach ($this->collection as $collectionItem) {
             if ($collectionItem->getName() === $element->getName()) {
                 throw new SchemaException('The field must have a unique name within type, field name [' . $element->getName() . '] seen twice.');

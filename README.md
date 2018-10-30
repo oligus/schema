@@ -284,8 +284,8 @@ A selection set is primarily composed of fields. A field describes one discrete 
 [GrapQL Spec](https://facebook.github.io/graphql/June2018/#sec-Language.Fields)
 
 #### Definition
-`Field(string $name, Type $type)`
-
+`Field(string $name, Type $type, ?TypeModifier $typeModifier, ?string $description)`
+        
 #### Examples
 
 ```php
@@ -299,7 +299,7 @@ simpleField: Int
 
 *With type modifier:*
 ```php
-$field = new Field('simpleField', new IntegerType(new TypeModifier($nullable = false));
+$field = new Field('simpleField', new IntegerType(), new TypeModifier($nullable = false));
 ```
 
 *Result:*
@@ -309,9 +309,9 @@ simpleField: Int!
 
 *With type argument:*
 ```php
-$field = new Field('booleanListArgField', new BooleanType(new TypeModifier(true, true)));
+$field = new Field('booleanListArgField', new BooleanType(), new TypeModifier(true, true));
 
-$argument = new Argument('booleanListArg', new BooleanType(new TypeModifier(true, true, false)));
+$argument = new Argument('booleanListArg', new BooleanType(), new TypeModifier(true, true, false));
 $field->addArgument($argument);
 ```
 
@@ -322,7 +322,7 @@ Fields are conceptually functions which return values, and occasionally accept a
 [GrapQL Spec](https://facebook.github.io/graphql/June2018/#sec-Language.Arguments)
 
 #### Definition
-`Argument(string $name, Type $type, Value $defaultVale)`
+`Argument(string $name, Type $type, ?TypeModifier $typeModifier, ?Value $defaultVale)`
 
 #### Examples
 
@@ -335,14 +335,16 @@ $argument = new Argument('booleanArg', new BooleanType());
 booleanArg: Boolean
 ```
 
-*With type default value:*
+*With type modifier:*
 ```php
-$argument = new Argument('intArg', new IntegerType(), new ValueInteger(0));
+$argument = new Argument('intArg', new IntegerType(), new TypeModifier(false));
+// intArg: Int! = 0
 ```
 
-*Result:*
-```graphql
-intArg: Int = 0
+*With type default value:*
+```php
+$argument = new Argument('intArg', new IntegerType(), null, new ValueInteger(0));
+// intArg: Int = 0
 ```
 
 ### Argument values

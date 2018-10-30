@@ -15,50 +15,32 @@ use GQLSchema\Serializers\FieldSerializer;
 class InputSerializer
 {
     /**
-     * @var InputType
-     */
-    private $inputType;
-
-    /**
-     * InputSerializer constructor.
-     * @param Type $type
-     * @throws SchemaException
-     */
-    public function __construct(Type $type)
-    {
-        if (!$type instanceof InputType) {
-            throw new SchemaException('Type must be input type');
-        }
-
-        $this->inputType = $type;
-    }
-
-    /**
+     * @param InputType $type
      * @return string
      * @throws SchemaException
      */
-    public function serialize(): string
+    public function serialize(InputType $type): string
     {
         $string = '';
 
-        if (!empty($this->inputType->getDescription())) {
+        if (!empty($type->getDescription())) {
             $string .= '"""' . "\n";
-            $string .= $this->inputType->getDescription() . "\n";
+            $string .= $type->getDescription() . "\n";
             $string .= '"""' . "\n";
         }
 
-        $string .= $this->inputType->getType();
-        $string .= ' ' . $this->inputType->getName();
+        $string .= $type->getType();
+        $string .= ' ' . $type->getName();
 
         $string .= " {\n";
 
 
-        if ($this->inputType->getFields()->isEmpty()) {
+        if ($type->getFields()->isEmpty()) {
             throw new SchemaException('An input type must define one or more fields.');
         }
 
         /** @var Field $field */
-        foreach ($this->inputType->getFields()->getIterator() as $field) {
+        foreach ($type->getFields()->getIterator() as $field) {
             $string .= '  ';
             $string .= (new FieldSerializer())->serialize($field);
             $string .= "\n";

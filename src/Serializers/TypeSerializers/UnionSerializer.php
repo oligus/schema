@@ -13,47 +13,29 @@ use GQLSchema\Exceptions\SchemaException;
 class UnionSerializer
 {
     /**
-     * @var UnionType
-     */
-    private $unionType;
-
-    /**
-     * UnionSerializer constructor.
-     * @param Type $type
-     * @throws SchemaException
-     */
-    public function __construct(Type $type)
-    {
-        if (!$type instanceof UnionType) {
-            throw new SchemaException('Type must be union type');
-        }
-
-        $this->unionType = $type;
-    }
-
-    /**
      * @return string
      * @throws SchemaException
      */
-    public function serialize(): string
+    public function serialize(UnionType $type): string
     {
         $string = '';
 
-        if (!empty($this->unionType->getDescription())) {
+        if (!empty($type->getDescription())) {
             $string .= '"""' . "\n";
-            $string .= $this->unionType->getDescription() . "\n";
+            $string .= $type->getDescription() . "\n";
             $string .= '"""' . "\n";
         }
 
-        $objectTypes = $this->unionType->getObjectTypes();
+        $objectTypes = $type->getObjectTypes();
 
         if (empty($objectTypes)) {
             throw new SchemaException('No types added');
         }
 
-        $string .= $this->unionType->getType();
-        $string .= ' ' . $this->unionType->getName();
-        $string .= ' = ' . $this->unionType->getObjectTypes();
+        $string .= $type->getType();
+        $string .= ' ' . $type->getName();
+        $string .= ' = ' . $type->getObjectTypes();
+        $string .= "\n\n";
 
         return $string;
     }

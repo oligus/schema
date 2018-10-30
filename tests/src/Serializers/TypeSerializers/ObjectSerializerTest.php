@@ -34,7 +34,7 @@ class ObjectSerializerTest extends SchemaTestCase
 
         $object->implements($interface);
 
-        $this->assertMatchesSnapshot((new ObjectSerializer($object))->serialize());
+        $this->assertMatchesSnapshot((new ObjectSerializer())->serialize($object));
     }
 
     /**
@@ -66,7 +66,7 @@ class ObjectSerializerTest extends SchemaTestCase
         $object->implements($interface2);
         $object->implements($interface3);
 
-        $this->assertMatchesSnapshot((new ObjectSerializer($object))->serialize());
+        $this->assertMatchesSnapshot((new ObjectSerializer())->serialize($object));
     }
 
     /**
@@ -77,23 +77,6 @@ class ObjectSerializerTest extends SchemaTestCase
     public function testNoFieldException()
     {
         $object = new ObjectType('Wine');
-        (new ObjectSerializer($object))->serialize();
+        (new ObjectSerializer())->serialize($object);
     }
-
-    /**
-     * @expectedException \GQLSchema\Exceptions\SchemaException
-     * @expectedExceptionMessage Type must be object type
-     */
-    public function testWrongType()
-    {
-        $mock = new class implements Type {
-            public function getName(): string { return 'test'; }
-            public function getType(): string { return 'testType'; }
-            public function getDescription(): ?string { return null; }
-            public function getTypeModifier(): ?TypeModifier { return null; }
-        };
-
-        new ObjectSerializer($mock);
-    }
-
 }

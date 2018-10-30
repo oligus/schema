@@ -15,48 +15,30 @@ use GQLSchema\Exceptions\SchemaException;
 class InterfaceSerializer
 {
     /**
-     * @var InterfaceType
-     */
-    private $interfaceType;
-
-    /**
-     * InterfaceSerializer constructor.
-     * @param Type $type
-     * @throws SchemaException
-     */
-    public function __construct(Type $type)
-    {
-        if (!$type instanceof InterfaceType) {
-            throw new SchemaException('Type must be interface type');
-        }
-
-        $this->interfaceType = $type;
-    }
-
-    /**
+     * @param InterfaceType $type
      * @return string
      * @throws SchemaException
      */
-    public function serialize(): string
+    public function serialize(InterfaceType $type): string
     {
         $string = '';
 
-        if (!empty($this->interfaceType->getDescription())) {
+        if (!empty($type->getDescription())) {
             $string .= '"""' . "\n";
-            $string .= $this->interfaceType->getDescription() . "\n";
+            $string .= $type->getDescription() . "\n";
             $string .= '"""' . "\n";
         }
 
-        $string .= $this->interfaceType->getType();
-        $string .= ' ' . $this->interfaceType->getName();
+        $string .= $type->getType();
+        $string .= ' ' . $type->getName();
         $string .= " {\n";
 
-        if ($this->interfaceType->getFields()->isEmpty()) {
+        if ($type->getFields()->isEmpty()) {
             throw new SchemaException('An Interface type must define one or more fields.');
         }
 
         /** @var Field $field */
-        foreach ($this->interfaceType->getFields()->getIterator() as $field) {
+        foreach ($type->getFields()->getIterator() as $field) {
             $string .= '  ';
             $string .= (new FieldSerializer())->serialize($field);
             $string .= "\n";

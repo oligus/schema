@@ -26,7 +26,7 @@ class InterfaceSerializerTest extends SchemaTestCase
         $interface->addField(new Field('name', new StringType()));
         $interface->addField(new Field('age', new IntegerType()));
         $interface->addField(new Field('size', new IntegerType()));
-        $this->assertMatchesSnapshot((new InterfaceSerializer($interface))->serialize());
+        $this->assertMatchesSnapshot((new InterfaceSerializer())->serialize($interface));
     }
 
     /**
@@ -36,22 +36,6 @@ class InterfaceSerializerTest extends SchemaTestCase
     public function testEmptyFieldsException()
     {
         $interface = new InterfaceType('Test');
-        (new InterfaceSerializer($interface))->serialize();
-    }
-
-    /**
-     * @expectedException \GQLSchema\Exceptions\SchemaException
-     * @expectedExceptionMessage Type must be interface type
-     */
-    public function testWrongType()
-    {
-        $mock = new class implements Type {
-            public function getName(): string { return 'test'; }
-            public function getType(): string { return 'testType'; }
-            public function getDescription(): ?string { return null; }
-            public function getTypeModifier(): ?TypeModifier { return null; }
-        };
-
-        new InterfaceSerializer($mock);
+        (new InterfaceSerializer())->serialize($interface);
     }
 }

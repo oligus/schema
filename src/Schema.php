@@ -8,10 +8,10 @@ use GQLSchema\Types\InputType;
 use GQLSchema\Types\InterfaceType;
 use GQLSchema\Types\ObjectType;
 use GQLSchema\Types\ScalarType;
+use GQLSchema\Types\UnionType;
 
 /**
  * Class Schema
- * @codeCoverageIgnore
  * @package GQLSchema
  */
 class Schema
@@ -37,6 +37,11 @@ class Schema
     private $inputs;
 
     /**
+     * @var ArrayCollection
+     */
+    private $unions;
+
+    /**
      * @var ObjectType
      */
     private $query;
@@ -60,6 +65,7 @@ class Schema
         $this->scalars = new ArrayCollection();
         $this->objects = new ArrayCollection();
         $this->inputs = new ArrayCollection();
+        $this->unions = new ArrayCollection();
     }
 
     /**
@@ -117,9 +123,9 @@ class Schema
     }
 
     /**
-     * @return ObjectType
+     * @return ObjectType|null
      */
-    public function getQuery(): ObjectType
+    public function getQuery(): ?ObjectType
     {
         return $this->query;
     }
@@ -135,9 +141,9 @@ class Schema
     }
 
     /**
-     * @return ObjectType
+     * @return ObjectType|null
      */
-    public function getMutation(): ObjectType
+    public function getMutation(): ?ObjectType
     {
         return $this->mutation;
     }
@@ -153,9 +159,10 @@ class Schema
     }
 
     /**
-     * @return ObjectType
+     * @return ObjectType|null
+     * @codeCoverageIgnore
      */
-    public function getSubscription(): ObjectType
+    public function getSubscription(): ?ObjectType
     {
         return $this->subscription;
     }
@@ -163,6 +170,7 @@ class Schema
     /**
      * Set root subscription
      *
+     * @codeCoverageIgnore
      * @param ObjectType $subscription
      */
     public function setSubscription(ObjectType $subscription): void
@@ -188,5 +196,21 @@ class Schema
     public function addInput(InputType $inputType): void
     {
         $this->inputs->add($inputType);
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getUnions(): ArrayCollection
+    {
+        return $this->unions;
+    }
+
+    /**
+     * @param UnionType $unionType
+     */
+    public function addUnion(UnionType $unionType): void
+    {
+        $this->unions->add($unionType);
     }
 }

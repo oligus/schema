@@ -2,9 +2,7 @@
 
 namespace GQLSchema\Serializers\TypeSerializers;
 
-use GQLSchema\Exceptions\SchemaException;
 use GQLSchema\Types\EnumType;
-use GQLSchema\Types\Type;
 
 /**
  * Class EnumSerializer
@@ -13,40 +11,22 @@ use GQLSchema\Types\Type;
 class EnumSerializer
 {
     /**
-     * @var EnumType
-     */
-    private $enumType;
-
-    /**
-     * EnumSerializer constructor.
-     * @param Type $type
-     * @throws SchemaException
-     */
-    public function __construct(Type $type)
-    {
-        if (!$type instanceof EnumType) {
-            throw new SchemaException('Type must be enum type');
-        }
-
-        $this->enumType = $type;
-    }
-
-    /**
+     * @param EnumType $type
      * @return string
      */
-    public function serialize(): string
+    public function serialize(EnumType $type): string
     {
         $string = '';
 
-        if (!empty($this->enumType->getDescription())) {
+        if (!empty($type->getDescription())) {
             $string .= '"""' . "\n";
-            $string .= $this->enumType->getDescription() . "\n";
+            $string .= $type->getDescription() . "\n";
             $string .= '"""' . "\n";
         }
 
-        $string .= $this->enumType->getType() . ' ' . $this->enumType->getName() . " {\n";
+        $string .= $type->getType() . ' ' . $type->getName() . " {\n";
 
-        foreach ($this->enumType->getEnums() as $enum) {
+        foreach ($type->getEnums() as $enum) {
             $string .= '  ' . $enum . "\n";
         }
 

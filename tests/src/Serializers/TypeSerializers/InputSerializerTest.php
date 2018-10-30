@@ -4,9 +4,7 @@ namespace GQLSchema\Tests\Serializers\TypeSerializers;
 
 use GQLSchema\Field;
 use GQLSchema\Serializers\TypeSerializers\InputSerializer;
-use GQLSchema\Types\Type;
 use GQLSchema\Types\InputType;
-use GQLSchema\Types\TypeModifier;
 use GQLSchema\Types\Scalars\IntegerType;
 use GQLSchema\Types\Scalars\StringType;
 use GQLSchema\Tests\SchemaTestCase;
@@ -27,7 +25,7 @@ class InputSerializerTest extends SchemaTestCase
         $input->addField(new Field('age', new IntegerType()));
         $input->addField(new Field('size', new IntegerType()));
 
-        $this->assertMatchesSnapshot((new InputSerializer($input))->serialize());
+        $this->assertMatchesSnapshot((new InputSerializer())->serialize($input));
     }
 
     /**
@@ -38,22 +36,6 @@ class InputSerializerTest extends SchemaTestCase
     public function testNoFieldException()
     {
         $input = new InputType('Wine');
-        (new InputSerializer($input))->serialize();
-    }
-
-    /**
-     * @expectedException \GQLSchema\Exceptions\SchemaException
-     * @expectedExceptionMessage Type must be input type
-     */
-    public function testWrongType()
-    {
-        $mock = new class implements Type {
-            public function getName(): string { return 'test'; }
-            public function getType(): string { return 'testType'; }
-            public function getDescription(): ?string { return null; }
-            public function getTypeModifier(): ?TypeModifier { return null; }
-        };
-
-        new InputSerializer($mock);
+        (new InputSerializer())->serialize($input);
     }
 }

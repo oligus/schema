@@ -2,10 +2,7 @@
 
 namespace GQLSchema\Tests\Collections;
 
-use GQLSchema\Types\InterfaceType;
 use GQLSchema\Types\Scalars\IntegerType;
-use GQLSchema\Types\Scalars\StringType;
-use GQLSchema\Field;
 use GQLSchema\Collections\CommonCollection;
 use GQLSchema\Tests\SchemaTestCase;
 use GQLSchema\Argument;

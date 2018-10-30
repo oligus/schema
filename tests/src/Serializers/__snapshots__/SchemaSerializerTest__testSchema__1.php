@@ -12,6 +12,11 @@ Define custom Url scalar
 scalar Url
 
 """
+My union description
+"""
+union MyUnion = Dog | Cat | Bird
+
+"""
 User type implements Entity interface
 """
 type User implements Entity {
@@ -29,6 +34,26 @@ Root query type
 """
 type Query {
   me: User
+  friends(limit: Int = 10): [User]!
 }
 
+"""
+Root mutation type
+"""
+type Mutation {
+  users(params: ListUsersInput): [User]!
+}
+
+"""
+Custom complex input type
+"""
+input ListUsersInput {
+  limit: Int
+  since_id: ID
+}
+
+schema {
+  query: Query
+  mutation: Mutation
+}
 ';
