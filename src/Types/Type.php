@@ -9,16 +9,23 @@ namespace GQLSchema\Types;
 interface Type
 {
     /**
-     * Returns the name.
+     * Returns the name of the type
      *
      * @return string
      */
     public function getName(): string;
 
     /**
-     * String representation of this object.
+     * Returns the type
      *
      * @return string
      */
-    public function __toString(): string;
+    public function getType(): string;
+
+    /**
+     * Returns description
+     *
+     * @return null|string
+     */
+    public function getDescription(): ?string;
 }

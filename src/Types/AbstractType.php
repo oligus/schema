@@ -26,6 +26,11 @@ abstract class AbstractType implements Type
     protected $description;
 
     /**
+     * @var TypeModifier|null
+     */
+    protected $typeModifier;
+
+    /**
      * AbstractType constructor.
      * @param string $name
      * @param null|string $description
@@ -83,5 +88,8 @@ abstract class AbstractType implements Type
     /**
      * @return string
      */
-    abstract public function __toString(): string;
+    public function getType(): string
+    {
+        return $this::TYPE;
+    }
 }

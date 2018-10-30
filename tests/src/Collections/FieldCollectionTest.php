@@ -2,6 +2,7 @@
 
 namespace GQLSchema\Tests\Collections;
 
+use GQLSchema\Serializers\FieldSerializer;
 use GQLSchema\Types\InterfaceType;
 use GQLSchema\Types\Scalars\IntegerType;
 use GQLSchema\Types\Scalars\StringType;
@@ -15,27 +16,6 @@ use GQLSchema\Tests\SchemaTestCase;
  */
 class FieldCollectionTest extends SchemaTestCase
 {
-    /**
-     * @throws \GQLSchema\Exceptions\SchemaException
-     */
-    public function testCollection()
-    {
-        $fields = new FieldCollection();
-        $fields->add(new Field('simpleField', new IntegerType()));
-        $this->assertEquals("  simpleField: Int\n", $fields->__toString());
-
-        $fields = new FieldCollection();
-        $fields->add(new Field('name', new StringType()));
-        $fields->add(new Field('age', new IntegerType()));
-        $fields->add(new Field('size',  new IntegerType()));
-
-        $expected = "  name: String\n";
-        $expected .= "  age: Int\n";
-        $expected .= "  size: Int\n";
-
-        $this->assertEquals($expected, $fields->__toString());
-    }
-
     /**
      * @throws \GQLSchema\Exceptions\SchemaException
      */
@@ -55,12 +35,6 @@ class FieldCollectionTest extends SchemaTestCase
         $interface->addField(new Field('test', new StringType()));
 
         $this->assertFalse($fields->implements($interface));
-    }
-
-    public function testEmpty()
-    {
-        $collection = new FieldCollection();
-        $this->assertEquals('', $collection->__toString());
     }
 
     /**

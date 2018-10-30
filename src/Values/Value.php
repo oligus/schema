@@ -14,11 +14,4 @@ interface Value
      * @return mixed
      */
     public function getValue();
-
-    /**
-     * String representation of this object.
-     *
-     * @return string
-     */
-    public function __toString(): string;
 }

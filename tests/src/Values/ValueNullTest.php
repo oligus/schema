@@ -11,10 +11,8 @@ use GQLSchema\Tests\SchemaTestCase;
  */
 class ValueNullTest extends SchemaTestCase
 {
-    public function testConstruct()
+    public function testGetValue()
     {
-        $string = new ValueNull();
-        $this->assertEquals(null, $string->getValue());
-        $this->assertEquals('null', $string->__toString());
+        $this->assertNull((new ValueNull())->getValue());
     }
 }

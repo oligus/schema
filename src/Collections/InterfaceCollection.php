@@ -80,22 +80,4 @@ class InterfaceCollection
     {
         return $this->collection;
     }
-
-    /**
-     * @return string
-     */
-    public function __toString(): string
-    {
-        if ($this->collection->isEmpty()) {
-            return '';
-        }
-
-        $string = '';
-
-        foreach ($this->collection as $interface) {
-            $string .= $interface->__toString();
-        }
-
-        return $string;
-    }
 }

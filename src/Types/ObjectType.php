@@ -51,6 +51,14 @@ class ObjectType extends AbstractType
     }
 
     /**
+     * @return FieldCollection
+     */
+    public function getFields(): FieldCollection
+    {
+        return $this->fields;
+    }
+
+    /**
      * Add interface to implement
      *
      * @param InterfaceType $interface
@@ -63,55 +71,6 @@ class ObjectType extends AbstractType
         }
 
         $this->interfaces->add($interface);
-    }
-
-    /**
-     * @return string
-     * @throws SchemaException
-     */
-    public function __toString(): string
-    {
-        $string = '';
-
-        if (!empty($this->getDescription())) {
-            $string .= '"""' . "\n";
-            $string .= $this->getDescription() . "\n";
-            $string .= '"""' . "\n";
-        }
-
-        $string .= self::TYPE;
-        $string .= ' ' . $this->getName();
-
-        /** @var InterfaceCollection $interfaces */
-        $interfaces = $this->getInterfaces();
-
-        if ($interfaces instanceof InterfaceCollection && !$interfaces->isEmpty()) {
-            $string .= ' implements ';
-
-            /**
-             * @var int $index
-             * @var InterfaceType $interface
-             */
-            foreach ($this->getInterfaces()->getCollection() as $index => $interface) {
-                $string .= $interface->getName();
-
-                if ($index + 2 <= $this->getInterfaces()->getCollection()->count()) {
-                    $string .= ', ';
-                }
-            }
-        }
-
-        $string .= " {\n";
-
-        if ($this->fields->isEmpty()) {
-            throw new SchemaException('An object type must define one or more fields.');
-        }
-
-        $string .= $this->fields->__toString();
-
-        $string .= "}\n\n";
-
-        return $string;
     }
 
     /**

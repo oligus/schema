@@ -38,30 +38,12 @@ class FieldCollection extends AbstractCollection
     public function hasField(string $name): bool
     {
         /** @var Field $field */
-        foreach ($this->collection as $field) {
+        foreach ($this->collection->getIterator() as $field) {
             if ($field->getName() === $name) {
                 return true;
             }
         }
 
         return false;
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString(): string
-    {
-        if ($this->collection->isEmpty()) {
-            return '';
-        }
-
-        $string = '';
-
-        foreach ($this->collection as $item) {
-            $string .= '  ' . $item->__toString() . "\n";
-        }
-
-        return $string;
     }
 }
