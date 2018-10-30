@@ -160,6 +160,7 @@ class Schema
 
     /**
      * @return ObjectType|null
+     * @codeCoverageIgnore
      */
     public function getSubscription(): ?ObjectType
     {
