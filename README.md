@@ -7,18 +7,18 @@ GraphQL schema library.
 [![Codecov.io](https://codecov.io/gh/oligus/schema/branch/master/graphs/badge.svg)](https://codecov.io/gh/oligus/schema)
 
 ## Contents
-[Types](README.md#types)<br />
+[Types](#types)<br />
 &nbsp;&nbsp;&nbsp;&nbsp;[Type modifiers](#type-modifiers)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;[Scalar](README.md#scalar)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;[Built in scalar types](README.md#built-in-scalar-types)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;[Objects](README.md#objects)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;[Interfaces](README.md#interfaces)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;[Enums](README.md#enums)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;[Scalar](#scalar)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;[Built in scalar types](#built-in-scalar-types)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;[Objects](#objects)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;[Interfaces](#interfaces)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;[Enums](#enums)<br />
 &nbsp;&nbsp;&nbsp;&nbsp;[Inputs](#inputs)<br />
-[Fields](README.md#fields)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;[Arguments](README.md#arguments)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;[Argument values](README.md#argument-values)<br />
-[Development](README.md#development)<br />
+[Fields](#fields)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;[Arguments](#arguments)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;[Argument values](#argument-values)<br />
+[Development](#development)<br />
 
 
 ## Types
@@ -284,8 +284,8 @@ A selection set is primarily composed of fields. A field describes one discrete 
 [GrapQL Spec](https://facebook.github.io/graphql/June2018/#sec-Language.Fields)
 
 #### Definition
-`Field(string $name, Type $type)`
-
+`Field(string $name, Type $type, ?TypeModifier $typeModifier, ?string $description)`
+        
 #### Examples
 
 ```php
@@ -299,7 +299,7 @@ simpleField: Int
 
 *With type modifier:*
 ```php
-$field = new Field('simpleField', new IntegerType(new TypeModifier($nullable = false));
+$field = new Field('simpleField', new IntegerType(), new TypeModifier($nullable = false));
 ```
 
 *Result:*
@@ -307,19 +307,12 @@ $field = new Field('simpleField', new IntegerType(new TypeModifier($nullable = f
 simpleField: Int!
 ```
 
-*Collection of fields:*
+*With type argument:*
 ```php
-$fields = new FieldCollection();
-$fields->add(new Field('name', new StringType()));
-$fields->add(new Field('age', new IntegerType()));
-$fields->add(new Field('size',  new IntegerType()));
-```
+$field = new Field('booleanListArgField', new BooleanType(), new TypeModifier(true, true));
 
-*Result:*
-```graphql
-name: String
-age: Int
-size: Int
+$argument = new Argument('booleanListArg', new BooleanType(), new TypeModifier(true, true, false));
+$field->addArgument($argument);
 ```
 
 ## Arguments
@@ -329,7 +322,7 @@ Fields are conceptually functions which return values, and occasionally accept a
 [GrapQL Spec](https://facebook.github.io/graphql/June2018/#sec-Language.Arguments)
 
 #### Definition
-`Argument(string $name, Type $type, Value $defaultVale)`
+`Argument(string $name, Type $type, ?TypeModifier $typeModifier, ?Value $defaultVale)`
 
 #### Examples
 
@@ -342,30 +335,19 @@ $argument = new Argument('booleanArg', new BooleanType());
 booleanArg: Boolean
 ```
 
+*With type modifier:*
+```php
+$argument = new Argument('intArg', new IntegerType(), new TypeModifier(false));
+// intArg: Int! = 0
+```
+
 *With type default value:*
 ```php
-$argument = new Argument('intArg', new IntegerType(), new ValueInteger(0));
+$argument = new Argument('intArg', new IntegerType(), null, new ValueInteger(0));
+// intArg: Int = 0
 ```
 
-*Result:*
-```graphql
-intArg: Int = 0
-```
-
-*Collection of arguments:*
-```php
-$arguments = new ArgumentCollection();
-$arguments->add(new Argument('booleanArg', new BooleanType(new TypeModifier($nullable = false))));
-$arguments->add(new Argument('integerArg', new IntegerType(new TypeModifier($nullable = false))));
-$arguments->add(new Argument('stringArg', new StringType(new TypeModifier($nullable = false)), new ValueString('test')));
-```
-
-*Result:*
-```graphql
-booleanArg: Boolean!, integerArg: Int!, stringArg: String! = "test"
-```
-
-## Argument values
+### Argument values
 
 Set simple scalar values for default values in arguments. 
 
