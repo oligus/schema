@@ -33,14 +33,15 @@ class InputType extends AbstractType
     }
 
     /**
-     * Add field to interface
-     *
      * @param Field $field
+     * @return InputType
      * @throws SchemaException
      */
-    public function addField(Field $field): void
+    public function addField(Field $field): InputType
     {
         $this->fields->add($field);
+
+        return $this;
     }
 
     /**

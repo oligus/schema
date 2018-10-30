@@ -95,4 +95,73 @@ class SchemaSerializerTest extends SchemaTestCase
 
         $this->assertMatchesSnapshot($this->serializer->serialize($schema));
     }
+
+    /**
+     * @throws \GQLSchema\Exceptions\SchemaException
+     */
+    public function testCleanSchema()
+    {
+        $schema = new Schema();
+
+        // Add interface
+        $interface = (new InterfaceType('Entity'))
+            ->addField(new Field('id', new IDType(), new TypeModifier(false)))
+            ->addField(new Field('name', new StringType()));
+        $schema->addInterface($interface);
+
+        // Add scalar
+        $scalar = new ScalarType('Url');
+        $schema->addScalar($scalar);
+
+        // Add object
+        $object = (new ObjectType('User'))
+            ->addField(new Field('id', new IDType(), new TypeModifier(false)))
+            ->addField(new Field('name', new StringType()))
+            ->addField(new Field('age', new IntegerType()))
+            ->addField(new Field('balance', new FloatType()))
+            ->addField(new Field('isActive', new BooleanType()));
+
+        $object->addField(new Field('friends', $object, new TypeModifier(true, true, false)))
+            ->addField(new Field('homepage', $scalar))
+            ->implements($interface);
+
+        $schema->addObject($object);
+
+        // Add query object
+        $query =  (new ObjectType('Query'))
+            ->addField(new Field('me', $object, new TypeModifier(true)));
+        $field = (new Field('friends', $object, new TypeModifier(true, true, false)))
+            ->addArgument(new Argument('limit', new IntegerType(), new TypeModifier(), new ValueInteger(10)));
+        $query->addField($field);
+
+        $schema->addObject($query);
+
+        // Add input object
+        $input = (new InputType('ListUsersInput'))
+            ->addField(new Field('limit', new IntegerType()))
+            ->addField(new Field('since_id', new IDType()));
+
+        $schema->addInput($input);
+
+        // Add mutation object
+        $mutation =  new ObjectType('Mutation');
+        $field = (new Field('users', $object, new TypeModifier(true, true, false)))
+            ->addArgument(new Argument('params', $input));
+        $mutation->addField($field);
+        $schema->addObject($mutation);
+
+        // Add union
+        $union = (new UnionType('MyUnion'))
+            ->addObjectType(new ObjectType('Dog'))
+            ->addObjectType(new ObjectType('Cat'))
+            ->addObjectType(new ObjectType('Bird'));
+
+        $schema->addUnion($union);
+
+        // Set root types
+        $schema->setQuery($query);
+        $schema->setMutation($mutation);
+
+        $this->assertMatchesSnapshot($this->serializer->serialize($schema));
+    }
 }

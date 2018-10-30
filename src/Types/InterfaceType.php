@@ -43,13 +43,14 @@ class InterfaceType extends AbstractType
     }
 
     /**
-     * Add field to interface
-     *
      * @param Field $field
+     * @return InterfaceType
      * @throws SchemaException
      */
-    public function addField(Field $field): void
+    public function addField(Field $field): InterfaceType
     {
         $this->fields->add($field);
+
+        return $this;
     }
 }

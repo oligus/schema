@@ -33,12 +33,11 @@ class UnionType extends AbstractType
     }
 
     /**
-     * Adds object type
-     *
      * @param ObjectType $objectType
+     * @return UnionType
      * @throws SchemaException
      */
-    public function addObjectType(ObjectType $objectType): void
+    public function addObjectType(ObjectType $objectType): UnionType
     {
         /** @var ObjectType $object */
         foreach ($this->objectTypes as $object) {
@@ -48,6 +47,8 @@ class UnionType extends AbstractType
         }
 
         $this->objectTypes->add($objectType);
+
+        return $this;
     }
 
     /**

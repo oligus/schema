@@ -40,14 +40,15 @@ class ObjectType extends AbstractType
     }
 
     /**
-     * Add field to interface
-     *
      * @param Field $field
+     * @return ObjectType
      * @throws SchemaException
      */
-    public function addField(Field $field): void
+    public function addField(Field $field): ObjectType
     {
         $this->fields->add($field);
+
+        return $this;
     }
 
     /**
@@ -59,18 +60,19 @@ class ObjectType extends AbstractType
     }
 
     /**
-     * Add interface to implement
-     *
      * @param InterfaceType $interface
+     * @return ObjectType
      * @throws SchemaException
      */
-    public function implements(InterfaceType $interface): void
+    public function implements(InterfaceType $interface): ObjectType
     {
         if (!$this->fields->implements($interface)) {
             throw new SchemaException('Object type must implement interface, one or more fields missing.');
         }
 
         $this->interfaces->add($interface);
+
+        return $this;
     }
 
     /**

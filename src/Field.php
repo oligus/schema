@@ -62,9 +62,10 @@ class Field implements Element
 
     /**
      * @param string $name
+     * @return Field
      * @throws SchemaException
      */
-    private function setName(string $name): void
+    private function setName(string $name): Field
     {
         if (!preg_match('/^[_A-Za-z][_0-9A-Za-z]*/', $name)) {
             throw new SchemaException('Invalid name [' . $name . ']');
@@ -75,15 +76,20 @@ class Field implements Element
         }
 
         $this->name = $name;
+
+        return $this;
     }
 
     /**
      * @param Argument $argument
+     * @return Field
      * @throws SchemaException
      */
-    public function addArgument(Argument $argument): void
+    public function addArgument(Argument $argument): Field
     {
         $this->arguments->add($argument);
+
+        return $this;
     }
 
     /**
@@ -126,10 +132,13 @@ class Field implements Element
 
     /**
      * @param TypeModifier|null $typeModifier
+     * @return Field
      */
-    public function setTypeModifier(?TypeModifier $typeModifier): void
+    public function setTypeModifier(?TypeModifier $typeModifier): Field
     {
         $this->typeModifier = $typeModifier;
+
+        return $this;
     }
 
     /**

@@ -6,7 +6,14 @@ GraphQL schema library.
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Codecov.io](https://codecov.io/gh/oligus/schema/branch/master/graphs/badge.svg)](https://codecov.io/gh/oligus/schema)
 
+## Install
+
+```bash
+$ composer require oligus/schema
+```
+
 ## Contents
+[Quick start](#quick-start)<br />
 [Types](#types)<br />
 &nbsp;&nbsp;&nbsp;&nbsp;[Type modifiers](#type-modifiers)<br />
 &nbsp;&nbsp;&nbsp;&nbsp;[Scalar](#scalar)<br />
@@ -20,6 +27,114 @@ GraphQL schema library.
 &nbsp;&nbsp;&nbsp;&nbsp;[Argument values](#argument-values)<br />
 [Development](#development)<br />
 
+## Quick start
+
+```php
+$schema = new Schema();
+
+// Add interface
+$interface = (new InterfaceType('Entity'))
+    ->addField(new Field('id', new IDType(), new TypeModifier(false)))
+    ->addField(new Field('name', new StringType()));
+$schema->addInterface($interface);
+
+// Add scalar
+$scalar = new ScalarType('Url');
+$schema->addScalar($scalar);
+
+// Add object
+$object = (new ObjectType('User'))
+    ->addField(new Field('id', new IDType(), new TypeModifier(false)))
+    ->addField(new Field('name', new StringType()))
+    ->addField(new Field('age', new IntegerType()))
+    ->addField(new Field('balance', new FloatType()))
+    ->addField(new Field('isActive', new BooleanType()));
+
+$object->addField(new Field('friends', $object, new TypeModifier(true, true, false)))
+    ->addField(new Field('homepage', $scalar))
+    ->implements($interface);
+
+$schema->addObject($object);
+
+// Add query object
+$query =  (new ObjectType('Query'))
+    ->addField(new Field('me', $object, new TypeModifier(true)));
+$field = (new Field('friends', $object, new TypeModifier(true, true, false)))
+    ->addArgument(new Argument('limit', new IntegerType(), new TypeModifier(), new ValueInteger(10)));
+$query->addField($field);
+
+$schema->addObject($query);
+
+// Add input object
+$input = (new InputType('ListUsersInput'))
+    ->addField(new Field('limit', new IntegerType()))
+    ->addField(new Field('since_id', new IDType()));
+
+$schema->addInput($input);
+
+// Add mutation object
+$mutation =  new ObjectType('Mutation');
+$field = (new Field('users', $object, new TypeModifier(true, true, false)))
+    ->addArgument(new Argument('params', $input));
+$mutation->addField($field);
+$schema->addObject($mutation);
+
+// Add union
+$union = (new UnionType('MyUnion'))
+    ->addObjectType(new ObjectType('Dog'))
+    ->addObjectType(new ObjectType('Cat'))
+    ->addObjectType(new ObjectType('Bird'));
+
+$schema->addUnion($union);
+
+// Set root types
+$schema->setQuery($query);
+$schema->setMutation($mutation);
+
+$serializer = new SchemaSerializer();
+$serializer->serialize($schema);
+```
+
+*Result:*
+```graphql
+interface Entity {
+  id: ID!
+  name: String
+}
+
+scalar Url
+
+union MyUnion = Dog | Cat | Bird
+
+type User implements Entity {
+  id: ID!
+  name: String
+  age: Int
+  balance: Float
+  isActive: Boolean
+  friends: [User]!
+  homepage: Url
+}
+
+type Query {
+  me: User
+  friends(limit: Int = 10): [User]!
+}
+
+type Mutation {
+  users(params: ListUsersInput): [User]!
+}
+
+input ListUsersInput {
+  limit: Int
+  since_id: ID
+}
+
+schema {
+  query: Query
+  mutation: Mutation
+}
+```
 
 ## Types
 
