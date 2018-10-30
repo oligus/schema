@@ -77,11 +77,11 @@ class SchemaSerializer
     {
         $string = "schema {\n";
 
-        if(!empty($schema->getQuery())) {
+        if (!empty($schema->getQuery())) {
             $string .= "  query: " . $schema->getQuery()->getName() . "\n";
         }
 
-        if(!empty($schema->getMutation())) {
+        if (!empty($schema->getMutation())) {
             $string .= "  mutation: " . $schema->getMutation()->getName() . "\n";
         }
 

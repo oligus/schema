@@ -2,7 +2,6 @@
 
 namespace GQLSchema\Tests\Collections;
 
-use GQLSchema\Serializers\FieldSerializer;
 use GQLSchema\Types\InterfaceType;
 use GQLSchema\Types\Scalars\IntegerType;
 use GQLSchema\Types\Scalars\StringType;

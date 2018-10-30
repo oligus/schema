@@ -4,7 +4,6 @@ namespace GQLSchema\Tests\Serializers\TypeSerializers;
 
 use GQLSchema\Serializers\TypeSerializers\ScalarSerializer;
 use GQLSchema\Tests\SchemaTestCase;
-use GQLSchema\Types\EnumType;
 use GQLSchema\Types\ScalarType;
 
 /**
