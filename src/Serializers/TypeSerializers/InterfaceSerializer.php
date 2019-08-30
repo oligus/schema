@@ -40,7 +40,7 @@ class InterfaceSerializer
         /** @var Field $field */
         foreach ($type->getFields()->getIterator() as $field) {
             $string .= '  ';
-            $string .= (new FieldSerializer())->serialize($field);
+            $string .= str_replace("\n", "\n  ", (new FieldSerializer())->serialize($field));
             $string .= "\n";
         }
 
