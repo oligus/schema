@@ -69,5 +69,4 @@ class DirectiveType extends AbstractType
 
         return $string;
     }
-
 }
