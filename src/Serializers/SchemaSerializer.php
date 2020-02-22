@@ -2,12 +2,15 @@
 
 namespace GQLSchema\Serializers;
 
+use GQLSchema\Serializers\TypeSerializers\DirectiveSerializer;
 use GQLSchema\Serializers\TypeSerializers\InputSerializer;
 use GQLSchema\Serializers\TypeSerializers\InterfaceSerializer;
 use GQLSchema\Serializers\TypeSerializers\ScalarSerializer;
 use GQLSchema\Serializers\TypeSerializers\ObjectSerializer;
 use GQLSchema\Schema;
 use GQLSchema\Serializers\TypeSerializers\UnionSerializer;
+use GQLSchema\Exceptions\SchemaException;
+use Exception;
 
 /**
  * Class SchemaSerializer
@@ -18,11 +21,20 @@ class SchemaSerializer
     /**
      * @param Schema $schema
      * @return string
-     * @throws \GQLSchema\Exceptions\SchemaException
+     * @throws SchemaException
+     * @throws Exception
      */
     public function serialize(Schema $schema): string
     {
         $string = '';
+
+        if (!$schema->getDirectives()->isEmpty()) {
+            $directiveSerializer = new DirectiveSerializer();
+
+            foreach ($schema->getDirectives()->getIterator() as $interface) {
+                $string .= $directiveSerializer->serialize($interface);
+            }
+        }
 
         if (!$schema->getInterfaces()->isEmpty()) {
             $interfaceSerializer = new InterfaceSerializer();

@@ -14,6 +14,7 @@ use GQLSchema\Values\ValueBoolean;
 use GQLSchema\Values\ValueString;
 use GQLSchema\Collections\CommonCollection;
 use GQLSchema\Tests\SchemaTestCase;
+use GQLSchema\Exceptions\SchemaException;
 
 /**
  * Class FieldTest
@@ -32,7 +33,7 @@ class FieldTest extends SchemaTestCase
     }
 
     /**
-     * @throws \GQLSchema\Exceptions\SchemaException
+     * @throws SchemaException
      */
     public function testFields()
     {
@@ -103,7 +104,7 @@ class FieldTest extends SchemaTestCase
     }
 
     /**
-     * @throws \GQLSchema\Exceptions\SchemaException
+     * @throws SchemaException
      */
     public function testDescription()
     {

@@ -4,6 +4,7 @@ namespace GQLSchema;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use GQLSchema\Collections\InterfaceCollection;
+use GQLSchema\Types\DirectiveType;
 use GQLSchema\Types\InputType;
 use GQLSchema\Types\InterfaceType;
 use GQLSchema\Types\ObjectType;
@@ -57,6 +58,11 @@ class Schema
     private $subscription;
 
     /**
+     * @var ArrayCollection
+     */
+    private $directives;
+
+    /**
      * Schema constructor.
      */
     public function __construct()
@@ -66,6 +72,7 @@ class Schema
         $this->objects = new ArrayCollection();
         $this->inputs = new ArrayCollection();
         $this->unions = new ArrayCollection();
+        $this->directives = new ArrayCollection();
     }
 
     /**
@@ -212,5 +219,21 @@ class Schema
     public function addUnion(UnionType $unionType): void
     {
         $this->unions->add($unionType);
+    }
+
+    /**
+     * @param DirectiveType $directive
+     */
+    public function addDirective(DirectiveType $directive): void
+    {
+        $this->directives->add($directive);
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getDirectives(): ArrayCollection
+    {
+        return $this->directives;
     }
 }

@@ -1,4 +1,9 @@
 <?php return '"""
+Uppercase output
+"""
+directive @upper on FIELD | FRAGMENT_SPREAD
+
+"""
 Define Entity interface
 """
 interface Entity {
