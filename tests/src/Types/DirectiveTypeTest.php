@@ -3,17 +3,9 @@
 namespace GQLSchema\Tests\Types;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use GQLSchema\Argument;
-use GQLSchema\Field;
 use GQLSchema\Types\DirectiveType;
 use GQLSchema\Tests\SchemaTestCase;
 use GQLSchema\Locations\ExecutableDirectiveLocation;
-use GQLSchema\Types\Scalars\BooleanType;
-use GQLSchema\Types\Scalars\IntegerType;
-use GQLSchema\Types\Scalars\StringType;
-use GQLSchema\Types\TypeModifier;
-use GQLSchema\Values\ValueString;
-use GQLSchema\Exceptions\SchemaException;
 
 /**
  * Class DirectiveTypeTest

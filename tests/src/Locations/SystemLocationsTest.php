@@ -8,6 +8,11 @@ use GQLSchema\Locations\SystemLocations;
 /**
  * Class SystemLocationsTest
  * @package GQLSchema\Tests\Serializers
+ *
+ * @method static SystemLocationsTest QUERY()
+ * @method static SystemLocationsTest MUTATION()
+ * @method static SystemLocationsTest SUBSCRIPTION()
+ * @method static SystemLocationsTest FIELD()
  */
 class SystemLocationsTest extends SchemaTestCase
 {

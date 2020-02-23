@@ -8,6 +8,7 @@ use GQLSchema\Types\Type;
 use GQLSchema\Exceptions\SchemaException;
 use GQLSchema\Types\TypeModifier;
 use GQLSchema\Locations\Location;
+use BadMethodCallException;
 
 /**
  * Class Field
@@ -52,6 +53,7 @@ class Field implements Element, Location
      * @param TypeModifier|null $typeModifier
      * @param null|string $description
      * @throws SchemaException
+     * @throws BadMethodCallException
      */
     public function __construct(
         string $name,

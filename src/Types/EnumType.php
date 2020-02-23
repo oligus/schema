@@ -13,7 +13,7 @@ class EnumType extends AbstractType
     const TYPE = 'enum';
 
     /**
-     * @var array
+     * @var array<string>
      */
     private $enums;
 
@@ -21,7 +21,7 @@ class EnumType extends AbstractType
      * EnumType constructor.
      * @param string $name
      * @param null|string $description
-     * @param array $enums
+     * @param array<string> $enums
      * @throws SchemaException
      */
     public function __construct(string $name, ?string $description = null, array $enums = [])
@@ -49,7 +49,7 @@ class EnumType extends AbstractType
     /**
      * Returns list of enums
      *
-     * @return array
+     * @return array<string>
      */
     public function getEnums(): array
     {
