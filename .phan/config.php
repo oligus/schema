@@ -307,6 +307,7 @@ return [
     'directory_list' => [
         'src/',
         'vendor/doctrine/',
+        'vendor/myclabs/php-enum',
     ],
 
     // List of case-insensitive file extensions supported by Phan.

@@ -7,6 +7,7 @@ use GQLSchema\Types\InputType;
 use GQLSchema\Types\Type;
 use GQLSchema\Exceptions\SchemaException;
 use GQLSchema\Serializers\FieldSerializer;
+use Exception;
 
 /**
  * Class InputSerializer
@@ -18,6 +19,7 @@ class InputSerializer
      * @param InputType $type
      * @return string
      * @throws SchemaException
+     * @throws Exception
      */
     public function serialize(InputType $type): string
     {

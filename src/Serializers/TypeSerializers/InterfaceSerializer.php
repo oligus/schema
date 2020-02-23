@@ -7,6 +7,7 @@ use GQLSchema\Types\Type;
 use GQLSchema\Types\InterfaceType;
 use GQLSchema\Serializers\FieldSerializer;
 use GQLSchema\Exceptions\SchemaException;
+use Exception;
 
 /**
  * Class InterfaceSerializer
@@ -18,6 +19,7 @@ class InterfaceSerializer
      * @param InterfaceType $type
      * @return string
      * @throws SchemaException
+     * @throws Exception
      */
     public function serialize(InterfaceType $type): string
     {

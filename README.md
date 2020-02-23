@@ -31,6 +31,10 @@ $ composer require oligus/schema
 
 ```php
 $schema = new Schema();
+// Add directive
+$directive = new DirectiveType('upper');
+$directive->addLocation(ExecutableDirectiveLocation::FIELD());
+$schema->addDirective($directive);
 
 // Add interface
 $interface = (new InterfaceType('Entity'))
@@ -97,6 +101,8 @@ $serializer->serialize($schema);
 
 *Result:*
 ```graphql
+directive @upper on FIELD
+
 interface Entity {
   id: ID!
   name: String
@@ -359,6 +365,35 @@ enum Direction {
   EAST
   WEST
 }
+```
+
+## Directives
+
+A GraphQL schema describes directives which are used to annotate various parts of a GraphQL document as an indicator that they should be evaluated differently by a validator, executor, or client tool such as a code generator.
+
+[GrapQL Spec](https://spec.graphql.org/June2018/#sec-Type-System.Directives)
+
+#### Definitions
+`EnumType(string $name, ?string $description = null, array $enums = [])`
+
+*Add locations:*
+
+`add(ExecutableDirectiveLocation $location)`
+
+#### Examples
+
+```php
+$directive = new DirectiveType('example', 'Example directive');
+$directive->addLocation(ExecutableDirectiveLocation::FIELD());
+$directive->addLocation(ExecutableDirectiveLocation::INLINE_FRAGMENT());
+```
+
+*Result:*
+```graphql
+"""
+Example directive
+"""
+directive @example on FIELD | FRAGMENT_SPREAD
 ```
 
 ## Inputs

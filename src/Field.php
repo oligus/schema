@@ -2,16 +2,19 @@
 
 namespace GQLSchema;
 
+use GQLSchema\Collections\ArgumentCollection;
+use GQLSchema\Locations\SystemLocations;
 use GQLSchema\Types\Type;
-use GQLSchema\Collections\CommonCollection;
 use GQLSchema\Exceptions\SchemaException;
 use GQLSchema\Types\TypeModifier;
+use GQLSchema\Locations\Location;
+use BadMethodCallException;
 
 /**
  * Class Field
  * @package GQLSchema
  */
-class Field implements Element
+class Field implements Element, Location
 {
     /**
      * @var Type
@@ -24,7 +27,7 @@ class Field implements Element
     private $name;
 
     /**
-     * @var CommonCollection
+     * @var ArgumentCollection
      */
     private $arguments;
 
@@ -39,12 +42,18 @@ class Field implements Element
     private $typeModifier;
 
     /**
+     * @var SystemLocations
+     */
+    private $location;
+
+    /**
      * Field constructor.
      * @param string $name
      * @param Type $type
      * @param TypeModifier|null $typeModifier
      * @param null|string $description
      * @throws SchemaException
+     * @throws BadMethodCallException
      */
     public function __construct(
         string $name,
@@ -57,7 +66,8 @@ class Field implements Element
         $this->typeModifier = $typeModifier;
         $this->description = $description;
 
-        $this->arguments = new CommonCollection();
+        $this->arguments = new ArgumentCollection();
+        $this->location = SystemLocations::FIELD();
     }
 
     /**
@@ -93,9 +103,9 @@ class Field implements Element
     }
 
     /**
-     * @return CommonCollection
+     * @return ArgumentCollection
      */
-    public function getArguments(): CommonCollection
+    public function getArguments(): ArgumentCollection
     {
         return $this->arguments;
     }
@@ -147,5 +157,10 @@ class Field implements Element
     public function getTypeModifier(): ?TypeModifier
     {
         return $this->typeModifier;
+    }
+
+    public function getLocation(): SystemLocations
+    {
+        return $this->location;
     }
 }

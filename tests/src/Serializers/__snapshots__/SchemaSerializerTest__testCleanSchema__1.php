@@ -1,4 +1,8 @@
-<?php return 'interface Entity {
+<?php return 'directive @upper on FIELD
+
+directive @lower on FIELD
+
+interface Entity {
   id: ID!
   name: String
 }

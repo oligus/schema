@@ -22,7 +22,6 @@ before_script:
 script:
   - vendor/bin/phpunit --coverage-clover=coverage.xml
   - vendor/bin/phpcs --standard=ruleset.xml ./src
-  - vendor/bin/phan -m checkstyle -o build/logs/checkstyle.cs
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)

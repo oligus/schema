@@ -3,9 +3,11 @@
 namespace GQLSchema\Tests\Serializers;
 
 use GQLSchema\Argument;
+use GQLSchema\Locations\ExecutableDirectiveLocation;
 use GQLSchema\Schema;
 use GQLSchema\Field;
 use GQLSchema\Serializers\SchemaSerializer;
+use GQLSchema\Types\DirectiveType;
 use GQLSchema\Types\InputType;
 use GQLSchema\Types\InterfaceType;
 use GQLSchema\Types\ObjectType;
@@ -43,6 +45,12 @@ class SchemaSerializerTest extends SchemaTestCase
     public function testSchema()
     {
         $schema = new Schema();
+
+        // Add directive
+        $directive = new DirectiveType('upper', 'Uppercase output');
+        $directive->addLocation(ExecutableDirectiveLocation::FIELD());
+        $directive->addLocation(ExecutableDirectiveLocation::FRAGMENT_SPREAD());
+        $schema->addDirective($directive);
 
         $interface = new InterfaceType('Entity', 'Define Entity interface');
         $interface->addField(new Field('id', new IDType(), new TypeModifier(false)));
@@ -102,6 +110,16 @@ class SchemaSerializerTest extends SchemaTestCase
     public function testCleanSchema()
     {
         $schema = new Schema();
+
+        // Add directives
+        $directive = new DirectiveType('upper');
+        $directive->addLocation(ExecutableDirectiveLocation::FIELD());
+        $schema->addDirective($directive);
+
+        // Add directives
+        $directive = new DirectiveType('lower');
+        $directive->addLocation(ExecutableDirectiveLocation::FIELD());
+        $schema->addDirective($directive);
 
         // Add interface
         $interface = (new InterfaceType('Entity'))

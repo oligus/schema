@@ -8,6 +8,7 @@ use GQLSchema\Types\InterfaceType;
 use GQLSchema\Exceptions\SchemaException;
 use GQLSchema\Serializers\FieldSerializer;
 use GQLSchema\Collections\InterfaceCollection;
+use Exception;
 
 /**
  * Class ObjectSerializer
@@ -19,6 +20,7 @@ class ObjectSerializer
      * @param ObjectType $type
      * @return string
      * @throws SchemaException
+     * @throws Exception
      */
     public function serialize(ObjectType $type): string
     {
