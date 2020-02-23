@@ -161,6 +161,4 @@ class Field implements Element, Location
     {
         return $this->location;
     }
-
-
 }
