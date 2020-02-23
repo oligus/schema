@@ -3,6 +3,8 @@
 namespace GQLSchema\Types;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use GQLSchema\Argument;
+use GQLSchema\Collections\ArgumentCollection;
 use GQLSchema\Exceptions\SchemaException;
 use GQLSchema\Locations\ExecutableDirectiveLocation;
 
@@ -20,6 +22,11 @@ class DirectiveType extends AbstractType
     private $locations;
 
     /**
+     * @var ArgumentCollection
+     */
+    private $arguments;
+
+    /**
      * InterfaceType constructor.
      * @param string $name
      * @param null|string $description
@@ -30,6 +37,7 @@ class DirectiveType extends AbstractType
         parent::__construct($name, $description);
 
         $this->locations = new ArrayCollection();
+        $this->arguments = new ArgumentCollection();
     }
 
     /**
@@ -52,21 +60,22 @@ class DirectiveType extends AbstractType
     }
 
     /**
-     * @return ArrayCollection
+     * @param Argument $argument
+     * @return DirectiveType
+     * @throws SchemaException
      */
-    public function getLocations2(): string
+    public function addArgument(Argument $argument): DirectiveType
     {
-        $string = '';
+        $this->arguments->add($argument);
 
-        /** @var ExecutableDirectiveLocation $location */
-        foreach ($this->locations as $index => $location) {
-            $string .= $location->getValue();
+        return $this;
+    }
 
-            if ($index + 2 <= $this->locations->count()) {
-                $string .= ' | ';
-            }
-        }
-
-        return $string;
+    /**
+     * @return ArgumentCollection
+     */
+    public function getArguments(): ArgumentCollection
+    {
+        return $this->arguments;
     }
 }

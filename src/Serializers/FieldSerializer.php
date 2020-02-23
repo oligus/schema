@@ -5,6 +5,7 @@ namespace GQLSchema\Serializers;
 use GQLSchema\Field;
 use GQLSchema\Types\TypeModifier;
 use Doctrine\Common\Collections\ArrayCollection;
+use Exception;
 
 /**
  * Class FieldSerializer
@@ -15,6 +16,7 @@ class FieldSerializer
     /**
      * @param Field $field
      * @return string
+     * @throws Exception
      */
     public function serialize(Field $field): string
     {
@@ -26,19 +28,7 @@ class FieldSerializer
 
         $string .= $field->getName();
 
-        $arguments = $field->getArguments();
-
-        if ($arguments instanceof ArrayCollection && !$arguments->isEmpty()) {
-            $string .= '(';
-            foreach ($arguments->getIterator() as $index => $argument) {
-                $string .= (new ArgumentSerializer())->serialize($argument);
-
-                if ($index + 2 <= $arguments->count()) {
-                    $string .= ', ';
-                }
-            }
-            $string .= ')';
-        }
+        $string .=  ArgumentSerializer::serializeCollection($field->getArguments());
 
         $string .= ': ' . $this->serializeScalar($field);
 

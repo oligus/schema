@@ -3,8 +3,10 @@
 namespace GQLSchema\Serializers;
 
 use GQLSchema\Argument;
+use GQLSchema\Collections\ArgumentCollection;
 use GQLSchema\Types\TypeModifier;
 use GQLSchema\Values\Value;
+use Exception;
 
 /**
  * Class ArgumentSerializer
@@ -51,6 +53,31 @@ class ArgumentSerializer
         $string .= !$typeModifier->isNullable() ? '!' : '';
         $string .= $typeModifier->isListable() ? ']' : '';
         $string .= !$typeModifier->isNullableList() ? '!' : '';
+
+        return $string;
+    }
+
+    /**
+     *
+     * @param ArgumentCollection $arguments
+     * @return string
+     * @throws Exception
+     */
+    public static function serializeCollection(ArgumentCollection $arguments)
+    {
+        $string = '';
+
+        if (!$arguments->isEmpty()) {
+            $string .= '(';
+            foreach ($arguments->getIterator() as $index => $argument) {
+                $string .= (new self())->serialize($argument);
+
+                if ($index + 2 <= $arguments->count()) {
+                    $string .= ', ';
+                }
+            }
+            $string .= ')';
+        }
 
         return $string;
     }

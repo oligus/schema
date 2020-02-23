@@ -5,6 +5,9 @@ namespace GQLSchema\Collections;
 use GQLSchema\Exceptions\SchemaException;
 use Doctrine\Common\Collections\ArrayCollection;
 use GQLSchema\Element;
+use ArrayIterator;
+use Traversable;
+use Exception;
 
 /**
  * Class AbstractCollection
@@ -36,7 +39,8 @@ abstract class AbstractCollection
     }
 
     /**
-     * @return \ArrayIterator|\Traversable
+     * @return ArrayIterator|Traversable
+     * @throws Exception
      */
     public function getIterator()
     {
