@@ -1,4 +1,4 @@
-FROM alpine:edge
+FROM alpine:3.11
 
 RUN set -xe && \
     apk update && \
@@ -19,6 +19,7 @@ RUN set -xe && \
         php7-tokenizer \
         php7-mbstring \
         php7-xmlwriter \
+        php7-xdebug \
         --repository http://dl-cdn.alpinelinux.org/alpine/edge/main/ \
         --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ \
         --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing/ && \
@@ -30,3 +31,6 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ 
 
 RUN mkdir -p /var/www/html
 WORKDIR /var/www/html
+
+## Enable xdebug
+# RUN /bin/sed -i "s|;zend_extension=xdebug.so|zend_extension=xdebug.so|g" /etc/php7/conf.d/xdebug.ini

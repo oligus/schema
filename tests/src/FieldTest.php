@@ -15,6 +15,7 @@ use GQLSchema\Values\ValueString;
 use GQLSchema\Collections\CommonCollection;
 use GQLSchema\Tests\SchemaTestCase;
 use GQLSchema\Exceptions\SchemaException;
+use Exception;
 
 /**
  * Class FieldTest
@@ -34,6 +35,7 @@ class FieldTest extends SchemaTestCase
 
     /**
      * @throws SchemaException
+     * @throws Exception
      */
     public function testFields()
     {
@@ -105,6 +107,7 @@ class FieldTest extends SchemaTestCase
 
     /**
      * @throws SchemaException
+     * @throws Exception
      */
     public function testDescription()
     {
@@ -131,5 +134,14 @@ class FieldTest extends SchemaTestCase
     public function testSetInvalidName()
     {
         new Field('99-yes', new BooleanType());
+    }
+
+    /**
+     * @throws SchemaException
+     */
+    public function testLocation()
+    {
+        $field = new Field('simpleField', new IntegerType(), null, 'My test description');
+        $this->assertEquals('FIELD', $field->getLocation());
     }
 }
