@@ -2,6 +2,7 @@
 
 namespace GQLSchema\Tests\Collections;
 
+use GQLSchema\Exceptions\SchemaException;
 use GQLSchema\Field;
 use GQLSchema\Types\InterfaceType;
 use GQLSchema\Types\Scalars\IntegerType;
@@ -16,7 +17,7 @@ use GQLSchema\Tests\SchemaTestCase;
 class InterfaceCollectionTest extends SchemaTestCase
 {
     /**
-     * @throws \GQLSchema\Exceptions\SchemaException
+     * @throws SchemaException
      */
     public function testGet()
     {
@@ -49,11 +50,13 @@ class InterfaceCollectionTest extends SchemaTestCase
     }
 
     /**
-     * @expectedException \GQLSchema\Exceptions\SchemaException
-     * @expectedExceptionMessage The interface type must have a unique name within document, interface [Test1] seen twice.
+     * @throws SchemaException
      */
     public function testUniqueNames()
     {
+        $this->expectException(SchemaException::class);
+        $this->expectExceptionMessage('The interface type must have a unique name within document, interface [Test1] seen twice.');
+
         $interfaces = new InterfaceCollection();
 
         $interface1 = new InterfaceType('Test1');

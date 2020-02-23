@@ -5,7 +5,8 @@ namespace GQLSchema\Tests\Types;
 use GQLSchema\Types\UnionType;
 use GQLSchema\Types\ObjectType;
 use GQLSchema\Tests\SchemaTestCase;
-
+use GQLSchema\Exceptions\SchemaException;
+use ReflectionException;
 /**
  * Class UnionTypeTest
  * @package GQLSchema\Tests\Types
@@ -13,8 +14,8 @@ use GQLSchema\Tests\SchemaTestCase;
 class UnionTypeTest extends SchemaTestCase
 {
     /**
-     * @throws \GQLSchema\Exceptions\SchemaException
-     * @throws \ReflectionException
+     * @throws ReflectionException
+     * @throws SchemaException
      */
     public function testGetObjectTypes()
     {
@@ -32,11 +33,13 @@ class UnionTypeTest extends SchemaTestCase
     }
 
     /**
-     * @expectedException \GQLSchema\Exceptions\SchemaException
-     * @expectedExceptionMessage Object type must be unique
+     * @throws SchemaException
      */
     public function testUniqueObjectTypes()
     {
+        $this->expectException(SchemaException::class);
+        $this->expectExceptionMessage('Object type must be unique');
+
         $union = new UnionType('MyUnion', 'My union description');
         $union->addObjectType(new ObjectType('Dog'));
         $union->addObjectType(new ObjectType('Dog'));

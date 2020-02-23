@@ -2,10 +2,9 @@
 
 namespace GQLSchema\Tests\Serializers\TypeSerializers;
 
+use GQLSchema\Exceptions\SchemaException;
 use GQLSchema\Serializers\TypeSerializers\ObjectSerializer;
 use GQLSchema\Field;
-use GQLSchema\Types\Type;
-use GQLSchema\Types\TypeModifier;
 use GQLSchema\Types\ObjectType;
 use GQLSchema\Types\InterfaceType;
 use GQLSchema\Types\Scalars\StringType;
@@ -19,7 +18,7 @@ use GQLSchema\Tests\SchemaTestCase;
 class ObjectSerializerTest extends SchemaTestCase
 {
     /**
-     * @throws \GQLSchema\Exceptions\SchemaException
+     * @throws SchemaException
      */
     public function testSerialize()
     {
@@ -38,7 +37,7 @@ class ObjectSerializerTest extends SchemaTestCase
     }
 
     /**
-     * @throws \GQLSchema\Exceptions\SchemaException
+     * @throws SchemaException
      */
     public function testInterfaces()
     {
@@ -70,12 +69,13 @@ class ObjectSerializerTest extends SchemaTestCase
     }
 
     /**
-     * @throws \GQLSchema\Exceptions\SchemaException
-     * @expectedException \GQLSchema\Exceptions\SchemaException
-     * @expectedExceptionMessage An object type must define one or more fields.
+     * @throws SchemaException
      */
     public function testNoFieldException()
     {
+        $this->expectException(SchemaException::class);
+        $this->expectExceptionMessage('An object type must define one or more fields.');
+
         $object = new ObjectType('Wine');
         (new ObjectSerializer())->serialize($object);
     }

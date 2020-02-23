@@ -2,6 +2,7 @@
 
 namespace GQLSchema\Tests\Types;
 
+use GQLSchema\Exceptions\SchemaException;
 use GQLSchema\Types\ScalarType;
 use GQLSchema\Tests\SchemaTestCase;
 
@@ -12,7 +13,7 @@ use GQLSchema\Tests\SchemaTestCase;
 class ScalarTypeTest extends SchemaTestCase
 {
     /**
-     * @throws \GQLSchema\Exceptions\SchemaException
+     * @throws SchemaException
      */
     public function testScalarType()
     {
@@ -22,11 +23,12 @@ class ScalarTypeTest extends SchemaTestCase
     }
 
     /**
-     * @expectedException \GQLSchema\Exceptions\SchemaException
-     * @expectedExceptionMessage Invalid name [023]
+     * @throws SchemaException
      */
     public function testNameValidation()
     {
+        $this->expectException(SchemaException::class);
+        $this->expectExceptionMessage('Invalid name [023]');
         new ScalarType('023');
     }
 

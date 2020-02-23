@@ -24,8 +24,8 @@ class InterfaceSerializer implements Serializer
      */
     public function serialize(Type $type): string
     {
-        if(!$type instanceof InterfaceType) {
-            throw new Exception('Type must be of type InterfaceType');
+        if (!$type instanceof InterfaceType) {
+            throw new SchemaException('Type must be of type InterfaceType');
         }
 
         $string = '';

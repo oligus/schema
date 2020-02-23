@@ -26,8 +26,8 @@ class ObjectSerializer implements Serializer
      */
     public function serialize(Type $type): string
     {
-        if(!$type instanceof ObjectType) {
-            throw new Exception('Type must be of type ObjectType');
+        if (!$type instanceof ObjectType) {
+            throw new SchemaException('Type must be of type ObjectType');
         }
 
         $string = '';

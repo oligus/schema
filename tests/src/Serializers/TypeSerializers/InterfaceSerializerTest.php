@@ -2,10 +2,9 @@
 
 namespace GQLSchema\Tests\Serializers\TypeSerializers;
 
+use GQLSchema\Exceptions\SchemaException;
 use GQLSchema\Serializers\TypeSerializers\InterfaceSerializer;
 use GQLSchema\Tests\SchemaTestCase;
-use GQLSchema\Types\Type;
-use GQLSchema\Types\TypeModifier;
 use GQLSchema\Types\InterfaceType;
 use GQLSchema\Types\Scalars\StringType;
 use GQLSchema\Types\Scalars\IntegerType;
@@ -18,7 +17,7 @@ use GQLSchema\Field;
 class InterfaceSerializerTest extends SchemaTestCase
 {
     /**
-     * @throws \GQLSchema\Exceptions\SchemaException
+     * @throws SchemaException
      */
     public function testSerialize()
     {
@@ -30,11 +29,13 @@ class InterfaceSerializerTest extends SchemaTestCase
     }
 
     /**
-     * @expectedException \GQLSchema\Exceptions\SchemaException
-     * @expectedExceptionMessage An Interface type must define one or more fields.
+     * @throws SchemaException
      */
     public function testEmptyFieldsException()
     {
+        $this->expectException(SchemaException::class);
+        $this->expectExceptionMessage('An Interface type must define one or more fields.');
+
         $interface = new InterfaceType('Test');
         (new InterfaceSerializer())->serialize($interface);
     }

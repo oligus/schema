@@ -2,6 +2,7 @@
 
 namespace GQLSchema\Tests\Serializers\TypeSerializers;
 
+use GQLSchema\Exceptions\SchemaException;
 use GQLSchema\Field;
 use GQLSchema\Serializers\TypeSerializers\InputSerializer;
 use GQLSchema\Types\InputType;
@@ -16,7 +17,7 @@ use GQLSchema\Tests\SchemaTestCase;
 class InputSerializerTest extends SchemaTestCase
 {
     /**
-     * @throws \GQLSchema\Exceptions\SchemaException
+     * @throws SchemaException
      */
     public function testSerialize()
     {
@@ -29,12 +30,13 @@ class InputSerializerTest extends SchemaTestCase
     }
 
     /**
-     * @throws \GQLSchema\Exceptions\SchemaException
-     * @expectedException \GQLSchema\Exceptions\SchemaException
-     * @expectedExceptionMessage An input type must define one or more fields.
+     * @throws SchemaException
      */
     public function testNoFieldException()
     {
+        $this->expectException(SchemaException::class);
+        $this->expectExceptionMessage('An input type must define one or more fields.');
+
         $input = new InputType('Wine');
         (new InputSerializer())->serialize($input);
     }

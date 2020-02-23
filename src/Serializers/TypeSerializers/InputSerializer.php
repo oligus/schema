@@ -24,8 +24,8 @@ class InputSerializer implements Serializer
      */
     public function serialize(Type $type): string
     {
-        if(!$type instanceof InputType) {
-            throw new Exception('Type must be of type InputType');
+        if (!$type instanceof InputType) {
+            throw new SchemaException('Type must be of type InputType');
         }
 
         $string = '';

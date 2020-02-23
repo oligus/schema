@@ -13,7 +13,6 @@ use GQLSchema\Types\Scalars\IntegerType;
 use GQLSchema\Types\Scalars\StringType;
 use GQLSchema\Types\TypeModifier;
 use GQLSchema\Values\ValueString;
-use Exception;
 
 /**
  * Class ValueSerializerHelp
@@ -50,12 +49,13 @@ class DirectiveSerializerTest extends SchemaTestCase
     }
 
     /**
-     * @throws Exception
-     * @expectedException \GQLSchema\Exceptions\SchemaException
-     * @expectedExceptionMessage A directive must define one or more locations.
+     * @throws SchemaException
      */
     public function testSerializeEmptyLocation()
     {
+        $this->expectException(SchemaException::class);
+        $this->expectExceptionMessage('A directive must define one or more locations.');
+
         $serializer = new DirectiveSerializer();
         $serializer->serialize(new DirectiveType('example'));
     }

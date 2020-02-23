@@ -5,6 +5,8 @@ namespace GQLSchema\Tests\Serializers\TypeSerializers;
 use GQLSchema\Serializers\TypeSerializers\ScalarSerializer;
 use GQLSchema\Tests\SchemaTestCase;
 use GQLSchema\Types\ScalarType;
+use GQLSchema\Exceptions\SchemaException;
+use Exception;
 
 /**
  * Class ValueSerializerHelp
@@ -17,13 +19,14 @@ class ScalarSerializerTest extends SchemaTestCase
      */
     private $serializer;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->serializer = new ScalarSerializer();
     }
 
     /**
-     * @throws \GQLSchema\Exceptions\SchemaException
+     * @throws SchemaException
+     * @throws Exception
      */
     public function testSerialize()
     {

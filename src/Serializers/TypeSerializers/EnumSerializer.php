@@ -2,6 +2,7 @@
 
 namespace GQLSchema\Serializers\TypeSerializers;
 
+use GQLSchema\Exceptions\SchemaException;
 use GQLSchema\Serializers\Serializer;
 use GQLSchema\Types\EnumType;
 use GQLSchema\Types\Type;
@@ -20,8 +21,8 @@ class EnumSerializer implements Serializer
      */
     public function serialize(Type $type): string
     {
-        if(!$type instanceof EnumType) {
-            throw new Exception('Type must be of type EnumType');
+        if (!$type instanceof EnumType) {
+            throw new SchemaException('Type must be of type EnumType');
         }
 
         $string = '';

@@ -2,6 +2,7 @@
 
 namespace GQLSchema\Tests\Collections;
 
+use GQLSchema\Exceptions\SchemaException;
 use GQLSchema\Types\InterfaceType;
 use GQLSchema\Types\Scalars\IntegerType;
 use GQLSchema\Types\Scalars\StringType;
@@ -16,7 +17,7 @@ use GQLSchema\Tests\SchemaTestCase;
 class FieldCollectionTest extends SchemaTestCase
 {
     /**
-     * @throws \GQLSchema\Exceptions\SchemaException
+     * @throws SchemaException
      */
     public function testImplements()
     {
@@ -37,11 +38,13 @@ class FieldCollectionTest extends SchemaTestCase
     }
 
     /**
-     * @expectedException \GQLSchema\Exceptions\SchemaException
-     * @expectedExceptionMessage The field must have a unique name within type, field name [age] seen twice.
+     * @throws SchemaException
      */
     public function testUniqueNames()
     {
+        $this->expectException(SchemaException::class);
+        $this->expectExceptionMessage('The field must have a unique name within type, field name [age] seen twice.');
+
         $fields = new FieldCollection();
         $fields->add(new Field('age', new IntegerType()));
         $fields->add(new Field('test', new IntegerType()));
@@ -49,7 +52,7 @@ class FieldCollectionTest extends SchemaTestCase
     }
 
     /**
-     * @throws \GQLSchema\Exceptions\SchemaException
+     * @throws SchemaException
      */
     public function testHasName()
     {

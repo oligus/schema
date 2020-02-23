@@ -34,7 +34,7 @@ class SchemaSerializerTest extends SchemaTestCase
      */
     private $serializer;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->serializer = new SchemaSerializer();
     }

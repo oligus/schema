@@ -22,8 +22,8 @@ class UnionSerializer implements Serializer
      */
     public function serialize(Type $type): string
     {
-        if(!$type instanceof UnionType) {
-            throw new Exception('Type must be of type UnionType');
+        if (!$type instanceof UnionType) {
+            throw new SchemaException('Type must be of type UnionType');
         }
 
         $string = '';

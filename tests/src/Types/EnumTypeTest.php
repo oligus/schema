@@ -2,6 +2,7 @@
 
 namespace GQLSchema\Tests\Types;
 
+use GQLSchema\Exceptions\SchemaException;
 use GQLSchema\Types\EnumType;
 use GQLSchema\Tests\SchemaTestCase;
 
@@ -12,12 +13,13 @@ use GQLSchema\Tests\SchemaTestCase;
 class EnumTypeTest extends SchemaTestCase
 {
     /**
-     * @throws \Exception
-     * @expectedException \GQLSchema\Exceptions\SchemaException
-     * @expectedExceptionMessage Enums must be unique, enum already found: EAST
+     * @throws SchemaException
      */
     public function testUniqueEnum()
     {
+        $this->expectException(SchemaException::class);
+        $this->expectExceptionMessage('Enums must be unique, enum already found: EAST');
+
         $enum = new EnumType('Direction', 'Different directions', ['SOUTH', 'NORTH']);
         $enum->addEnum('EAST');
         $enum->addEnum('EAST');

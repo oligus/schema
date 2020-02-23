@@ -25,8 +25,8 @@ class DirectiveSerializer implements Serializer
      */
     public function serialize(Type $directive): string
     {
-        if(!$directive instanceof DirectiveType) {
-            throw new Exception('Directive must be of type DirectiveType');
+        if (!$directive instanceof DirectiveType) {
+            throw new SchemaException('Directive must be of type DirectiveType');
         }
 
         $string = '';
