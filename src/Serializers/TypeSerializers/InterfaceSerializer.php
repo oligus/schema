@@ -3,6 +3,7 @@
 namespace GQLSchema\Serializers\TypeSerializers;
 
 use GQLSchema\Field;
+use GQLSchema\Serializers\Serializer;
 use GQLSchema\Types\Type;
 use GQLSchema\Types\InterfaceType;
 use GQLSchema\Serializers\FieldSerializer;
@@ -13,16 +14,20 @@ use Exception;
  * Class InterfaceSerializer
  * @package GQLSchema\Serializers\TypeSerializers
  */
-class InterfaceSerializer
+class InterfaceSerializer implements Serializer
 {
     /**
-     * @param InterfaceType $type
+     * @param Type $type
      * @return string
      * @throws SchemaException
      * @throws Exception
      */
-    public function serialize(InterfaceType $type): string
+    public function serialize(Type $type): string
     {
+        if(!$type instanceof InterfaceType) {
+            throw new Exception('Type must be of type InterfaceType');
+        }
+
         $string = '';
 
         if (!empty($type->getDescription())) {

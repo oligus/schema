@@ -35,6 +35,7 @@ class TypeModifier
      * @param bool $nullable
      * @param bool $listable
      * @param bool $nullableList
+     * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
      */
     public function __construct(bool $nullable = true, bool $listable = false, bool $nullableList = true)
     {

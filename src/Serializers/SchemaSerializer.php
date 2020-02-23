@@ -2,6 +2,7 @@
 
 namespace GQLSchema\Serializers;
 
+use Doctrine\Common\Collections\Collection;
 use GQLSchema\Serializers\TypeSerializers\DirectiveSerializer;
 use GQLSchema\Serializers\TypeSerializers\InputSerializer;
 use GQLSchema\Serializers\TypeSerializers\InterfaceSerializer;
@@ -29,51 +30,27 @@ class SchemaSerializer
         $string = '';
 
         if (!$schema->getDirectives()->isEmpty()) {
-            $directiveSerializer = new DirectiveSerializer();
-
-            foreach ($schema->getDirectives()->getIterator() as $interface) {
-                $string .= $directiveSerializer->serialize($interface);
-            }
+            $string .= $this->serializeCollection(new DirectiveSerializer(), $schema->getDirectives());
         }
 
         if (!$schema->getInterfaces()->isEmpty()) {
-            $interfaceSerializer = new InterfaceSerializer();
-
-            foreach ($schema->getInterfaces()->getCollection()->getIterator() as $interface) {
-                $string .= $interfaceSerializer->serialize($interface);
-            }
+            $string .= $this->serializeCollection(new InterfaceSerializer(), $schema->getInterfaces()->getCollection());
         }
 
         if (!$schema->getScalars()->isEmpty()) {
-            $scalarSerializer = new ScalarSerializer();
-
-            foreach ($schema->getScalars()->getIterator() as $scalar) {
-                $string .= $scalarSerializer->serialize($scalar);
-            }
+            $string .= $this->serializeCollection(new ScalarSerializer(), $schema->getScalars());
         }
 
         if (!$schema->getUnions()->isEmpty()) {
-            $unionSerializer = new UnionSerializer();
-
-            foreach ($schema->getUnions()->getIterator() as $union) {
-                $string .= $unionSerializer->serialize($union);
-            }
+            $string .= $this->serializeCollection(new UnionSerializer(), $schema->getUnions());
         }
 
         if (!$schema->getObjects()->isEmpty()) {
-            $objectSerializer = new ObjectSerializer();
-
-            foreach ($schema->getObjects()->getIterator() as $object) {
-                $string .= $objectSerializer->serialize($object);
-            }
+            $string .= $this->serializeCollection(new ObjectSerializer(), $schema->getObjects());
         }
 
         if (!$schema->getInputs()->isEmpty()) {
-            $inputSerializer = new InputSerializer();
-
-            foreach ($schema->getInputs()->getIterator() as $input) {
-                $string .= $inputSerializer->serialize($input);
-            }
+            $string .= $this->serializeCollection(new InputSerializer(), $schema->getInputs());
         }
 
         $string .= $this->getRootTypes($schema);
@@ -97,13 +74,24 @@ class SchemaSerializer
             $string .= "  mutation: " . $schema->getMutation()->getName() . "\n";
         }
 
-        /*
-        if(!empty($schema->getSubscription())) {
-            $string .= "  subscription: " . $schema->getSubscription()->getName() . "\n";
-        }
-        */
-
         $string .= "}\n";
+
+        return $string;
+    }
+
+    /**
+     * @param Serializer $serializer
+     * @param Collection $collection
+     * @return string
+     * @throws Exception
+     */
+    private function serializeCollection(Serializer $serializer, Collection $collection): string
+    {
+        $string = '';
+
+        foreach ($collection->getIterator() as $item) {
+            $string .= $serializer->serialize($item);
+        }
 
         return $string;
     }

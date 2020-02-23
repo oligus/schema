@@ -5,24 +5,30 @@ namespace GQLSchema\Serializers\TypeSerializers;
 use Doctrine\Common\Collections\ArrayCollection;
 use GQLSchema\Locations\ExecutableDirectiveLocation;
 use GQLSchema\Serializers\ArgumentSerializer;
+use GQLSchema\Serializers\Serializer;
 use GQLSchema\Types\DirectiveType;
 use GQLSchema\Exceptions\SchemaException;
 use Exception;
+use GQLSchema\Types\Type;
 
 /**
  * Class DirectiveSerializer
  * @package GQLSchema\Serializers\TypeSerializers
  */
-class DirectiveSerializer
+class DirectiveSerializer implements Serializer
 {
     /**
-     * @param DirectiveType $directive
+     * @param Type $directive
      * @return string
      * @throws SchemaException
      * @throws Exception
      */
-    public function serialize(DirectiveType $directive): string
+    public function serialize(Type $directive): string
     {
+        if(!$directive instanceof DirectiveType) {
+            throw new Exception('Directive must be of type DirectiveType');
+        }
+
         $string = '';
 
         if (!empty($directive->getDescription())) {

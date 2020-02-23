@@ -4,7 +4,6 @@ namespace GQLSchema\Serializers;
 
 use GQLSchema\Field;
 use GQLSchema\Types\TypeModifier;
-use Doctrine\Common\Collections\ArrayCollection;
 use Exception;
 
 /**
@@ -44,15 +43,7 @@ class FieldSerializer
         $name = $field->getType()->getName();
         $typeModifier = $field->getTypeModifier();
 
-        $string = '';
-
-        if ($typeModifier instanceof TypeModifier) {
-            $string .= $this->modifyType($name, $typeModifier);
-        } else {
-            $string .= $name;
-        }
-
-        return $string;
+        return $typeModifier instanceof TypeModifier ? $this->modifyType($name, $typeModifier) : $name;
     }
 
     /**

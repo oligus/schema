@@ -2,20 +2,28 @@
 
 namespace GQLSchema\Serializers\TypeSerializers;
 
+use GQLSchema\Serializers\Serializer;
 use GQLSchema\Types\EnumType;
+use GQLSchema\Types\Type;
+use Exception;
 
 /**
  * Class EnumSerializer
  * @package GQLSchema\Serializers\TypeSerializers
  */
-class EnumSerializer
+class EnumSerializer implements Serializer
 {
     /**
-     * @param EnumType $type
+     * @param Type $type
      * @return string
+     * @throws Exception
      */
-    public function serialize(EnumType $type): string
+    public function serialize(Type $type): string
     {
+        if(!$type instanceof EnumType) {
+            throw new Exception('Type must be of type EnumType');
+        }
+
         $string = '';
 
         if (!empty($type->getDescription())) {

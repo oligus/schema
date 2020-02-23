@@ -24,6 +24,7 @@ class ValueBoolean implements Value
 
     /**
      * @return bool
+     * @SuppressWarnings(PHPMD.BooleanGetMethodName)
      */
     public function getValue(): bool
     {

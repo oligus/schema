@@ -25,11 +25,7 @@ class ArgumentSerializer
 
         $string = $argument->getName() . ': ';
 
-        if ($typeModifier instanceof TypeModifier) {
-            $string .= $this->modifyType($type, $typeModifier);
-        } else {
-            $string .= $type;
-        }
+        $string .= ($typeModifier instanceof TypeModifier) ? $this->modifyType($type, $typeModifier): $type;
 
         $defaultValue = $argument->getDefaultValue();
 

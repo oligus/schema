@@ -3,27 +3,33 @@
 namespace GQLSchema\Serializers\TypeSerializers;
 
 use GQLSchema\Field;
+use GQLSchema\Serializers\Serializer;
 use GQLSchema\Types\ObjectType;
 use GQLSchema\Types\InterfaceType;
 use GQLSchema\Exceptions\SchemaException;
 use GQLSchema\Serializers\FieldSerializer;
 use GQLSchema\Collections\InterfaceCollection;
 use Exception;
+use GQLSchema\Types\Type;
 
 /**
  * Class ObjectSerializer
  * @package GQLSchema\Serializers\TypeSerializers
  */
-class ObjectSerializer
+class ObjectSerializer implements Serializer
 {
     /**
-     * @param ObjectType $type
+     * @param Type $type
      * @return string
      * @throws SchemaException
      * @throws Exception
      */
-    public function serialize(ObjectType $type): string
+    public function serialize(Type $type): string
     {
+        if(!$type instanceof ObjectType) {
+            throw new Exception('Type must be of type ObjectType');
+        }
+
         $string = '';
 
         if (!empty($type->getDescription())) {
