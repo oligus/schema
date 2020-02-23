@@ -10,7 +10,6 @@ use GQLSchema\Serializers\TypeSerializers\ScalarSerializer;
 use GQLSchema\Serializers\TypeSerializers\ObjectSerializer;
 use GQLSchema\Schema;
 use GQLSchema\Serializers\TypeSerializers\UnionSerializer;
-use GQLSchema\Exceptions\SchemaException;
 use Exception;
 
 /**
@@ -20,9 +19,6 @@ use Exception;
 class SchemaSerializer
 {
     /**
-     * @param Schema $schema
-     * @return string
-     * @throws SchemaException
      * @throws Exception
      */
     public function serialize(Schema $schema): string
@@ -58,10 +54,6 @@ class SchemaSerializer
         return $string;
     }
 
-    /**
-     * @param Schema $schema
-     * @return string
-     */
     private function getRootTypes(Schema $schema): string
     {
         $string = "schema {\n";
@@ -80,9 +72,6 @@ class SchemaSerializer
     }
 
     /**
-     * @param Serializer $serializer
-     * @param Collection $collection
-     * @return string
      * @throws Exception
      */
     private function serializeCollection(Serializer $serializer, Collection $collection): string

@@ -18,8 +18,6 @@ use GQLSchema\Types\Type;
 class DirectiveSerializer implements Serializer
 {
     /**
-     * @param Type $directive
-     * @return string
      * @throws SchemaException
      * @throws Exception
      */
@@ -54,10 +52,6 @@ class DirectiveSerializer implements Serializer
         return $string;
     }
 
-    /**
-     * @param ArrayCollection $locations
-     * @return string
-     */
     private function getLocationString(ArrayCollection $locations): string
     {
         $string = '';
@@ -66,7 +60,7 @@ class DirectiveSerializer implements Serializer
         foreach ($locations as $index => $location) {
             $string .= $location->getValue();
 
-            if ($index + 2 <= $locations->count()) {
+            if ((int) $index + 2 <= $locations->count()) {
                 $string .= ' | ';
             }
         }

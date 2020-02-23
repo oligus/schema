@@ -17,8 +17,6 @@ use Exception;
 class InterfaceSerializer implements Serializer
 {
     /**
-     * @param Type $type
-     * @return string
      * @throws SchemaException
      * @throws Exception
      */

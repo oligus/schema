@@ -45,9 +45,6 @@ class InterfaceCollection
 
     /**
      * Get interface by name
-     *
-     * @param string $name
-     * @return InterfaceType|null
      */
     public function get(string $name): ?InterfaceType
     {
@@ -61,21 +58,11 @@ class InterfaceCollection
         return null;
     }
 
-    /**
-     * Check if collection is empty
-     * q
-     * @return bool
-     */
     public function isEmpty(): bool
     {
         return $this->collection->isEmpty();
     }
 
-    /**
-     * Returns a collection of interfaces
-     *
-     * @return ArrayCollection
-     */
     public function getCollection(): ArrayCollection
     {
         return $this->collection;

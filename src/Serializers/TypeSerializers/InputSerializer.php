@@ -17,8 +17,6 @@ use Exception;
 class InputSerializer implements Serializer
 {
     /**
-     * @param Type $type
-     * @return string
      * @throws SchemaException
      * @throws Exception
      */

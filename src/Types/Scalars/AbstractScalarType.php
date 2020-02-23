@@ -15,27 +15,16 @@ abstract class AbstractScalarType implements Type
      */
     protected $name;
 
-    /**
-     * Returns the name.
-     *
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
     public function getType(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return null|string
-     */
     public function getDescription(): ?string
     {
         return "";

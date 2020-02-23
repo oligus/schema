@@ -252,15 +252,16 @@ return [
     // here to inhibit them from being reported
     'suppress_issue_types' => [
         'PhanUnreferencedClosure',  // False positives seen with closures in arrays, TODO: move closure checks closer to what is done by unused variable plugin
-        'PhanPossiblyFalseTypeArgument',
-        'PhanPossiblyFalseTypeArgumentInternal',
-        'PhanPossiblyNullTypeArgument',
-        'PhanPossiblyNullTypeArgumentInternal',
-        'PhanPluginDescriptionlessCommentOnPrivateProperty',
-        'PhanPluginDescriptionlessCommentOnProtectedProperty',
         'PhanUnreferencedUseNormal',
         'PhanPluginDescriptionlessCommentOnPrivateMethod',
-        'PhanPluginDescriptionlessCommentOnPublicMethod'
+        'PhanPluginDescriptionlessCommentOnProtectedMethod',
+        'PhanPluginDescriptionlessCommentOnPublicMethod',
+        'PhanPluginDescriptionlessCommentOnPublicProperty',
+        'PhanPluginDescriptionlessCommentOnPrivateProperty',
+        'PhanPluginDescriptionlessCommentOnProtectedProperty',
+        'PhanPluginNoCommentOnPrivateMethod',
+        'PhanPluginNoCommentOnPublicMethod',
+        'PhanPluginNoCommentOnProtectedMethod'
     ],
 
     // If empty, no filter against issues types will be applied.
@@ -367,27 +368,39 @@ return [
     // or relative/absolute paths to the plugin (Relative to the project root).
     'plugins' => [
         'AlwaysReturnPlugin',
-        'DemoPlugin',
         'DollarDollarPlugin',
         'UnreachableCodePlugin',
         'DuplicateArrayKeyPlugin',
         'PregRegexCheckerPlugin',
         'PrintfCheckerPlugin',
+        // 'PHPUnitAssertionPlugin',  // analyze assertSame/assertInstanceof/assertTrue/assertFalse
+        'UseReturnValuePlugin',
+
+        // UnknownElementTypePlugin warns about unknown types in element signatures.
         'UnknownElementTypePlugin',
         'DuplicateExpressionPlugin',
+        // warns about carriage returns("\r"), trailing whitespace, and tabs in PHP files.
+        'WhitespacePlugin',
+        // Warn about inline HTML anywhere in the files.
+        'InlineHTMLPlugin',
+
+        ////////////////////////////////////////////////////////////////////////
+        // Plugins for Phan's self-analysis
+        ////////////////////////////////////////////////////////////////////////
+
+        // Warns about the usage of assert() for Phan's self-analysis. See https://github.com/phan/phan/issues/288
         'NoAssertPlugin',
+        // 'PossiblyStaticMethodPlugin',
         'HasPHPDocPlugin',
+        'PHPDocToRealTypesPlugin',  // suggests replacing (at)return void with `: void` in the declaration, etc.
+        'PHPDocRedundantPlugin',
+        'PreferNamespaceUsePlugin',
+        'EmptyStatementListPlugin',
 
+        // Report empty (not overridden or overriding) methods and functions
+        'EmptyMethodAndFunctionPlugin',
 
-        // 'SleepCheckerPlugin' is useful for projects which heavily use the __sleep() method. Phan doesn't use __sleep().
-        // InvokePHPNativeSyntaxCheckPlugin invokes 'php --no-php-ini --syntax-check ${abs_path_to_analyzed_file}.php' and reports any error messages.
-        // Using this can cause phan's overall analysis time to more than double.
-        // 'InvokePHPNativeSyntaxCheckPlugin',
-
-        // 'PHPUnitNotDeadCodePlugin',  // Marks PHPUnit test case subclasses and test cases as referenced code. This is only useful for runs when dead code detection is enabled.
-
-        // NOTE: This plugin only produces correct results when
-        //       Phan is run on a single core (-j1).
-        // 'UnusedSuppressionPlugin',
+        // Warn about assigning the value the variable already had to that variable.
+        'RedundantAssignmentPlugin',
     ],
 ];

@@ -33,8 +33,6 @@ class InputType extends AbstractType
     }
 
     /**
-     * @param Field $field
-     * @return InputType
      * @throws SchemaException
      */
     public function addField(Field $field): InputType
@@ -44,9 +42,6 @@ class InputType extends AbstractType
         return $this;
     }
 
-    /**
-     * @return CommonCollection
-     */
     public function getFields(): CommonCollection
     {
         return $this->fields;

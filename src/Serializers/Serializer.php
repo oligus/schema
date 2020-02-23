@@ -10,9 +10,5 @@ use GQLSchema\Types\Type;
  */
 interface Serializer
 {
-    /**
-     * @param Type $type
-     * @return string
-     */
     public function serialize(Type $type) : string;
 }

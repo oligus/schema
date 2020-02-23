@@ -33,8 +33,6 @@ class UnionType extends AbstractType
     }
 
     /**
-     * @param ObjectType $objectType
-     * @return UnionType
      * @throws SchemaException
      */
     public function addObjectType(ObjectType $objectType): UnionType
@@ -51,9 +49,6 @@ class UnionType extends AbstractType
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getObjectTypes(): string
     {
         $string = '';
@@ -62,7 +57,7 @@ class UnionType extends AbstractType
         foreach ($this->objectTypes as $index => $objectType) {
             $string .= $objectType->getName();
 
-            if ($index + 2 <= $this->objectTypes->count()) {
+            if ((int) $index + 2 <= $this->objectTypes->count()) {
                 $string .= ' | ';
             }
         }

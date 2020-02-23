@@ -44,31 +44,16 @@ class TypeModifier
         $this->nullableList = $nullableList;
     }
 
-    /**
-     * Returns true if nullable, false otherwise.
-     *
-     * @return bool
-     */
     public function isNullable(): bool
     {
         return $this->nullable;
     }
 
-    /**
-     * Return true if listable, false otherwise.
-     *
-     * @return bool
-     */
     public function isListable(): bool
     {
         return $this->listable;
     }
 
-    /**
-     * Returns true if nullable list, false otherwise.
-     *
-     * @return bool
-     */
     public function isNullableList(): bool
     {
         return $this->nullableList;

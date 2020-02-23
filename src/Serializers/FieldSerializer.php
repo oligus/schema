@@ -13,8 +13,6 @@ use Exception;
 class FieldSerializer
 {
     /**
-     * @param Field $field
-     * @return string
      * @throws Exception
      */
     public function serialize(Field $field): string
@@ -34,10 +32,6 @@ class FieldSerializer
         return $string;
     }
 
-    /**
-     * @param Field $field
-     * @return string
-     */
     public function serializeScalar(Field $field): string
     {
         $name = $field->getType()->getName();
@@ -46,12 +40,7 @@ class FieldSerializer
         return $typeModifier instanceof TypeModifier ? $this->modifyType($name, $typeModifier) : $name;
     }
 
-    /**
-     * @param string $type
-     * @param TypeModifier $typeModifier
-     * @return string
-     */
-    private function modifyType(string $type, TypeModifier $typeModifier)
+    private function modifyType(string $type, TypeModifier $typeModifier): string
     {
         $string = '';
         $string .= $typeModifier->isListable() ? '[' : '';

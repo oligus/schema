@@ -19,8 +19,6 @@ use GQLSchema\Types\Type;
 class ObjectSerializer implements Serializer
 {
     /**
-     * @param Type $type
-     * @return string
      * @throws SchemaException
      * @throws Exception
      */
@@ -54,7 +52,7 @@ class ObjectSerializer implements Serializer
             foreach ($type->getInterfaces()->getCollection() as $index => $interface) {
                 $string .= $interface->getName();
 
-                if ($index + 2 <= $type->getInterfaces()->getCollection()->count()) {
+                if ((int) $index + 2 <= $type->getInterfaces()->getCollection()->count()) {
                     $string .= ', ';
                 }
             }

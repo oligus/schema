@@ -8,8 +8,5 @@ namespace GQLSchema\Locations;
  */
 interface Location
 {
-    /**
-     * @return SystemLocations
-     */
     public function getLocation(): SystemLocations;
 }

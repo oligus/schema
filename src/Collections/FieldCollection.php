@@ -4,6 +4,7 @@ namespace GQLSchema\Collections;
 
 use GQLSchema\Field;
 use GQLSchema\Types\InterfaceType;
+use Exception;
 
 /**
  * Class FieldCollection
@@ -14,8 +15,7 @@ class FieldCollection extends AbstractCollection
     /**
      * Check if interface is implemented in current field collection
      *
-     * @param InterfaceType $interface
-     * @return bool
+     * @throws Exception
      */
     public function implements(InterfaceType $interface): bool
     {
@@ -30,10 +30,7 @@ class FieldCollection extends AbstractCollection
     }
 
     /**
-     * Returns true if field name is present
-     *
-     * @param string $name
-     * @return bool
+     * @throws Exception
      */
     public function hasField(string $name): bool
     {

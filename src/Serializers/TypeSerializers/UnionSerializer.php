@@ -15,8 +15,6 @@ use Exception;
 class UnionSerializer implements Serializer
 {
     /**
-     * @param Type $type
-     * @return string
      * @throws SchemaException
      * @throws Exception
      */

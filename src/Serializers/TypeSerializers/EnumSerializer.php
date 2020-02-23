@@ -15,8 +15,6 @@ use Exception;
 class EnumSerializer implements Serializer
 {
     /**
-     * @param Type $type
-     * @return string
      * @throws Exception
      */
     public function serialize(Type $type): string
