@@ -4,6 +4,7 @@ namespace GQLSchema\Tests\Serializers\TypeSerializers;
 
 use GQLSchema\Serializers\TypeSerializers\ScalarSerializer;
 use GQLSchema\Tests\SchemaTestCase;
+use GQLSchema\Types\EnumType;
 use GQLSchema\Types\ScalarType;
 use GQLSchema\Exceptions\SchemaException;
 use Exception;
@@ -32,5 +33,17 @@ class ScalarSerializerTest extends SchemaTestCase
     {
         $scalar = new ScalarType('Url', 'Url description');
         $this->assertMatchesSnapshot($this->serializer->serialize($scalar));
+    }
+
+    /**
+     * @throws SchemaException
+     */
+    public function testCorrectType()
+    {
+        $this->expectException(SchemaException::class);
+        $this->expectExceptionMessage('Type must be of type ScalarType');
+
+        $serializer = new ScalarSerializer();
+        $serializer->serialize(new EnumType('example'));
     }
 }

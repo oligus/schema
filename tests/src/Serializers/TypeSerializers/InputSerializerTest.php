@@ -5,6 +5,7 @@ namespace GQLSchema\Tests\Serializers\TypeSerializers;
 use GQLSchema\Exceptions\SchemaException;
 use GQLSchema\Field;
 use GQLSchema\Serializers\TypeSerializers\InputSerializer;
+use GQLSchema\Types\EnumType;
 use GQLSchema\Types\InputType;
 use GQLSchema\Types\Scalars\IntegerType;
 use GQLSchema\Types\Scalars\StringType;
@@ -39,5 +40,17 @@ class InputSerializerTest extends SchemaTestCase
 
         $input = new InputType('Wine');
         (new InputSerializer())->serialize($input);
+    }
+
+    /**
+     * @throws SchemaException
+     */
+    public function testCorrectType()
+    {
+        $this->expectException(SchemaException::class);
+        $this->expectExceptionMessage('Type must be of type InputType');
+
+        $serializer = new InputSerializer();
+        $serializer->serialize(new EnumType('example'));
     }
 }

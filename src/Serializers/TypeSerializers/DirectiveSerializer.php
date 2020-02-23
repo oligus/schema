@@ -21,31 +21,31 @@ class DirectiveSerializer implements Serializer
      * @throws SchemaException
      * @throws Exception
      */
-    public function serialize(Type $directive): string
+    public function serialize(Type $type): string
     {
-        if (!$directive instanceof DirectiveType) {
-            throw new SchemaException('Directive must be of type DirectiveType');
+        if (!$type instanceof DirectiveType) {
+            throw new SchemaException('Type must be of type DirectiveType');
         }
 
         $string = '';
 
-        if (!empty($directive->getDescription())) {
+        if (!empty($type->getDescription())) {
             $string .= '"""' . "\n";
-            $string .= $directive->getDescription() . "\n";
+            $string .= $type->getDescription() . "\n";
             $string .= '"""' . "\n";
         }
 
-        $string .= $directive->getType();
-        $string .= ' @' . $directive->getName();
+        $string .= $type->getType();
+        $string .= ' @' . $type->getName();
 
-        if ($directive->getLocations()->isEmpty()) {
+        if ($type->getLocations()->isEmpty()) {
             throw new SchemaException('A directive must define one or more locations.');
         }
 
-        $string .=  ArgumentSerializer::serializeCollection($directive->getArguments());
+        $string .=  ArgumentSerializer::serializeCollection($type->getArguments());
 
         $string .= ' on ';
-        $string .= $this->getLocationString($directive->getLocations());
+        $string .= $this->getLocationString($type->getLocations());
 
         $string .= "\n\n";
 

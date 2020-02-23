@@ -4,6 +4,7 @@ namespace GQLSchema\Tests\Serializers\TypeSerializers;
 
 use GQLSchema\Exceptions\SchemaException;
 use GQLSchema\Serializers\TypeSerializers\UnionSerializer;
+use GQLSchema\Types\EnumType;
 use GQLSchema\Types\UnionType;
 use GQLSchema\Types\ObjectType;
 use GQLSchema\Tests\SchemaTestCase;
@@ -40,5 +41,17 @@ class UnionSerializerTest extends SchemaTestCase
 
         $union = new UnionType('MyUnion', 'My union description');
         (new UnionSerializer())->serialize($union);
+    }
+
+    /**
+     * @throws SchemaException
+     */
+    public function testCorrectType()
+    {
+        $this->expectException(SchemaException::class);
+        $this->expectExceptionMessage('Type must be of type UnionType');
+
+        $serializer = new UnionSerializer();
+        $serializer->serialize(new EnumType('example'));
     }
 }

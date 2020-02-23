@@ -5,6 +5,7 @@ namespace GQLSchema\Tests\Serializers\TypeSerializers;
 use GQLSchema\Exceptions\SchemaException;
 use GQLSchema\Serializers\TypeSerializers\InterfaceSerializer;
 use GQLSchema\Tests\SchemaTestCase;
+use GQLSchema\Types\EnumType;
 use GQLSchema\Types\InterfaceType;
 use GQLSchema\Types\Scalars\StringType;
 use GQLSchema\Types\Scalars\IntegerType;
@@ -38,5 +39,17 @@ class InterfaceSerializerTest extends SchemaTestCase
 
         $interface = new InterfaceType('Test');
         (new InterfaceSerializer())->serialize($interface);
+    }
+
+    /**
+     * @throws SchemaException
+     */
+    public function testCorrectType()
+    {
+        $this->expectException(SchemaException::class);
+        $this->expectExceptionMessage('Type must be of type InterfaceType');
+
+        $serializer = new InterfaceSerializer();
+        $serializer->serialize(new EnumType('example'));
     }
 }

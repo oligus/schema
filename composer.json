@@ -12,6 +12,7 @@
   "scripts": {
     "test": "phpunit",
     "test-coverage": "phpunit --coverage-clover=coverage.xml",
+    "test-coverage-html": "phpunit --coverage-html tests/coverage",
     "lint": "phpcs src",
     "lint-fix": "phpcbf src",
     "md": "phpmd src text phpmd.xml",

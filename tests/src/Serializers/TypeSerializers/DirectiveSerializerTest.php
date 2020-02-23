@@ -8,6 +8,7 @@ use GQLSchema\Serializers\TypeSerializers\DirectiveSerializer;
 use GQLSchema\Tests\SchemaTestCase;
 use GQLSchema\Types\DirectiveType;
 use GQLSchema\Exceptions\SchemaException;
+use GQLSchema\Types\EnumType;
 use GQLSchema\Types\Scalars\BooleanType;
 use GQLSchema\Types\Scalars\IntegerType;
 use GQLSchema\Types\Scalars\StringType;
@@ -60,4 +61,15 @@ class DirectiveSerializerTest extends SchemaTestCase
         $serializer->serialize(new DirectiveType('example'));
     }
 
+    /**
+     * @throws SchemaException
+     */
+    public function testCorrectType()
+    {
+        $this->expectException(SchemaException::class);
+        $this->expectExceptionMessage('Type must be of type DirectiveType');
+
+        $serializer = new DirectiveSerializer();
+        $serializer->serialize(new EnumType('example'));
+    }
 }

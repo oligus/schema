@@ -5,6 +5,7 @@ namespace GQLSchema\Tests\Serializers\TypeSerializers;
 use GQLSchema\Exceptions\SchemaException;
 use GQLSchema\Serializers\TypeSerializers\ObjectSerializer;
 use GQLSchema\Field;
+use GQLSchema\Types\EnumType;
 use GQLSchema\Types\ObjectType;
 use GQLSchema\Types\InterfaceType;
 use GQLSchema\Types\Scalars\StringType;
@@ -78,5 +79,17 @@ class ObjectSerializerTest extends SchemaTestCase
 
         $object = new ObjectType('Wine');
         (new ObjectSerializer())->serialize($object);
+    }
+
+    /**
+     * @throws SchemaException
+     */
+    public function testCorrectType()
+    {
+        $this->expectException(SchemaException::class);
+        $this->expectExceptionMessage('Type must be of type ObjectType');
+
+        $serializer = new ObjectSerializer();
+        $serializer->serialize(new EnumType('example'));
     }
 }

@@ -6,7 +6,6 @@ use GQLSchema\Exceptions\SchemaException;
 use GQLSchema\Serializers\Serializer;
 use GQLSchema\Types\ScalarType;
 use GQLSchema\Types\Type;
-use Exception;
 
 /**
  * Class ScalarSerializer
@@ -15,7 +14,7 @@ use Exception;
 class ScalarSerializer implements Serializer
 {
     /**
-     * @throws Exception
+     * @throws SchemaException
      */
     public function serialize(Type $type): string
     {

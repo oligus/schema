@@ -6,7 +6,6 @@ use GQLSchema\Exceptions\SchemaException;
 use GQLSchema\Serializers\Serializer;
 use GQLSchema\Types\EnumType;
 use GQLSchema\Types\Type;
-use Exception;
 
 /**
  * Class EnumSerializer
@@ -15,7 +14,7 @@ use Exception;
 class EnumSerializer implements Serializer
 {
     /**
-     * @throws Exception
+     * @throws SchemaException
      */
     public function serialize(Type $type): string
     {
