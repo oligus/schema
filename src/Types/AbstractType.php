@@ -42,18 +42,12 @@ abstract class AbstractType implements Type
         $this->setDescription($description);
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
     /**
-     * Set name
-     *
-     * @param string $name
      * @throws SchemaException
      */
     protected function setName(string $name): void
@@ -65,29 +59,16 @@ abstract class AbstractType implements Type
         $this->name = $name;
     }
 
-    /**
-     * Returns description
-     *
-     * @return null|string
-     */
     public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    /**
-     * Set type description
-     *
-     * @param null|string $description
-     */
     protected function setDescription(?string $description): void
     {
         $this->description = $description;
     }
 
-    /**
-     * @return string
-     */
     public function getType(): string
     {
         return $this::TYPE;

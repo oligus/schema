@@ -15,9 +15,6 @@ class ValueSerializer
 {
     /**
      * Serialize value to string type
-     *
-     * @param Value $value
-     * @return string
      */
     public function serialize(Value $value): string
     {

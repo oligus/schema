@@ -2,6 +2,7 @@
 
 namespace GQLSchema\Tests\Types;
 
+use GQLSchema\Exceptions\SchemaException;
 use GQLSchema\Types\InterfaceType;
 use GQLSchema\Types\ObjectType;
 use GQLSchema\Collections\FieldCollection;
@@ -17,7 +18,7 @@ use GQLSchema\Tests\SchemaTestCase;
 class ObjectTypeTest extends SchemaTestCase
 {
     /**
-     * @throws \GQLSchema\Exceptions\SchemaException
+     * @throws SchemaException
      */
     public function testObject()
     {
@@ -27,11 +28,12 @@ class ObjectTypeTest extends SchemaTestCase
     }
 
     /**
-     * @expectedException \GQLSchema\Exceptions\SchemaException
-     * @expectedExceptionMessage Object type must implement interface, one or more fields missing.
+     * @throws SchemaException
      */
     public function testInterfaceException()
     {
+        $this->expectException(SchemaException::class);
+        $this->expectExceptionMessage('Object type must implement interface, one or more fields missing.');
 
         $object = new ObjectType('Wine', 'My object description');
         $object->addField(new Field('name', new StringType()));

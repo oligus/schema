@@ -67,47 +67,26 @@ class Argument implements Element
         $this->name = $name;
     }
 
-    /**
-     * Returns the name.
-     *
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * Returns the type.
-     *
-     * @return Type
-     */
     public function getType(): Type
     {
         return $this->type;
     }
 
-    /**
-     * Returns the default value.
-     *
-     * @return Value|null
-     */
     public function getDefaultValue(): ?Value
     {
         return $this->defaultValue;
     }
 
-    /**
-     * @return TypeModifier|null
-     */
     public function getTypeModifier(): ?TypeModifier
     {
         return $this->typeModifier;
     }
 
-    /**
-     * @param TypeModifier|null $typeModifier
-     */
     public function setTypeModifier(?TypeModifier $typeModifier): void
     {
         $this->typeModifier = $typeModifier;

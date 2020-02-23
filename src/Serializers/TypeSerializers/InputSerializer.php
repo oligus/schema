@@ -3,6 +3,7 @@
 namespace GQLSchema\Serializers\TypeSerializers;
 
 use GQLSchema\Field;
+use GQLSchema\Serializers\Serializer;
 use GQLSchema\Types\InputType;
 use GQLSchema\Types\Type;
 use GQLSchema\Exceptions\SchemaException;
@@ -13,16 +14,18 @@ use Exception;
  * Class InputSerializer
  * @package GQLSchema\Serializers\TypeSerializers
  */
-class InputSerializer
+class InputSerializer implements Serializer
 {
     /**
-     * @param InputType $type
-     * @return string
      * @throws SchemaException
      * @throws Exception
      */
-    public function serialize(InputType $type): string
+    public function serialize(Type $type): string
     {
+        if (!$type instanceof InputType) {
+            throw new SchemaException('Type must be of type InputType');
+        }
+
         $string = '';
 
         if (!empty($type->getDescription())) {

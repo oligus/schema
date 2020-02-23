@@ -8,10 +8,5 @@ namespace GQLSchema;
  */
 interface Element
 {
-    /**
-     * Returns the name of the type
-     *
-     * @return string
-     */
     public function getName(): string;
 }

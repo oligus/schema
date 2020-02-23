@@ -15,16 +15,12 @@ class ValueInteger implements Value
 
     /**
      * ValueInteger constructor.
-     * @param integer $value
      */
     public function __construct(int $value)
     {
         $this->value = $value;
     }
 
-    /**
-     * @return integer
-     */
     public function getValue(): int
     {
         return $this->value;

@@ -3,6 +3,7 @@
 namespace GQLSchema\Tests\Collections;
 
 use GQLSchema\Argument;
+use GQLSchema\Exceptions\SchemaException;
 use GQLSchema\Types\Scalars\IntegerType;
 use GQLSchema\Collections\ArgumentCollection;
 use GQLSchema\Tests\SchemaTestCase;
@@ -15,11 +16,13 @@ use stdClass;
 class ArgumentCollectionTest extends SchemaTestCase
 {
     /**
-     * @expectedException \GQLSchema\Exceptions\SchemaException
-     * @expectedExceptionMessage The argument must have a unique name, argument name [age] seen twice.
+     * @throws SchemaException
      */
     public function testUniqueNames()
     {
+        $this->expectException(SchemaException::class);
+        $this->expectExceptionMessage('The argument must have a unique name, argument name [age] seen twice.');
+
         $arguments = new ArgumentCollection();
         $arguments->add(new Argument('age', new IntegerType()));
         $arguments->add(new Argument('test', new IntegerType()));
@@ -27,11 +30,13 @@ class ArgumentCollectionTest extends SchemaTestCase
     }
 
     /**
-     * @expectedException \GQLSchema\Exceptions\SchemaException
-     * @expectedExceptionMessage Collection item must be instance of Argument
+     * @throws SchemaException
      */
     public function testInstanceArgument()
     {
+        $this->expectException(SchemaException::class);
+        $this->expectExceptionMessage('Collection item must be instance of Argument');
+
         $arguments = new ArgumentCollection();
         $arguments->add(new stdClass());
     }

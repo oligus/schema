@@ -28,7 +28,7 @@ class FieldTest extends SchemaTestCase
      */
     private $serializer;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->serializer = new FieldSerializer();
     }
@@ -119,20 +119,22 @@ class FieldTest extends SchemaTestCase
     }
 
     /**
-     * @expectedException \GQLSchema\Exceptions\SchemaException
-     * @expectedExceptionMessage The field must not have a name which begins with the characters "__" (two underscores)
+     * @throws SchemaException
      */
     public function testSetNameException()
     {
+        $this->expectException(SchemaException::class);
+        $this->expectExceptionMessage('The field must not have a name which begins with the characters "__" (two underscores)');
         new Field('__testField', new BooleanType());
     }
 
     /**
-     * @expectedException \GQLSchema\Exceptions\SchemaException
-     * @expectedExceptionMessage Invalid name [99-yes]
+     * @throws SchemaException
      */
     public function testSetInvalidName()
     {
+        $this->expectException(SchemaException::class);
+        $this->expectExceptionMessage('Invalid name [99-yes]');
         new Field('99-yes', new BooleanType());
     }
 

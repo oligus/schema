@@ -8,12 +8,12 @@ use GQLSchema\Serializers\TypeSerializers\DirectiveSerializer;
 use GQLSchema\Tests\SchemaTestCase;
 use GQLSchema\Types\DirectiveType;
 use GQLSchema\Exceptions\SchemaException;
+use GQLSchema\Types\EnumType;
 use GQLSchema\Types\Scalars\BooleanType;
 use GQLSchema\Types\Scalars\IntegerType;
 use GQLSchema\Types\Scalars\StringType;
 use GQLSchema\Types\TypeModifier;
 use GQLSchema\Values\ValueString;
-use Exception;
 
 /**
  * Class ValueSerializerHelp
@@ -50,14 +50,26 @@ class DirectiveSerializerTest extends SchemaTestCase
     }
 
     /**
-     * @throws Exception
-     * @expectedException \GQLSchema\Exceptions\SchemaException
-     * @expectedExceptionMessage A directive must define one or more locations.
+     * @throws SchemaException
      */
     public function testSerializeEmptyLocation()
     {
+        $this->expectException(SchemaException::class);
+        $this->expectExceptionMessage('A directive must define one or more locations.');
+
         $serializer = new DirectiveSerializer();
         $serializer->serialize(new DirectiveType('example'));
     }
 
+    /**
+     * @throws SchemaException
+     */
+    public function testCorrectType()
+    {
+        $this->expectException(SchemaException::class);
+        $this->expectExceptionMessage('Type must be of type DirectiveType');
+
+        $serializer = new DirectiveSerializer();
+        $serializer->serialize(new EnumType('example'));
+    }
 }

@@ -6,6 +6,7 @@ use GQLSchema\Collections\FieldCollection;
 use GQLSchema\Collections\InterfaceCollection;
 use GQLSchema\Exceptions\SchemaException;
 use GQLSchema\Field;
+use Exception;
 
 /**
  * Class ObjectType
@@ -40,8 +41,6 @@ class ObjectType extends AbstractType
     }
 
     /**
-     * @param Field $field
-     * @return ObjectType
      * @throws SchemaException
      */
     public function addField(Field $field): ObjectType
@@ -51,18 +50,14 @@ class ObjectType extends AbstractType
         return $this;
     }
 
-    /**
-     * @return FieldCollection
-     */
     public function getFields(): FieldCollection
     {
         return $this->fields;
     }
 
     /**
-     * @param InterfaceType $interface
-     * @return ObjectType
      * @throws SchemaException
+     * @throws Exception
      */
     public function implements(InterfaceType $interface): ObjectType
     {
@@ -75,11 +70,6 @@ class ObjectType extends AbstractType
         return $this;
     }
 
-    /**
-     * Get implemented interfaces
-     *
-     * @return InterfaceCollection|null
-     */
     public function getInterfaces(): ?InterfaceCollection
     {
         return $this->interfaces;

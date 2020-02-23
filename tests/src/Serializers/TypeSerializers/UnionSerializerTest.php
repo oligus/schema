@@ -2,19 +2,21 @@
 
 namespace GQLSchema\Tests\Serializers\TypeSerializers;
 
+use GQLSchema\Exceptions\SchemaException;
 use GQLSchema\Serializers\TypeSerializers\UnionSerializer;
+use GQLSchema\Types\EnumType;
 use GQLSchema\Types\UnionType;
 use GQLSchema\Types\ObjectType;
 use GQLSchema\Tests\SchemaTestCase;
 
 /**
- * Class ValueSerializerHelp
- * @package GQLSchema\Tests\Types
+ * Class UnionSerializerTest
+ * @package GQLSchema\Tests\Serializers\TypeSerializers
  */
-class TypeSerializerTest extends SchemaTestCase
+class UnionSerializerTest extends SchemaTestCase
 {
     /**
-     * @throws \GQLSchema\Exceptions\SchemaException
+     * @throws SchemaException
      */
     public function testSerialize()
     {
@@ -30,12 +32,26 @@ class TypeSerializerTest extends SchemaTestCase
     }
 
     /**
-     * @expectedException \GQLSchema\Exceptions\SchemaException
-     * @expectedExceptionMessage No types added
+     * @throws SchemaException
      */
     public function testEmptyObjectTypes()
     {
+        $this->expectException(SchemaException::class);
+        $this->expectExceptionMessage('No types added');
+
         $union = new UnionType('MyUnion', 'My union description');
         (new UnionSerializer())->serialize($union);
+    }
+
+    /**
+     * @throws SchemaException
+     */
+    public function testCorrectType()
+    {
+        $this->expectException(SchemaException::class);
+        $this->expectExceptionMessage('Type must be of type UnionType');
+
+        $serializer = new UnionSerializer();
+        $serializer->serialize(new EnumType('example'));
     }
 }

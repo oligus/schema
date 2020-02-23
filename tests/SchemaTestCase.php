@@ -12,7 +12,7 @@ class SchemaTestCase extends TestCase
 {
     use MatchesSnapshots;
 
-    protected function setUp()
+    protected function setUp(): void
     {
 
     }

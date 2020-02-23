@@ -40,10 +40,6 @@ class DirectiveType extends AbstractType
         $this->arguments = new ArgumentCollection();
     }
 
-    /**
-     * @param ExecutableDirectiveLocation $location
-     * @return DirectiveType
-     */
     public function addLocation(ExecutableDirectiveLocation $location): DirectiveType
     {
         $this->locations->add($location);
@@ -51,17 +47,12 @@ class DirectiveType extends AbstractType
         return $this;
     }
 
-    /**
-     * @return ArrayCollection
-     */
     public function getLocations(): ArrayCollection
     {
         return $this->locations;
     }
 
     /**
-     * @param Argument $argument
-     * @return DirectiveType
      * @throws SchemaException
      */
     public function addArgument(Argument $argument): DirectiveType
@@ -71,9 +62,6 @@ class DirectiveType extends AbstractType
         return $this;
     }
 
-    /**
-     * @return ArgumentCollection
-     */
     public function getArguments(): ArgumentCollection
     {
         return $this->arguments;

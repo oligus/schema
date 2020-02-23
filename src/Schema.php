@@ -86,87 +86,52 @@ class Schema
         $this->interfaces->add($interface);
     }
 
-    /**
-     * @return InterfaceCollection
-     */
     public function getInterfaces(): InterfaceCollection
     {
         return $this->interfaces;
     }
 
-
-    /**
-     * Add scalar types
-     *
-     * @param ScalarType $scalar
-     */
     public function addScalar(ScalarType $scalar): void
     {
         $this->scalars->add($scalar);
     }
 
-    /**
-     * @return ArrayCollection
-     */
     public function getScalars(): ArrayCollection
     {
         return $this->scalars;
     }
 
-    /**
-     * @return ArrayCollection
-     */
     public function getObjects(): ArrayCollection
     {
         return $this->objects;
     }
 
-    /**
-     * @return ArrayCollection
-     */
     public function getInputs(): ArrayCollection
     {
         return $this->inputs;
     }
 
-    /**
-     * @return ObjectType|null
-     */
     public function getQuery(): ?ObjectType
     {
         return $this->query;
     }
 
-    /**
-     * Set root query
-     *
-     * @param ObjectType $query
-     */
     public function setQuery(ObjectType $query): void
     {
         $this->query = $query;
     }
 
-    /**
-     * @return ObjectType|null
-     */
     public function getMutation(): ?ObjectType
     {
         return $this->mutation;
     }
 
-    /**
-     * Set root mutation
-     *
-     * @param ObjectType $mutation
-     */
     public function setMutation(ObjectType $mutation): void
     {
         $this->mutation = $mutation;
     }
 
     /**
-     * @return ObjectType|null
      * @codeCoverageIgnore
      */
     public function getSubscription(): ?ObjectType
@@ -178,60 +143,37 @@ class Schema
      * Set root subscription
      *
      * @codeCoverageIgnore
-     * @param ObjectType $subscription
      */
     public function setSubscription(ObjectType $subscription): void
     {
         $this->subscription = $subscription;
     }
 
-    /**
-     * Add object to schema
-     *
-     * @param ObjectType $objectType
-     */
     public function addObject(ObjectType $objectType): void
     {
         $this->objects->add($objectType);
     }
 
-    /**
-     * Add input type
-     *
-     * @param InputType $inputType
-     */
     public function addInput(InputType $inputType): void
     {
         $this->inputs->add($inputType);
     }
 
-    /**
-     * @return ArrayCollection
-     */
     public function getUnions(): ArrayCollection
     {
         return $this->unions;
     }
 
-    /**
-     * @param UnionType $unionType
-     */
     public function addUnion(UnionType $unionType): void
     {
         $this->unions->add($unionType);
     }
 
-    /**
-     * @param DirectiveType $directive
-     */
     public function addDirective(DirectiveType $directive): void
     {
         $this->directives->add($directive);
     }
 
-    /**
-     * @return ArrayCollection
-     */
     public function getDirectives(): ArrayCollection
     {
         return $this->directives;

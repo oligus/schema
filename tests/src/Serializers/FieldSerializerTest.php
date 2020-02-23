@@ -11,6 +11,8 @@ use GQLSchema\Types\Scalars\IntegerType;
 use GQLSchema\Types\Scalars\StringType;
 use GQLSchema\Values\ValueString;
 use GQLSchema\Tests\SchemaTestCase;
+use GQLSchema\Exceptions\SchemaException;
+use Exception;
 
 /**
  * Class ValueSerializerHelp
@@ -24,13 +26,14 @@ class FieldSerializerTest extends SchemaTestCase
      */
     private $serializer;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->serializer = new FieldSerializer();
     }
 
     /**
-     * @throws \GQLSchema\Exceptions\SchemaException
+     * @throws SchemaException
+     * @throws Exception
      */
     public function testSerialize()
     {
@@ -49,7 +52,5 @@ class FieldSerializerTest extends SchemaTestCase
 
         $this->assertEquals('testField(booleanArg: Boolean!, integerArg: Int!, stringArg: String! = "test"): Int!',
             $this->serializer->serialize($field));
-
-
     }
 }

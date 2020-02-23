@@ -15,7 +15,6 @@ class ValueBoolean implements Value
 
     /**
      * ValueBoolean constructor.
-     * @param bool $value
      */
     public function __construct(bool $value)
     {
@@ -23,7 +22,7 @@ class ValueBoolean implements Value
     }
 
     /**
-     * @return bool
+     * @SuppressWarnings(PHPMD.BooleanGetMethodName)
      */
     public function getValue(): bool
     {

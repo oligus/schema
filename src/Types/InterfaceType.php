@@ -32,19 +32,12 @@ class InterfaceType extends AbstractType
         $this->fields = new FieldCollection();
     }
 
-    /**
-     * Get interface fields
-     *
-     * @return FieldCollection
-     */
     public function getFields(): FieldCollection
     {
         return $this->fields;
     }
 
     /**
-     * @param Field $field
-     * @return InterfaceType
      * @throws SchemaException
      */
     public function addField(Field $field): InterfaceType

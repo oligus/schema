@@ -71,8 +71,6 @@ class Field implements Element, Location
     }
 
     /**
-     * @param string $name
-     * @return Field
      * @throws SchemaException
      */
     private function setName(string $name): Field
@@ -91,8 +89,6 @@ class Field implements Element, Location
     }
 
     /**
-     * @param Argument $argument
-     * @return Field
      * @throws SchemaException
      */
     public function addArgument(Argument $argument): Field
@@ -102,48 +98,26 @@ class Field implements Element, Location
         return $this;
     }
 
-    /**
-     * @return ArgumentCollection
-     */
     public function getArguments(): ArgumentCollection
     {
         return $this->arguments;
     }
 
-    /**
-     * Returns the description.
-     *
-     * @return string|null
-     */
     public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    /**
-     * Returns the name
-     *
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * Returns the type.
-     *
-     * @return Type
-     */
     public function getType(): Type
     {
         return $this->type;
     }
 
-    /**
-     * @param TypeModifier|null $typeModifier
-     * @return Field
-     */
     public function setTypeModifier(?TypeModifier $typeModifier): Field
     {
         $this->typeModifier = $typeModifier;
@@ -151,9 +125,6 @@ class Field implements Element, Location
         return $this;
     }
 
-    /**
-     * @return TypeModifier|null
-     */
     public function getTypeModifier(): ?TypeModifier
     {
         return $this->typeModifier;

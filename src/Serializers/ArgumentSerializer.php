@@ -14,10 +14,6 @@ use Exception;
  */
 class ArgumentSerializer
 {
-    /**
-     * @param Argument $argument
-     * @return string
-     */
     public function serialize(Argument $argument): string
     {
         $type = $argument->getType()->getName();
@@ -25,11 +21,7 @@ class ArgumentSerializer
 
         $string = $argument->getName() . ': ';
 
-        if ($typeModifier instanceof TypeModifier) {
-            $string .= $this->modifyType($type, $typeModifier);
-        } else {
-            $string .= $type;
-        }
+        $string .= ($typeModifier instanceof TypeModifier) ? $this->modifyType($type, $typeModifier): $type;
 
         $defaultValue = $argument->getDefaultValue();
 
@@ -40,12 +32,7 @@ class ArgumentSerializer
         return $string;
     }
 
-    /**
-     * @param string $type
-     * @param TypeModifier $typeModifier
-     * @return string
-     */
-    private function modifyType(string $type, TypeModifier $typeModifier)
+    private function modifyType(string $type, TypeModifier $typeModifier): string
     {
         $string = '';
         $string .= $typeModifier->isListable() ? '[' : '';
@@ -58,12 +45,9 @@ class ArgumentSerializer
     }
 
     /**
-     *
-     * @param ArgumentCollection $arguments
-     * @return string
      * @throws Exception
      */
-    public static function serializeCollection(ArgumentCollection $arguments)
+    public static function serializeCollection(ArgumentCollection $arguments): string
     {
         $string = '';
 

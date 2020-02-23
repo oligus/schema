@@ -26,7 +26,7 @@ class ArgumentSerializerTest extends SchemaTestCase
      */
     private $serializer;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->serializer = new ArgumentSerializer();
     }

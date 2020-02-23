@@ -4,7 +4,6 @@ namespace GQLSchema\Serializers;
 
 use GQLSchema\Field;
 use GQLSchema\Types\TypeModifier;
-use Doctrine\Common\Collections\ArrayCollection;
 use Exception;
 
 /**
@@ -14,8 +13,6 @@ use Exception;
 class FieldSerializer
 {
     /**
-     * @param Field $field
-     * @return string
      * @throws Exception
      */
     public function serialize(Field $field): string
@@ -35,32 +32,15 @@ class FieldSerializer
         return $string;
     }
 
-    /**
-     * @param Field $field
-     * @return string
-     */
     public function serializeScalar(Field $field): string
     {
         $name = $field->getType()->getName();
         $typeModifier = $field->getTypeModifier();
 
-        $string = '';
-
-        if ($typeModifier instanceof TypeModifier) {
-            $string .= $this->modifyType($name, $typeModifier);
-        } else {
-            $string .= $name;
-        }
-
-        return $string;
+        return $typeModifier instanceof TypeModifier ? $this->modifyType($name, $typeModifier) : $name;
     }
 
-    /**
-     * @param string $type
-     * @param TypeModifier $typeModifier
-     * @return string
-     */
-    private function modifyType(string $type, TypeModifier $typeModifier)
+    private function modifyType(string $type, TypeModifier $typeModifier): string
     {
         $string = '';
         $string .= $typeModifier->isListable() ? '[' : '';

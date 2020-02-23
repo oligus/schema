@@ -6,7 +6,6 @@ use GQLSchema\Exceptions\SchemaException;
 use Doctrine\Common\Collections\ArrayCollection;
 use GQLSchema\Element;
 use ArrayIterator;
-use Traversable;
 use Exception;
 
 /**
@@ -28,27 +27,20 @@ abstract class AbstractCollection
         $this->collection = new ArrayCollection();
     }
 
-    /**
-     * Returns true if empty, false otherwise.
-     *
-     * @return bool
-     */
     public function isEmpty(): bool
     {
         return $this->collection->isEmpty();
     }
 
     /**
-     * @return ArrayIterator|Traversable
      * @throws Exception
      */
-    public function getIterator()
+    public function getIterator(): ArrayIterator
     {
         return $this->collection->getIterator();
     }
 
     /**
-     * @param Element $element
      * @throws SchemaException
      */
     public function add(Element $element): void

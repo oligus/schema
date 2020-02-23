@@ -2,20 +2,26 @@
 
 namespace GQLSchema\Serializers\TypeSerializers;
 
+use GQLSchema\Exceptions\SchemaException;
+use GQLSchema\Serializers\Serializer;
 use GQLSchema\Types\ScalarType;
+use GQLSchema\Types\Type;
 
 /**
  * Class ScalarSerializer
  * @package GQLSchema\Serializers\TypeSerializers
  */
-class ScalarSerializer
+class ScalarSerializer implements Serializer
 {
     /**
-     * @param ScalarType $type
-     * @return string
+     * @throws SchemaException
      */
-    public function serialize(ScalarType $type): string
+    public function serialize(Type $type): string
     {
+        if (!$type instanceof ScalarType) {
+            throw new SchemaException('Type must be of type ScalarType');
+        }
+
         $string = '';
 
         if (!empty($type->getDescription())) {

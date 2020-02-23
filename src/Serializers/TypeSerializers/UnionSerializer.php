@@ -2,22 +2,28 @@
 
 namespace GQLSchema\Serializers\TypeSerializers;
 
+use GQLSchema\Serializers\Serializer;
 use GQLSchema\Types\UnionType;
 use GQLSchema\Types\Type;
 use GQLSchema\Exceptions\SchemaException;
+use Exception;
 
 /**
  * Class UnionSerializer
  * @package GQLSchema\Serializers\TypeSerializers
  */
-class UnionSerializer
+class UnionSerializer implements Serializer
 {
     /**
-     * @return string
      * @throws SchemaException
+     * @throws Exception
      */
-    public function serialize(UnionType $type): string
+    public function serialize(Type $type): string
     {
+        if (!$type instanceof UnionType) {
+            throw new SchemaException('Type must be of type UnionType');
+        }
+
         $string = '';
 
         if (!empty($type->getDescription())) {
